@@ -340,6 +340,9 @@ GameObject:
   - component: {fileID: 2311989428022930361}
   - component: {fileID: 8786936103212503177}
   - component: {fileID: 1995375791370011620}
+  - component: {fileID: 7418603658721581490}
+  - component: {fileID: 6139105098252316419}
+  - component: {fileID: 426827041464429389}
   m_Layer: 0
   m_Name: Hexagon
   m_TagString: Untagged
@@ -490,6 +493,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _neighboringHexagons: []
+--- !u!114 &7418603658721581490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910288373307850574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bff624700474b9682ac9bcbfc904489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _entityBehaviour: {fileID: -3125488246894819592}
+--- !u!114 &6139105098252316419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910288373307850574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc7f66a83b0a49bdb93fd5a92aeb9dff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointerHandler: {fileID: 426827041464429389}
+  _entityBehaviour: {fileID: -3125488246894819592}
+--- !u!114 &426827041464429389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910288373307850574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf27ae053586459c9300189678aa9294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6227954836980274645
 GameObject:
   m_ObjectHideFlags: 0

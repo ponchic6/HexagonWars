@@ -7,7 +7,6 @@ namespace Code.Gameplay.Features.Map.Systems
         public MapFeature(ISystemFactory systemFactory)
         {
             Add(systemFactory.Create<MapCreatorSystem>());
-            Add(systemFactory.Create<SetPopulationSystem>());
         }
     }
 }

@@ -12,36 +12,52 @@ public static class GameComponentsLookup {
     public const int LineRenderer = 1;
     public const int Transform = 2;
     public const int WorldPosition = 3;
-    public const int CitizensAmount = 4;
-    public const int ChildHexagon = 5;
-    public const int MapParent = 6;
-    public const int ComplexityWay = 7;
-    public const int FinishMigrationPoint = 8;
-    public const int MigrationAmount = 9;
-    public const int MigrationArrow = 10;
-    public const int MigrationWayIdPoints = 11;
-    public const int StartMigrationPoint = 12;
-    public const int Destructed = 13;
-    public const int View = 14;
-    public const int ViewPath = 15;
-    public const int ViewPrefab = 16;
+    public const int BuildingProgress = 4;
+    public const int FoodFarm = 5;
+    public const int LivingArea = 6;
+    public const int CitizensAmount = 7;
+    public const int CouriersAmount = 8;
+    public const int CurrentSupplyComplexityWay = 9;
+    public const int Food = 10;
+    public const int MaxSupplyComplexityWay = 11;
+    public const int SupplyRoute = 12;
+    public const int ChildHexagon = 13;
+    public const int MapParent = 14;
+    public const int ComplexityWay = 15;
+    public const int FinishMigrationPoint = 16;
+    public const int MigrationAmount = 17;
+    public const int MigrationArrow = 18;
+    public const int StartMigrationPoint = 19;
+    public const int WayIdPoints = 20;
+    public const int Destructed = 21;
+    public const int View = 22;
+    public const int ViewPath = 23;
+    public const int ViewPrefab = 24;
 
-    public const int TotalComponents = 17;
+    public const int TotalComponents = 25;
 
     public static readonly string[] componentNames = {
         "Id",
         "LineRenderer",
         "Transform",
         "WorldPosition",
+        "BuildingProgress",
+        "FoodFarm",
+        "LivingArea",
         "CitizensAmount",
+        "CouriersAmount",
+        "CurrentSupplyComplexityWay",
+        "Food",
+        "MaxSupplyComplexityWay",
+        "SupplyRoute",
         "ChildHexagon",
         "MapParent",
         "ComplexityWay",
         "FinishMigrationPoint",
         "MigrationAmount",
         "MigrationArrow",
-        "MigrationWayIdPoints",
         "StartMigrationPoint",
+        "WayIdPoints",
         "Destructed",
         "View",
         "ViewPath",
@@ -53,15 +69,23 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Common.LineRendererComponent),
         typeof(Code.Gameplay.Common.TransformComponent),
         typeof(Code.Gameplay.Common.WorldPosition),
+        typeof(Code.Gameplay.Features.Building.BuildingProgress),
+        typeof(Code.Gameplay.Features.Building.FoodFarm),
+        typeof(Code.Gameplay.Features.Building.LivingArea),
         typeof(Code.Gameplay.Features.Citizens.CitizensAmount),
+        typeof(Code.Gameplay.Features.Logistics.CouriersAmount),
+        typeof(Code.Gameplay.Features.Logistics.CurrentSupplyComplexityWay),
+        typeof(Code.Gameplay.Features.Logistics.Food),
+        typeof(Code.Gameplay.Features.Logistics.MaxSupplyComplexityWay),
+        typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),
         typeof(Code.Gameplay.Features.Migration.ComplexityWay),
         typeof(Code.Gameplay.Features.Migration.FinishMigrationPoint),
         typeof(Code.Gameplay.Features.Migration.MigrationAmount),
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
-        typeof(Code.Gameplay.Features.Migration.MigrationWayIdPoints),
         typeof(Code.Gameplay.Features.Migration.StartMigrationPoint),
+        typeof(Code.Gameplay.Features.Migration.WayIdPoints),
         typeof(Code.Infrastructure.Destroy.Destructed),
         typeof(Code.Infrastructure.View.View),
         typeof(Code.Infrastructure.View.ViewPath),

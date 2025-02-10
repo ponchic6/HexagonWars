@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Gameplay.Features.Map.View;
+using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
 using UnityEngine;
 
@@ -9,13 +10,15 @@ namespace Code.Gameplay.Features.Migration.Services
     public class MigrationFactory : IMigrationFactory
     {
         private const string MOVING_ARROW_PATH = "Arrows/MigrationArrow/MigrationArrow";
-        
+
+        private readonly IIdentifierService _identifierService;
         private EntityBehaviour _initialHex, _finishHex;
         private int _migrationAmount;
         private GameContext _game;
 
-        public MigrationFactory()
+        public MigrationFactory(IIdentifierService identifierService)
         {
+            _identifierService = identifierService;
             _game = Contexts.sharedInstance.game;
         }   
             
@@ -31,8 +34,9 @@ namespace Code.Gameplay.Features.Migration.Services
 
             List<int> shortestPath = FindShortestPath(_initialHex, _finishHex);
             GameEntity migration = _game.CreateEntity();
+            migration.AddId(_identifierService.Next());
             migration.AddMigrationAmount(_migrationAmount);
-            migration.AddMigrationWayIdPoints(shortestPath);
+            migration.AddWayIdPoints(shortestPath);
             migration.AddComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
             migration.AddViewPath(MOVING_ARROW_PATH);
             migration.isMigrationArrow = true;

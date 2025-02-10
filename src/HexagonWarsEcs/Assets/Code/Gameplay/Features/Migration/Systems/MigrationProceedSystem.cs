@@ -16,7 +16,7 @@ namespace Code.Gameplay.Features.Migration.Systems
 
             _entities = _game.GetGroup(GameMatcher.AllOf(
                 GameMatcher.ComplexityWay,
-                GameMatcher.MigrationWayIdPoints,
+                GameMatcher.WayIdPoints,
                 GameMatcher.MigrationAmount));
         }
         
@@ -36,12 +36,12 @@ namespace Code.Gameplay.Features.Migration.Systems
                 }
                 if (entity.complexityWay.Value[0] <= 0)
                 {
-                    _game.GetEntityWithId(entity.migrationWayIdPoints.Value[0]).citizensAmount.Value -= entity.migrationAmount.Value;
-                    _game.GetEntityWithId(entity.migrationWayIdPoints.Value[1]).citizensAmount.Value += entity.migrationAmount.Value;
+                    _game.GetEntityWithId(entity.wayIdPoints.Value[0]).citizensAmount.Value -= entity.migrationAmount.Value;
+                    _game.GetEntityWithId(entity.wayIdPoints.Value[1]).citizensAmount.Value += entity.migrationAmount.Value;
                     entity.complexityWay.Value.RemoveAt(0);
                     entity.ReplaceComplexityWay(entity.complexityWay.Value);
-                    entity.migrationWayIdPoints.Value.RemoveAt(0);
-                    entity.ReplaceMigrationWayIdPoints(entity.migrationWayIdPoints.Value);
+                    entity.wayIdPoints.Value.RemoveAt(0);
+                    entity.ReplaceWayIdPoints(entity.wayIdPoints.Value);
                 }
             }
         }

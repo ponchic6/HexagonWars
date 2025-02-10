@@ -15,19 +15,19 @@ namespace Code.Gameplay.Features.Migration.Systems
                 GameMatcher.MigrationArrow,
                 GameMatcher.LineRenderer,
                 GameMatcher.View,
-                GameMatcher.MigrationWayIdPoints));
+                GameMatcher.WayIdPoints));
         }
         
         public void Execute()
         {
             foreach (GameEntity arrow in _arrows)
             {
-                if (arrow.migrationWayIdPoints.Value.Count <= 1) 
+                if (arrow.wayIdPoints.Value.Count <= 1) 
                     continue;
                 
-                var vec1 = _game.GetEntityWithId(arrow.migrationWayIdPoints.Value[0]).transform.Value.position;
+                var vec1 = _game.GetEntityWithId(arrow.wayIdPoints.Value[0]).transform.Value.position;
                 vec1.y = 0.5f;
-                var vec2 = _game.GetEntityWithId(arrow.migrationWayIdPoints.Value[1]).transform.Value.position;
+                var vec2 = _game.GetEntityWithId(arrow.wayIdPoints.Value[1]).transform.Value.position;
                 vec2.y = 0.5f;
                 arrow.lineRenderer.Value.SetPosition(0, vec1);
                 arrow.lineRenderer.Value.SetPosition(1, vec2);
