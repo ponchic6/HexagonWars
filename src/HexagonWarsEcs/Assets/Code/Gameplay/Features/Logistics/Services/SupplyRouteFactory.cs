@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Gameplay.Features.Logistics.View;
+using Code.Infrastructure.Services;
 using Logic.Logistic;
 
 namespace Code.Gameplay.Features.Logistics.Services
@@ -8,11 +9,14 @@ namespace Code.Gameplay.Features.Logistics.Services
     public class SupplyRouteFactory : ISupplyRouteFactory
     {
         private readonly ISupplyArrowFactory _supplyArrowFactory;
+        private readonly IIdentifierService _identifierService;
+        
         private List<LogisticNode> _currentNodes = new();
 
-        public SupplyRouteFactory(ISupplyArrowFactory supplyArrowFactory)
+        public SupplyRouteFactory(ISupplyArrowFactory supplyArrowFactory, IIdentifierService identifierService)
         {
             _supplyArrowFactory = supplyArrowFactory;
+            _identifierService = identifierService;
         }
 
         public void StartCreateRoute(LogisticNode logisticNode)
@@ -51,6 +55,7 @@ namespace Code.Gameplay.Features.Logistics.Services
             }
             
             GameEntity entity = _supplyArrowFactory.CreateArrow();
+            entity.AddId(_identifierService.Next());
             entity.AddCouriersAmount(0);
             entity.AddWayIdPoints(_currentNodes.Select(x => x.EntityBehaviour.Entity.id.Value).ToList());
             entity.AddCurrentSupplyComplexityWay(0);
@@ -59,12 +64,7 @@ namespace Code.Gameplay.Features.Logistics.Services
             _currentNodes.Clear();
             return true;
         }
-
-        public void DestroyRoute()
-        {
-            //_supplyArrowFactory.DestroyArrow(supplyRoute);
-        }
-
+        
 
         private void BackButtonDown() =>
             StopCreatingSupplyRoute();

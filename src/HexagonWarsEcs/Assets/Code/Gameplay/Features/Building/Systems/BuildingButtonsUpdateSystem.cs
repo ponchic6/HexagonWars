@@ -31,20 +31,8 @@ namespace Code.Gameplay.Features.Building.Systems
 
                 if (infoPanel.EntityBehaviour.Entity.id.Value != entity.id.Value)
                     continue;
-                
-                Dictionary<BuildProgressContainer, BuildingButton> buildingButtons = infoPanel.BuildingButtons;
 
-                foreach (BuildProgressContainer buildProgress in entity.buildingProgress.Value)
-                {
-                    if (buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress >= buildProgress.fullProgress)
-                        infoPanel.DeleteBuildingButton(buildProgress);
-                    
-                    if (!buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress < buildProgress.fullProgress)
-                        infoPanel.CreateBuildingButton(buildProgress);
-                    
-                    if (buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress < buildProgress.fullProgress)
-                        infoPanel.UpdateBuildingButton(buildProgress);
-                }
+                infoPanel.UpdateBuildersStates(entity);
             }
         }
     }

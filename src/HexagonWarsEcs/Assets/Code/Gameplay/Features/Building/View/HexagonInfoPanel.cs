@@ -6,7 +6,6 @@ using Code.Gameplay.Features.Building.DataStructure;
 using Code.Infrastructure.View;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Code.Gameplay.Features.Building.View
 {
@@ -37,7 +36,22 @@ namespace Code.Gameplay.Features.Building.View
             _entityBehaviour = entityBehaviour;
         }
 
-        public void CreateBuildingButton(BuildProgressContainer buildProgress)
+        public void UpdateBuildersStates(GameEntity entity)
+        {
+            foreach (BuildProgressContainer buildProgress in entity.buildingProgress.Value)
+            {
+                if (_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress >= buildProgress.fullProgress)
+                    DeleteBuildingButton(buildProgress);
+                    
+                if (!_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress < buildProgress.fullProgress)
+                    CreateBuildingButton(buildProgress);
+                    
+                if (_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress < buildProgress.fullProgress)
+                    UpdateBuildingButton(buildProgress);
+            }
+        }
+
+        private void CreateBuildingButton(BuildProgressContainer buildProgress)
         {
             var buildingButton = Instantiate(_buildingButtonPrefab, _content);
             buildingButton.Setup(buildProgress, _entityBehaviour);
@@ -48,14 +62,14 @@ namespace Code.Gameplay.Features.Building.View
             buildingButton.OnSliderValueChanged += _=> UpdateBuildersAmountAccordingSliders();
         }
 
-        public void DeleteBuildingButton(BuildProgressContainer buildProgress)
+        private void DeleteBuildingButton(BuildProgressContainer buildProgress)
         {
             _slidersGroup.Remove(_buildingButtons[buildProgress].Slider);
             Destroy(_buildingButtons[buildProgress].gameObject);
             _buildingButtons.Remove(buildProgress);
         }
 
-        public void UpdateBuildingButton(BuildProgressContainer buildProgress)
+        private void UpdateBuildingButton(BuildProgressContainer buildProgress)
         {
             _buildingButtons[buildProgress].UpdateUI(buildProgress);
         }
