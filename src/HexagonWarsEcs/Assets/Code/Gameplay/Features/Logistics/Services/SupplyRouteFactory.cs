@@ -56,9 +56,8 @@ namespace Code.Gameplay.Features.Logistics.Services
             
             GameEntity entity = _supplyArrowFactory.CreateArrow();
             entity.AddId(_identifierService.Next());
-            entity.AddCouriersAmount(0);
+            entity.AddCouriersProgressList(new ());
             entity.AddWayIdPoints(_currentNodes.Select(x => x.EntityBehaviour.Entity.id.Value).ToList());
-            entity.AddCurrentSupplyComplexityWay(0);
             entity.AddMaxSupplyComplexityWay(20);
             entity.isSupplyRoute = true;
             _currentNodes.Clear();

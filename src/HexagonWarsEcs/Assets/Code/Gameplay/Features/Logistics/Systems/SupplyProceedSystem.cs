@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Code.Gameplay.Features.Logistics.DataStructure;
 using Entitas;
 using UnityEngine;
 
@@ -14,29 +15,30 @@ namespace Code.Gameplay.Features.Logistics.Systems
             _game = Contexts.sharedInstance.game;
             
             _entities = _game.GetGroup(GameMatcher.AllOf(
-                GameMatcher.CurrentSupplyComplexityWay,
                 GameMatcher.WayIdPoints,
                 GameMatcher.MaxSupplyComplexityWay,
-                GameMatcher.CouriersAmount));
+                GameMatcher.CouriersProgressList ));
         }
         
         public void Execute()
         {
             foreach (GameEntity entity in _entities)
             {
-                if (entity.couriersAmount.Value == 0)
+                if (entity.couriersProgressList.Value.Count == 0)
                     continue;
-                
-                if (entity.currentSupplyComplexityWay.Value < entity.maxSupplyComplexityWay.Value)
+
+                foreach (CurrentCourierProgress courierProgress in entity.couriersProgressList.Value)
                 {
-                    entity.ReplaceCurrentSupplyComplexityWay(entity.currentSupplyComplexityWay.Value + Time.deltaTime);
-                }
-                else
-                {
-                    _game.GetEntityWithId(entity.wayIdPoints.Value.Last()).food.Value += entity.couriersAmount.Value;
-                    _game.GetEntityWithId(entity.wayIdPoints.Value[0]).food.Value -= entity.couriersAmount.Value;
-                    entity.ReplaceCurrentSupplyComplexityWay(0);
-                    return;
+                    if (courierProgress.currentProgress < entity.maxSupplyComplexityWay.Value)
+                    {
+                        courierProgress.currentProgress += Time.deltaTime;
+                    }
+                    else
+                    {
+                        _game.GetEntityWithId(entity.wayIdPoints.Value.Last()).food.Value += 4;
+                        _game.GetEntityWithId(entity.wayIdPoints.Value[0]).food.Value -= 4;
+                        courierProgress.currentProgress = 0;
+                    }
                 }
             }
         }

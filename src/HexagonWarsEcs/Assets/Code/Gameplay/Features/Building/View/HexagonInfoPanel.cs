@@ -12,6 +12,7 @@ namespace Code.Gameplay.Features.Building.View
     public class HexagonInfoPanel : MonoBehaviour
     {
         [SerializeField] private TMP_Text _citizensAmount;
+        [SerializeField] private TMP_Text _foodAmount;
         [SerializeField] private RectTransform _content;
         [SerializeField] private BuildingButton _buildingButtonPrefab;
         [SerializeField] private SlidersGroup _slidersGroup;
@@ -21,8 +22,11 @@ namespace Code.Gameplay.Features.Building.View
         public Dictionary<BuildProgressContainer, BuildingButton> BuildingButtons => _buildingButtons;
         public EntityBehaviour EntityBehaviour => _entityBehaviour;
 
-        private void Update() =>
+        private void Update()
+        {
             _citizensAmount.text = _entityBehaviour.Entity.citizensAmount.Value.ToString();
+            _foodAmount.text = _entityBehaviour.Entity.food.Value.ToString();
+        }
 
         public void Setup(EntityBehaviour entityBehaviour)
         {

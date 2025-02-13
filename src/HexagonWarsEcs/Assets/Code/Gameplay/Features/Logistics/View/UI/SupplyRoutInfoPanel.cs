@@ -1,11 +1,10 @@
-using System;
-using Code.Gameplay.Features.Logistics.Services;
+using System.Linq;
+using Code.Gameplay.Features.Logistics.DataStructure;
 using Code.Infrastructure.View;
 using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 namespace Code.Gameplay.Features.Logistics.View.UI
 {
@@ -14,7 +13,6 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         [SerializeField] private TMP_Text _couriersCountTmp;
         [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private Button _destroySupplyButton;
-        private Action _onDestroyRoute;
         private EntityBehaviour _entityBehaviour;
         private GameContext _game;
         
@@ -27,7 +25,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
 
         private void Update()
         {
-            _couriersCountTmp.text = _entityBehaviour.Entity.couriersAmount.Value.ToString();
+            _couriersCountTmp.text = _entityBehaviour.Entity.couriersProgressList.Value.Count.ToString();
         }
 
         public void Setup(EntityBehaviour entityBehaviour)
@@ -48,7 +46,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
             
             _inputField.text = string.Empty;
             startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value - result);
-            entity.ReplaceCouriersAmount(result);
+            entity.couriersProgressList.Value.AddRange(Enumerable.Repeat(new CurrentCourierProgress(), result).Select(_ => new CurrentCourierProgress()));
         }
 
         private void DestroySupplyRoute()
@@ -56,7 +54,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
             GameEntity entity = _entityBehaviour.Entity;
             GameEntity startHexEntity = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
             
-            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value + entity.couriersAmount.Value);
+            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value + entity.couriersProgressList.Value.Count);
             _entityBehaviour.Entity.isDestructed = true;
             gameObject.SetActive(false);
         }

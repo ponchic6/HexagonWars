@@ -16,25 +16,24 @@ public static class GameComponentsLookup {
     public const int FoodFarm = 5;
     public const int LivingArea = 6;
     public const int CitizensAmount = 7;
-    public const int CouriersAmount = 8;
-    public const int CurrentSupplyComplexityWay = 9;
-    public const int Food = 10;
-    public const int MaxSupplyComplexityWay = 11;
-    public const int SupplyRoute = 12;
-    public const int ChildHexagon = 13;
-    public const int MapParent = 14;
-    public const int ComplexityWay = 15;
-    public const int FinishMigrationPoint = 16;
-    public const int MigrationAmount = 17;
-    public const int MigrationArrow = 18;
-    public const int StartMigrationPoint = 19;
-    public const int WayIdPoints = 20;
-    public const int Destructed = 21;
-    public const int View = 22;
-    public const int ViewPath = 23;
-    public const int ViewPrefab = 24;
+    public const int CouriersProgressList = 8;
+    public const int Food = 9;
+    public const int MaxSupplyComplexityWay = 10;
+    public const int SupplyRoute = 11;
+    public const int ChildHexagon = 12;
+    public const int MapParent = 13;
+    public const int ComplexityWay = 14;
+    public const int FinishMigrationPoint = 15;
+    public const int MigrationAmount = 16;
+    public const int MigrationArrow = 17;
+    public const int StartMigrationPoint = 18;
+    public const int WayIdPoints = 19;
+    public const int Destructed = 20;
+    public const int View = 21;
+    public const int ViewPath = 22;
+    public const int ViewPrefab = 23;
 
-    public const int TotalComponents = 25;
+    public const int TotalComponents = 24;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -45,8 +44,7 @@ public static class GameComponentsLookup {
         "FoodFarm",
         "LivingArea",
         "CitizensAmount",
-        "CouriersAmount",
-        "CurrentSupplyComplexityWay",
+        "CouriersProgressList",
         "Food",
         "MaxSupplyComplexityWay",
         "SupplyRoute",
@@ -73,8 +71,7 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Building.FoodFarm),
         typeof(Code.Gameplay.Features.Building.LivingArea),
         typeof(Code.Gameplay.Features.Citizens.CitizensAmount),
-        typeof(Code.Gameplay.Features.Logistics.CouriersAmount),
-        typeof(Code.Gameplay.Features.Logistics.CurrentSupplyComplexityWay),
+        typeof(Code.Gameplay.Features.Logistics.CouriersProgressList),
         typeof(Code.Gameplay.Features.Logistics.Food),
         typeof(Code.Gameplay.Features.Logistics.MaxSupplyComplexityWay),
         typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
