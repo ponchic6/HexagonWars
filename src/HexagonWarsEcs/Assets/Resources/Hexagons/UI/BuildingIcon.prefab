@@ -178,6 +178,7 @@ MonoBehaviour:
   _slider: {fileID: 1573330873406827493}
   _cancelBuildingButton: {fileID: 6485535004601196777}
   _startBuildingButton: {fileID: 2265245739600228080}
+  _buildingName: {fileID: 4305048297977027510}
 --- !u!1 &2565838317385124776
 GameObject:
   m_ObjectHideFlags: 0

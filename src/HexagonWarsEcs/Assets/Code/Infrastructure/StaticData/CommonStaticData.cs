@@ -6,6 +6,7 @@ namespace Code.Infrastructure.StaticData
     [CreateAssetMenu(fileName = "CommonStaticData", menuName = "StaticData/CommonStaticData")]
     public class CommonStaticData : ScriptableObject
     {
-        public EntityBehaviour Map;
+        public EntityBehaviour Hexagon;
+        public Sprite Man;
     }
 }

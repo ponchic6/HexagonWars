@@ -1,18 +1,19 @@
 ﻿using Code.Gameplay.Features.Migration.Services;
 using Code.Gameplay.Features.Migration.View.UI;
 using Code.Infrastructure.View;
+using Logic.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Code.Gameplay.Features.Migration.View
 {
-    public class MigrationHandler : MonoBehaviour, IPointerDownHandler
+    public class MigrationHandler : MonoBehaviour
     {
         [SerializeField] private EntityBehaviour _entityBehaviour;
+        [SerializeField] private PointerHandler _pointerHandler;
         private MigrationAllSlidersBlocker _allSlidersBlocker;
         private IMigrationFactory _migrationFactory;
-        private GameEntity _entity;
 
         [Inject]
         public void Construct(IMigrationFactory migrationFactory)
@@ -23,10 +24,19 @@ namespace Code.Gameplay.Features.Migration.View
         private void Awake()
         {
             _allSlidersBlocker = GetComponentInParent<MigrationAllSlidersBlocker>();
+            _pointerHandler.OnPointerDownEvent += OnPointerDown;
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        private void OnDisable()
         {
+            _pointerHandler.OnPointerDownEvent -= OnPointerDown;
+        }
+
+        private void OnPointerDown(PointerEventData eventData)
+        {
+            if (_entityBehaviour.Entity.isEnemyHexagon)
+                return;
+
             if (eventData.button == PointerEventData.InputButton.Right)
             {
                 _migrationFactory.SetFinishHexAndCreateMigration(_entityBehaviour);

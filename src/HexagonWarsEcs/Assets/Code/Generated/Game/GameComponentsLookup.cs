@@ -10,82 +10,121 @@ public static class GameComponentsLookup {
 
     public const int Id = 0;
     public const int LineRenderer = 1;
-    public const int Transform = 2;
-    public const int WorldPosition = 3;
-    public const int BuildingProgress = 4;
-    public const int FoodFarm = 5;
-    public const int LivingArea = 6;
-    public const int CitizensAmount = 7;
-    public const int CouriersProgressList = 8;
-    public const int Food = 9;
-    public const int MaxSupplyComplexityWay = 10;
-    public const int SupplyRoute = 11;
-    public const int ChildHexagon = 12;
-    public const int MapParent = 13;
-    public const int ComplexityWay = 14;
-    public const int FinishMigrationPoint = 15;
-    public const int MigrationAmount = 16;
-    public const int MigrationArrow = 17;
-    public const int StartMigrationPoint = 18;
-    public const int WayIdPoints = 19;
-    public const int Destructed = 20;
-    public const int View = 21;
-    public const int ViewPath = 22;
-    public const int ViewPrefab = 23;
+    public const int Renderer = 2;
+    public const int Transform = 3;
+    public const int WorldPosition = 4;
+    public const int BattleArrow = 5;
+    public const int BattleCooldown = 6;
+    public const int Battlefield = 7;
+    public const int CurrentBattleCooldown = 8;
+    public const int EnemyHexagon = 9;
+    public const int PlayerHexagon = 10;
+    public const int WarriorsAmount = 11;
+    public const int WarriorsMigrationAmount = 12;
+    public const int BuildingProgress = 13;
+    public const int CitizensAmount = 14;
+    public const int CurrentHungerDeathCooldown = 15;
+    public const int MaxHungerDeathCooldown = 16;
+    public const int CouriersProgressList = 17;
+    public const int FoodAmount = 18;
+    public const int MaxSupplyComplexityWay = 19;
+    public const int SupplyRoute = 20;
+    public const int ChildHexagon = 21;
+    public const int MapParent = 22;
+    public const int CitizensMigrationAmount = 23;
+    public const int ComplexityWay = 24;
+    public const int FinishMigrationPoint = 25;
+    public const int MigrationArrow = 26;
+    public const int StartMigrationPoint = 27;
+    public const int WayIdPoints = 28;
+    public const int FoodFarm = 29;
+    public const int LivingArea = 30;
+    public const int Destructed = 31;
+    public const int InitialTransform = 32;
+    public const int View = 33;
+    public const int ViewPath = 34;
+    public const int ViewPrefab = 35;
+    public const int ViewPrefabWithParent = 36;
 
-    public const int TotalComponents = 24;
+    public const int TotalComponents = 37;
 
     public static readonly string[] componentNames = {
         "Id",
         "LineRenderer",
+        "Renderer",
         "Transform",
         "WorldPosition",
+        "BattleArrow",
+        "BattleCooldown",
+        "Battlefield",
+        "CurrentBattleCooldown",
+        "EnemyHexagon",
+        "PlayerHexagon",
+        "WarriorsAmount",
+        "WarriorsMigrationAmount",
         "BuildingProgress",
-        "FoodFarm",
-        "LivingArea",
         "CitizensAmount",
+        "CurrentHungerDeathCooldown",
+        "MaxHungerDeathCooldown",
         "CouriersProgressList",
-        "Food",
+        "FoodAmount",
         "MaxSupplyComplexityWay",
         "SupplyRoute",
         "ChildHexagon",
         "MapParent",
+        "CitizensMigrationAmount",
         "ComplexityWay",
         "FinishMigrationPoint",
-        "MigrationAmount",
         "MigrationArrow",
         "StartMigrationPoint",
         "WayIdPoints",
+        "FoodFarm",
+        "LivingArea",
         "Destructed",
+        "InitialTransform",
         "View",
         "ViewPath",
-        "ViewPrefab"
+        "ViewPrefab",
+        "ViewPrefabWithParent"
     };
 
     public static readonly System.Type[] componentTypes = {
         typeof(Code.Gameplay.Common.Id),
         typeof(Code.Gameplay.Common.LineRendererComponent),
+        typeof(Code.Gameplay.Common.RendererComponent),
         typeof(Code.Gameplay.Common.TransformComponent),
         typeof(Code.Gameplay.Common.WorldPosition),
+        typeof(Code.Gameplay.Features.Battle.BattleArrow),
+        typeof(Code.Gameplay.Features.Battle.BattleCooldown),
+        typeof(Code.Gameplay.Features.Battle.Battlefield),
+        typeof(Code.Gameplay.Features.Battle.CurrentBattleCooldown),
+        typeof(Code.Gameplay.Features.Battle.EnemyHexagon),
+        typeof(Code.Gameplay.Features.Battle.PlayerHexagon),
+        typeof(Code.Gameplay.Features.Battle.WarriorsAmount),
+        typeof(Code.Gameplay.Features.Battle.WarriorsMigrationAmount),
         typeof(Code.Gameplay.Features.Building.BuildingProgress),
-        typeof(Code.Gameplay.Features.Building.FoodFarm),
-        typeof(Code.Gameplay.Features.Building.LivingArea),
         typeof(Code.Gameplay.Features.Citizens.CitizensAmount),
+        typeof(Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown),
+        typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown),
         typeof(Code.Gameplay.Features.Logistics.CouriersProgressList),
-        typeof(Code.Gameplay.Features.Logistics.Food),
+        typeof(Code.Gameplay.Features.Logistics.FoodAmount),
         typeof(Code.Gameplay.Features.Logistics.MaxSupplyComplexityWay),
         typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),
+        typeof(Code.Gameplay.Features.Migration.CitizensMigrationAmount),
         typeof(Code.Gameplay.Features.Migration.ComplexityWay),
         typeof(Code.Gameplay.Features.Migration.FinishMigrationPoint),
-        typeof(Code.Gameplay.Features.Migration.MigrationAmount),
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
         typeof(Code.Gameplay.Features.Migration.StartMigrationPoint),
         typeof(Code.Gameplay.Features.Migration.WayIdPoints),
+        typeof(Code.Gameplay.Features.Production.FoodFarm),
+        typeof(Code.Gameplay.Features.Production.LivingArea),
         typeof(Code.Infrastructure.Destroy.Destructed),
+        typeof(Code.Infrastructure.View.InitialTransform),
         typeof(Code.Infrastructure.View.View),
         typeof(Code.Infrastructure.View.ViewPath),
-        typeof(Code.Infrastructure.View.ViewPrefab)
+        typeof(Code.Infrastructure.View.ViewPrefab),
+        typeof(Code.Infrastructure.View.ViewPrefabWithParent)
     };
 }

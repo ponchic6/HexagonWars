@@ -842,6 +842,7 @@ GameObject:
   - component: {fileID: 8611664819723067918}
   - component: {fileID: 1191749062344671104}
   - component: {fileID: 8128491141135746964}
+  - component: {fileID: 9091167544829821098}
   m_Layer: 5
   m_Name: HexagonInfoPanel
   m_TagString: Untagged
@@ -947,8 +948,22 @@ MonoBehaviour:
   _citizensAmount: {fileID: 2641033127890284959}
   _foodAmount: {fileID: 7572029463963542964}
   _content: {fileID: 3765936725469211967}
-  _buildingButtonPrefab: {fileID: 9176489030463782325, guid: e4c6e4efd3fc9f14d9cc868685edbbec, type: 3}
   _slidersGroup: {fileID: 4786331941281521891}
+  _buildingButtonPrefab: {fileID: 9176489030463782325, guid: e4c6e4efd3fc9f14d9cc868685edbbec, type: 3}
+--- !u!114 &9091167544829821098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8045498832558383211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9289e8edecb9472987af5cf640dd8128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _productionHandlerPrefab: {fileID: 5074115170076945826, guid: 3d41ef7045b9ae840bb0d52028e01fda, type: 3}
+  _content: {fileID: 3765936725469211967}
 --- !u!1 &8545927629393409634
 GameObject:
   m_ObjectHideFlags: 0

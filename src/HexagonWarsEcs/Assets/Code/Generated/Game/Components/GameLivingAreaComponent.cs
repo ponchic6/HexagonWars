@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly Code.Gameplay.Features.Building.LivingArea livingAreaComponent = new Code.Gameplay.Features.Building.LivingArea();
+    static readonly Code.Gameplay.Features.Production.LivingArea livingAreaComponent = new Code.Gameplay.Features.Production.LivingArea();
 
     public bool isLivingArea {
         get { return HasComponent(GameComponentsLookup.LivingArea); }

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly Code.Gameplay.Features.Building.FoodFarm foodFarmComponent = new Code.Gameplay.Features.Building.FoodFarm();
+    public Code.Gameplay.Features.Production.FoodFarm foodFarm { get { return (Code.Gameplay.Features.Production.FoodFarm)GetComponent(GameComponentsLookup.FoodFarm); } }
+    public bool hasFoodFarm { get { return HasComponent(GameComponentsLookup.FoodFarm); } }
 
-    public bool isFoodFarm {
-        get { return HasComponent(GameComponentsLookup.FoodFarm); }
-        set {
-            if (value != isFoodFarm) {
-                var index = GameComponentsLookup.FoodFarm;
-                if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : foodFarmComponent;
+    public void AddFoodFarm(int newWorkers) {
+        var index = GameComponentsLookup.FoodFarm;
+        var component = (Code.Gameplay.Features.Production.FoodFarm)CreateComponent(index, typeof(Code.Gameplay.Features.Production.FoodFarm));
+        component.Workers = newWorkers;
+        AddComponent(index, component);
+    }
 
-                    AddComponent(index, component);
-                } else {
-                    RemoveComponent(index);
-                }
-            }
-        }
+    public void ReplaceFoodFarm(int newWorkers) {
+        var index = GameComponentsLookup.FoodFarm;
+        var component = (Code.Gameplay.Features.Production.FoodFarm)CreateComponent(index, typeof(Code.Gameplay.Features.Production.FoodFarm));
+        component.Workers = newWorkers;
+        ReplaceComponent(index, component);
+    }
+
+    public void RemoveFoodFarm() {
+        RemoveComponent(GameComponentsLookup.FoodFarm);
     }
 }
 

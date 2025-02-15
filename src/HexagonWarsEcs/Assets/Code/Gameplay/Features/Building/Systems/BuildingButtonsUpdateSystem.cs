@@ -24,7 +24,7 @@ namespace Code.Gameplay.Features.Building.Systems
         {
             foreach (GameEntity entity in _entities)
             {
-                HexagonInfoPanel infoPanel = _uiFactory.HexagonInfoPanel;
+                BuildingInfoPanel infoPanel = _uiFactory.BuildingInfoPanel;
                 
                 if (infoPanel == null || !infoPanel.gameObject.activeSelf)
                     continue;

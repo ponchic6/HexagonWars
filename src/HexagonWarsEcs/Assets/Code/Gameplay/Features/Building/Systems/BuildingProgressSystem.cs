@@ -49,7 +49,7 @@ namespace Code.Gameplay.Features.Building.Systems
                     break;
                 
                 case BuildingsType.FoodFarm:
-                    entity.isFoodFarm = true;
+                    entity.AddFoodFarm(0);
                     break;
             }
         }

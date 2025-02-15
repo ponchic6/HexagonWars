@@ -1,6 +1,7 @@
 ﻿using System;
 using Code.Gameplay.Features.Building.DataStructure;
 using Code.Infrastructure.View;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace Code.Gameplay.Features.Building.View
         [SerializeField] private Slider _slider;
         [SerializeField] private Button _cancelBuildingButton;
         [SerializeField] private Button _startBuildingButton;
-        private float _maxProgress;
+        [SerializeField] private TMP_Text _buildingName;
         
         public Slider Slider => _slider;
 
@@ -24,6 +25,8 @@ namespace Code.Gameplay.Features.Building.View
 
         public void Setup(BuildProgressContainer buildProgress, EntityBehaviour entityBehaviour)
         {
+            _buildingName.text = buildProgress.buildingType.ToString();
+            
             if (buildProgress.currentProgress != 0)
             {
                 _startBuildingButton.gameObject.SetActive(false);

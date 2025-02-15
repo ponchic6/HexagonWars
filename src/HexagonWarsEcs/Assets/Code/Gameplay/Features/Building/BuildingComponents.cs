@@ -5,6 +5,4 @@ using Entitas;
 namespace Code.Gameplay.Features.Building
 {
     [Game] public class BuildingProgress : IComponent { public List<BuildProgressContainer> Value; }
-    [Game] public class LivingArea : IComponent { }
-    [Game] public class FoodFarm : IComponent { }
 }

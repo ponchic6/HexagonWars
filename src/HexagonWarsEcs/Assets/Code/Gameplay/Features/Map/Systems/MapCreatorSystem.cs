@@ -7,11 +7,9 @@ namespace Code.Gameplay.Features.Map.Systems
     {
         private readonly IMapFactory _mapFactory;
 
-        public MapCreatorSystem(IMapFactory mapFactory)
-        {
+        public MapCreatorSystem(IMapFactory mapFactory) =>
             _mapFactory = mapFactory;
-        }
-        
+
         public void Initialize() =>
             _mapFactory.CreateMap();
     }

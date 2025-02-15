@@ -36,7 +36,7 @@ namespace Code.Gameplay.Features.Map.View
                 entity.AddId(_identifierService.Next());
                 entity.AddTransform(behaviour.transform);
                 entity.AddCitizensAmount(new Random().Next(1, 101));
-                entity.AddFood(new Random().Next(1, 101));
+                entity.AddFoodAmount(new Random().Next(1, 101));
                 entity.AddBuildingProgress(new ()
                 {
                     new BuildProgressContainer

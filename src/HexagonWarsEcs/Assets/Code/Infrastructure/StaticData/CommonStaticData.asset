@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: CommonStaticData
   m_EditorClassIdentifier: 
   Map: {fileID: 6397262711342811206, guid: 6e38a2a537a836d49ac1191fbe908cbd, type: 3}
+  Hexagon: {fileID: -3125488246894819592, guid: e0123509e35e61e468158ee0292593d9, type: 3}
+  Man: {fileID: 21300000, guid: 586222d5524d5d244afd4b834f1813e2, type: 3}

@@ -1,3 +1,4 @@
+using UnityEngine;
 using Zenject;
 
 namespace Code.Infrastructure.View
@@ -21,7 +22,13 @@ namespace Code.Infrastructure.View
         
         public EntityBehaviour CreateViewForEntityFromPrefab(GameEntity gameEntity)
         {
-            var view = _diContainer.InstantiatePrefab(gameEntity.viewPrefab.Value);
+            GameObject view;
+
+            if (gameEntity.hasViewPrefabWithParent)
+                view = _diContainer.InstantiatePrefab(gameEntity.viewPrefabWithParent.Value, gameEntity.viewPrefabWithParent.Parent.transform);
+            else
+                view = _diContainer.InstantiatePrefab(gameEntity.viewPrefab.Value);
+            
             var entityBehaviour = view.GetComponent<EntityBehaviour>();
             entityBehaviour.SetEntity(gameEntity);
             return entityBehaviour;

@@ -1,4 +1,5 @@
 using Code.Gameplay.Features.Building.View;
+using Code.Gameplay.Features.Production.View.UI;
 using Code.Infrastructure.View;
 
 namespace Code.Gameplay.Common.Services
@@ -7,6 +8,7 @@ namespace Code.Gameplay.Common.Services
     {
         public void ShowInfoPanel(EntityBehaviour entityBehaviour);
         public void HideInfoPanel(EntityBehaviour entityBehaviour);
-        public HexagonInfoPanel HexagonInfoPanel { get; }
+        public BuildingInfoPanel BuildingInfoPanel { get; }
+        public ProductionInfoPanel ProductionInfoPanel { get; }
     }
 }

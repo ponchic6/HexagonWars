@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Code.Gameplay.Common;
 using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Services
 {
@@ -13,8 +13,9 @@ namespace Code.Gameplay.Features.Migration.Services
 
         private readonly IIdentifierService _identifierService;
         private EntityBehaviour _initialHex, _finishHex;
-        private int _migrationAmount;
         private GameContext _game;
+        private int _migrationAmount;
+        private ManType _manType;
 
         public MigrationFactory(IIdentifierService identifierService)
         {
@@ -22,25 +23,43 @@ namespace Code.Gameplay.Features.Migration.Services
             _game = Contexts.sharedInstance.game;
         }   
             
-        public void SetInitialHex(EntityBehaviour entityBehaviour, int selectedPeople)
+        public void SetInitialHex(EntityBehaviour entityBehaviour, int selectedPeople, ManType manType)
         {
+            _manType = manType;
             _initialHex = entityBehaviour;
             _migrationAmount = selectedPeople;
         }
 
         public void SetFinishHexAndCreateMigration(EntityBehaviour entityBehaviour)
         {
+            if (_initialHex == null)
+            {
+                _finishHex = null;
+                _migrationAmount = 0;
+                return;
+            }
+            
             _finishHex = entityBehaviour;
 
             List<int> shortestPath = FindShortestPath(_initialHex, _finishHex);
             GameEntity migration = _game.CreateEntity();
             migration.AddId(_identifierService.Next());
-            migration.AddMigrationAmount(_migrationAmount);
             migration.AddWayIdPoints(shortestPath);
-            migration.AddComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
             migration.AddViewPath(MOVING_ARROW_PATH);
+            migration.AddComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
             migration.isMigrationArrow = true;
-            
+
+            switch (_manType)
+            {
+                case ManType.Citizens:
+                    migration.AddCitizensMigrationAmount(_migrationAmount);
+                    break;
+                
+                case ManType.Warriors:
+                    migration.AddWarriorsMigrationAmount(_migrationAmount);
+                    break;
+            }
+
             _initialHex = null;
             _finishHex = null;
             _migrationAmount = 0;

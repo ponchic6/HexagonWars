@@ -35,8 +35,8 @@ namespace Code.Gameplay.Features.Logistics.Systems
                     }
                     else
                     {
-                        _game.GetEntityWithId(entity.wayIdPoints.Value.Last()).food.Value += 4;
-                        _game.GetEntityWithId(entity.wayIdPoints.Value[0]).food.Value -= 4;
+                        _game.GetEntityWithId(entity.wayIdPoints.Value.Last()).foodAmount.Value += 4;
+                        _game.GetEntityWithId(entity.wayIdPoints.Value[0]).foodAmount.Value -= 4;
                         courierProgress.currentProgress = 0;
                     }
                 }
