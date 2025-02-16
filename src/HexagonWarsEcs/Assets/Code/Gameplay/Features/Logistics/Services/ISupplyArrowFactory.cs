@@ -8,6 +8,5 @@ namespace Logic.Logistic
         void RemoveLastPoint();
         void DestroyCurrentArrow();
         GameEntity CreateArrow();
-        void DestroyArrow();
     }
 }

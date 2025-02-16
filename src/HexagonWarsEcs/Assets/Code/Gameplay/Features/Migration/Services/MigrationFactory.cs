@@ -12,10 +12,11 @@ namespace Code.Gameplay.Features.Migration.Services
         private const string MOVING_ARROW_PATH = "Arrows/MigrationArrow/MigrationArrow";
 
         private readonly IIdentifierService _identifierService;
+        private readonly GameContext _game;
+        
         private EntityBehaviour _initialHex, _finishHex;
-        private GameContext _game;
+        private ManMigrationType _manMigrationType;
         private int _migrationAmount;
-        private ManType _manType;
 
         public MigrationFactory(IIdentifierService identifierService)
         {
@@ -23,9 +24,9 @@ namespace Code.Gameplay.Features.Migration.Services
             _game = Contexts.sharedInstance.game;
         }   
             
-        public void SetInitialHex(EntityBehaviour entityBehaviour, int selectedPeople, ManType manType)
+        public void SetInitialHex(EntityBehaviour entityBehaviour, int selectedPeople, ManMigrationType manMigrationType)
         {
-            _manType = manType;
+            _manMigrationType = manMigrationType;
             _initialHex = entityBehaviour;
             _migrationAmount = selectedPeople;
         }
@@ -49,13 +50,13 @@ namespace Code.Gameplay.Features.Migration.Services
             migration.AddComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
             migration.isMigrationArrow = true;
 
-            switch (_manType)
+            switch (_manMigrationType)
             {
-                case ManType.Citizens:
+                case ManMigrationType.Citizens:
                     migration.AddCitizensMigrationAmount(_migrationAmount);
                     break;
                 
-                case ManType.Warriors:
+                case ManMigrationType.Warriors:
                     migration.AddWarriorsMigrationAmount(_migrationAmount);
                     break;
             }

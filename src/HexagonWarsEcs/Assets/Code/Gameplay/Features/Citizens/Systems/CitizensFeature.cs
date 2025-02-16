@@ -8,8 +8,10 @@ namespace Code.Gameplay.Features.Citizens.Systems
         {
             Add(systemFactory.Create<FoodDecreasingByCitizensSystem>());
             Add(systemFactory.Create<FoodDecreasingByBuildersSystem>());
+            Add(systemFactory.Create<FoodDecreasingByWarriorsSystem>());
             Add(systemFactory.Create<DeathBuildersByHungerSystem>());
             Add(systemFactory.Create<DeathCitizensByHungerSystem>());
+            Add(systemFactory.Create<DeathWarriorsByHungerSystem>());
             Add(systemFactory.Create<HungerSystem>());
         }
     }

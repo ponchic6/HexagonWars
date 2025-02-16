@@ -65,14 +65,7 @@ namespace Code.Gameplay.Features.Logistics.Services
             _currentLine = null;
             return entity;
         }
-
-        public void DestroyArrow()
-        {
-            // var lineRenderer = _lines[supplyRoute];
-            // _lines.Remove(supplyRoute);
-            // Object.Destroy(lineRenderer.gameObject);
-        }
-
+        
         public void DestroyCurrentArrow()
         {
             if (_currentLine == null)

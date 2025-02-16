@@ -32,7 +32,7 @@ namespace Code.Gameplay.Features.Building.View
                 _uiFactory.HideInfoPanel(_entityBehaviour);
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        private void OnPointerDown(PointerEventData eventData)
         {
             if (_entityBehaviour.Entity.isEnemyHexagon)
                 return;

@@ -8,6 +8,7 @@ namespace Code.Gameplay.Features.Production.Systems
         {
             Add(systemFactory.Create<ProductionUiViewUpdateSystem>());
             Add(systemFactory.Create<FoodProductionSystem>());
+            Add(systemFactory.Create<WarriorsTrainSystem>());
         }
     }
 }

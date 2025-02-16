@@ -81,6 +81,12 @@ namespace Code.Gameplay.Features.Battle.View.UI
                 return;
             }
             
+            if (_migrationAllSlidersBlocker.isSlidersBlocked.Value && _selectedWarriors == 0)
+            {
+                _slider.value = 0;
+                return;
+            }
+            
             if (sliderValue == 0)
                 return;
             
@@ -89,7 +95,7 @@ namespace Code.Gameplay.Features.Battle.View.UI
             _text.text = _selectedWarriors + "/" + value;
             _migrationAllSlidersBlocker.isSlidersBlocked.Value = true;
             _battleFieldFactory.SetAttackers(_entityBehaviour, _selectedWarriors);
-            _migrationFactory.SetInitialHex(_entityBehaviour, _selectedWarriors, ManType.Warriors);
+            _migrationFactory.SetInitialHex(_entityBehaviour, _selectedWarriors, ManMigrationType.Warriors);
         }
 
         private void ShowWarriorUi()

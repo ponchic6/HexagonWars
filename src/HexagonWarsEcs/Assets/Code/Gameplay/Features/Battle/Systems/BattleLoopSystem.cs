@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Infrastructure.StaticData;
 using Entitas;
 
 namespace Code.Gameplay.Features.Battle.Systems
 {
     public class BattleLoopSystem : IExecuteSystem
     {
+        private readonly CommonStaticData _commonStaticData;
         private readonly IGroup<GameEntity> _entities;
 
-        public BattleLoopSystem()
+        public BattleLoopSystem(CommonStaticData commonStaticData)
         {
+            _commonStaticData = commonStaticData;
             GameContext game = Contexts.sharedInstance.game;
 
             _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.Battlefield, GameMatcher.CurrentBattleCooldown, GameMatcher.BattleCooldown));
@@ -27,7 +30,7 @@ namespace Code.Gameplay.Features.Battle.Systems
                 int defenders = entity.battlefield.DefenderHexagonContainer.warriorsCount;
 
                 List<int> attackersList = entity.battlefield.AttackerHexagonContainers.Select(x => x.warriorsCount).ToList();
-                int totalAttackersLosses = (int)Math.Round(0.001f * defenders * defenders);
+                int totalAttackersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * defenders * defenders);
 
                 List<int> distributeLosses = DistributeLosses(attackersList, totalAttackersLosses);
 
@@ -35,11 +38,15 @@ namespace Code.Gameplay.Features.Battle.Systems
                 {
                     var warriorsContainer = entity.battlefield.AttackerHexagonContainers[i];
                     warriorsContainer.warriorsCount -= distributeLosses[i];
+                    
+                    if (warriorsContainer.warriorsCount < 0) 
+                        warriorsContainer.warriorsCount = 0;
                 }
                 
-                entity.battlefield.DefenderHexagonContainer.warriorsCount -= (int)Math.Round(0.001f * attackers * attackers);
+                entity.battlefield.DefenderHexagonContainer.warriorsCount -= (int)Math.Round(_commonStaticData.StrongCoefficientOfAttackers * attackers * attackers);
                 
-                entity.ReplaceCurrentBattleCooldown(entity.battleCooldown.Value);
+                if (entity.battlefield.DefenderHexagonContainer.warriorsCount < 0)
+                    entity.battlefield.DefenderHexagonContainer.warriorsCount = 0;
             }
         }
         

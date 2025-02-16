@@ -1,6 +1,6 @@
 ﻿namespace Code.Gameplay.Common
 {
-    public enum ManType
+    public enum ManMigrationType
     {
         Citizens,
         Warriors

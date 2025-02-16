@@ -84,6 +84,14 @@ namespace Code.Gameplay.Features.Map.Services
                     buildingType = BuildingsType.FoodFarm,
                     buildersAmount = 0,
                     ready = false
+                },
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.Barracks,
+                    buildersAmount = 0,
+                    ready = false
                 }
             });
 

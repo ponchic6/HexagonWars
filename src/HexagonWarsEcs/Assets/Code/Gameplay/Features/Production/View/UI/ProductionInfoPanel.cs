@@ -33,8 +33,10 @@ namespace Code.Gameplay.Features.Production.View.UI
         {
             foreach (BuildProgressContainer build in entity.buildingProgress.Value.Where(x => x.ready))
             {
-                if (!_prodictionHandlers.ContainsKey(build.buildingType)) 
+                if (!_prodictionHandlers.TryGetValue(build.buildingType, out ProductionHandler handler)) 
                     CreateProductionHandler(entity, build);
+                else
+                    UpdateProductionHandlerState(build.buildingType, handler, entity);
             }
         }
 
@@ -43,20 +45,47 @@ namespace Code.Gameplay.Features.Production.View.UI
             var productionHandler = Instantiate(_productionHandlerPrefab, _content);
             productionHandler.Setup(entity, build);
             _prodictionHandlers.Add(build.buildingType, productionHandler);
-            
-            productionHandler.OnSliderValueChanged += x => UpdateWorkersAmount(x, build.buildingType);
+
+            switch (build.buildingType)
+            {
+                case BuildingsType.FoodFarm:
+                    productionHandler.OnSliderValueChanged += x => OnSliderValueChanged(x, build.buildingType);
+                    break;
+                
+                case BuildingsType.Barracks:
+                    productionHandler.OnInputFieldSubmit += x => OnInputFieldSubmit(x, build.buildingType);
+                    break;
+            }
         }
 
-        private void UpdateWorkersAmount(float sliderValue, BuildingsType buildingType)
+        private void UpdateProductionHandlerState(BuildingsType buildingsType, ProductionHandler productionHandler, GameEntity entity)
         {
-            int totalAmount = 0;
-            
+            switch (buildingsType)
+            {
+                case BuildingsType.Barracks:
+                    if (!productionHandler.InputField.isFocused) 
+                        productionHandler.InputField.text = entity.barracks.WarriorsOrdered.ToString();
+                    break;
+            }
+        }
+
+        private void OnInputFieldSubmit(int input, BuildingsType buildBuildingType)
+        {
+            switch (buildBuildingType)
+            {
+                case BuildingsType.Barracks:
+                    _entityBehaviour.Entity.barracks.WarriorsOrdered = input;
+                    break;
+            }
+        }
+
+        private void OnSliderValueChanged(float sliderValue, BuildingsType buildingType)
+        {
             switch (buildingType)
             {
                 case BuildingsType.FoodFarm:
-                    totalAmount = _entityBehaviour.Entity.foodFarm.Workers +
-                                  _entityBehaviour.Entity.citizensAmount.Value;
-                    
+                    var totalAmount = _entityBehaviour.Entity.foodFarm.Workers + _entityBehaviour.Entity.citizensAmount.Value;
+
                     _entityBehaviour.Entity.foodFarm.Workers = (int)Math.Round(totalAmount * sliderValue);
                     _entityBehaviour.Entity.ReplaceCitizensAmount(totalAmount - _entityBehaviour.Entity.foodFarm.Workers);
                     break;

@@ -58,7 +58,7 @@ namespace Code.Gameplay.Features.Logistics.Services
             entity.AddId(_identifierService.Next());
             entity.AddCouriersProgressList(new ());
             entity.AddWayIdPoints(_currentNodes.Select(x => x.EntityBehaviour.Entity.id.Value).ToList());
-            entity.AddMaxSupplyComplexityWay(20);
+            entity.AddMaxSupplyComplexityWay(10);
             entity.isSupplyRoute = true;
             _currentNodes.Clear();
             return true;

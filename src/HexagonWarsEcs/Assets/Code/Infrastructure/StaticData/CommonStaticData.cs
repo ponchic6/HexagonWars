@@ -7,6 +7,20 @@ namespace Code.Infrastructure.StaticData
     public class CommonStaticData : ScriptableObject
     {
         public EntityBehaviour Hexagon;
-        public Sprite Man;
+        public Sprite ManSprite;
+        public float BattleCooldown;
+        public float BattleArrowsVerticalOffset;
+        public float StrongCoefficientOfDefenders;
+        public float StrongCoefficientOfAttackers;
+        public float FoodPerSecondByBuilders;
+        public float FoodPerSecondByWarriors;
+        public float FoodPerSecondByCitizens;
+        [Range(0, 1)] public float CoefficientBuildersDeathByHungerInAct;
+        [Range(0, 1)] public float CoefficientCitizensDeathByHungerInAct;
+        [Range(0, 1)] public float CoefficientWarriorsDeathByHungerInAct;
+        public float HungerCooldown;
+        public float CourierFoodCapacity;
+        public float FoodPerformancePerSecond;
+        public float WarriorTrainingTime;
     }
 }

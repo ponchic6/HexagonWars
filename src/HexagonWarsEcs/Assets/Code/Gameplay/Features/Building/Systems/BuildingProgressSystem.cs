@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Code.Gameplay.Features.Building.DataStructure;
+using Code.Infrastructure.StaticData;
 using Entitas;
 using UnityEngine;
 
@@ -8,12 +8,14 @@ namespace Code.Gameplay.Features.Building.Systems
 {
     public class BuildingProgressSystem : IExecuteSystem
     {
+        private readonly CommonStaticData _commonStaticData;
         private IGroup<GameEntity> _entities;
         private List<GameEntity> _buffer = new(128);
 
-        public BuildingProgressSystem()
+        public BuildingProgressSystem(CommonStaticData commonStaticData)
         {
             GameContext game = Contexts.sharedInstance.game;
+            _commonStaticData = commonStaticData;
 
             _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.BuildingProgress, GameMatcher.CitizensAmount));
         }
@@ -50,6 +52,10 @@ namespace Code.Gameplay.Features.Building.Systems
                 
                 case BuildingsType.FoodFarm:
                     entity.AddFoodFarm(0);
+                    break;
+                
+                case BuildingsType.Barracks:
+                    entity.AddBarracks(0, _commonStaticData.WarriorTrainingTime, _commonStaticData.WarriorTrainingTime);
                     break;
             }
         }

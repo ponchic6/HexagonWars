@@ -37,16 +37,17 @@ public static class GameComponentsLookup {
     public const int MigrationArrow = 26;
     public const int StartMigrationPoint = 27;
     public const int WayIdPoints = 28;
-    public const int FoodFarm = 29;
-    public const int LivingArea = 30;
-    public const int Destructed = 31;
-    public const int InitialTransform = 32;
-    public const int View = 33;
-    public const int ViewPath = 34;
-    public const int ViewPrefab = 35;
-    public const int ViewPrefabWithParent = 36;
+    public const int Barracks = 29;
+    public const int FoodFarm = 30;
+    public const int LivingArea = 31;
+    public const int Destructed = 32;
+    public const int InitialTransform = 33;
+    public const int View = 34;
+    public const int ViewPath = 35;
+    public const int ViewPrefab = 36;
+    public const int ViewPrefabWithParent = 37;
 
-    public const int TotalComponents = 37;
+    public const int TotalComponents = 38;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -78,6 +79,7 @@ public static class GameComponentsLookup {
         "MigrationArrow",
         "StartMigrationPoint",
         "WayIdPoints",
+        "Barracks",
         "FoodFarm",
         "LivingArea",
         "Destructed",
@@ -118,6 +120,7 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
         typeof(Code.Gameplay.Features.Migration.StartMigrationPoint),
         typeof(Code.Gameplay.Features.Migration.WayIdPoints),
+        typeof(Code.Gameplay.Features.Production.Barracks),
         typeof(Code.Gameplay.Features.Production.FoodFarm),
         typeof(Code.Gameplay.Features.Production.LivingArea),
         typeof(Code.Infrastructure.Destroy.Destructed),

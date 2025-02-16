@@ -1,14 +1,16 @@
-﻿using Entitas;
-using UnityEngine;
+﻿using Code.Infrastructure.StaticData;
+using Entitas;
 
 namespace Code.Gameplay.Features.Citizens.Systems
 {
     public class DeathCitizensByHungerSystem : IExecuteSystem
     {
+        private readonly CommonStaticData _commonStaticData;
         private readonly IGroup<GameEntity> _entities;
 
-        public DeathCitizensByHungerSystem()
+        public DeathCitizensByHungerSystem(CommonStaticData commonStaticData)
         {
+            _commonStaticData = commonStaticData;
             GameContext game = Contexts.sharedInstance.game;
 
             _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.CitizensAmount, GameMatcher.CurrentHungerDeathCooldown));
@@ -18,10 +20,8 @@ namespace Code.Gameplay.Features.Citizens.Systems
         {
             foreach (GameEntity entity in _entities)
             {
-                if (entity.foodAmount.Value == 0 && entity.currentHungerDeathCooldown.Value >= entity.maxHungerDeathCooldown.Value)
-                {
-                    entity.ReplaceCitizensAmount((int)(entity.citizensAmount.Value * 0.9f));
-                }
+                if (entity.currentHungerDeathCooldown.Value == 0) 
+                    entity.ReplaceCitizensAmount((int)(entity.citizensAmount.Value * _commonStaticData.CoefficientCitizensDeathByHungerInAct));
             }
         }
     }

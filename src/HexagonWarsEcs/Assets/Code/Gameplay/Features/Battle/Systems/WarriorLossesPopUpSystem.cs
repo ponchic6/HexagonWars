@@ -26,15 +26,15 @@ namespace Code.Gameplay.Features.Battle.Systems
         {
             foreach (GameEntity entity in _entities)
             {
-                if (entity.currentBattleCooldown.Value == entity.battleCooldown.Value)
+                if (entity.currentBattleCooldown.Value == 0)
                 {
                     GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonContainer.hexagonId);
-                    _popUpFactory.CreatePopUp(_commonStaticData.Man, entity.battlefield.DefenderHexagonContainer.warriorsCount, defenderEntity.transform.Value);
+                    _popUpFactory.CreatePopUp(_commonStaticData.ManSprite, entity.battlefield.DefenderHexagonContainer.warriorsCount, defenderEntity.transform.Value);
 
                     foreach (WarriorsContainer warriorsContainer in entity.battlefield.AttackerHexagonContainers)
                     {
                         GameEntity attackerEntity = _game.GetEntityWithId(warriorsContainer.hexagonId);
-                        _popUpFactory.CreatePopUp(_commonStaticData.Man, warriorsContainer.warriorsCount, attackerEntity.transform.Value);
+                        _popUpFactory.CreatePopUp(_commonStaticData.ManSprite, warriorsContainer.warriorsCount, attackerEntity.transform.Value);
                     }
                 }
             }

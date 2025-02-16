@@ -19,10 +19,13 @@ namespace Code.Gameplay.Features.Battle.Systems
         {
             foreach (GameEntity entity in _entities)
             {
+                if (entity.currentBattleCooldown.Value == 0) 
+                    entity.ReplaceCurrentBattleCooldown(entity.battleCooldown.Value);
+                
                 if (entity.currentBattleCooldown.Value > 0) 
                     entity.ReplaceCurrentBattleCooldown(entity.currentBattleCooldown.Value - Time.deltaTime);
 
-                if (entity.currentBattleCooldown.Value <= 0) 
+                if (entity.currentBattleCooldown.Value < 0) 
                     entity.ReplaceCurrentBattleCooldown(0);
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Code.Gameplay.Features.Battle.DataStructures;
 using Code.Infrastructure.Services;
+using Code.Infrastructure.StaticData;
 using Code.Infrastructure.View;
 using Entitas;
 
@@ -11,13 +12,15 @@ namespace Code.Gameplay.Features.Battle.Services
         private const string MOVING_ARROW_PATH = "Arrows/MigrationArrow/MigrationArrow";
         
         private readonly IIdentifierService _identifierService;
+        private readonly CommonStaticData _commonStaticData;
         private EntityBehaviour _attackersHex, _defendersHex;
         private GameContext _game;
         private int _warriorsAmount;
 
-        public BattleFieldFactory(IIdentifierService identifierService)
+        public BattleFieldFactory(IIdentifierService identifierService, CommonStaticData commonStaticData)
         {
             _identifierService = identifierService;
+            _commonStaticData = commonStaticData;
             _game = Contexts.sharedInstance.game;
         }   
         
@@ -69,7 +72,7 @@ namespace Code.Gameplay.Features.Battle.Services
             GameEntity battlefield = _game.CreateEntity();
             battlefield.AddId(_identifierService.Next());
             battlefield.AddCurrentBattleCooldown(0f);
-            battlefield.AddBattleCooldown(2f);
+            battlefield.AddBattleCooldown(_commonStaticData.BattleCooldown);
             WarriorsContainer attackers = new WarriorsContainer(_warriorsAmount, _attackersHex.Entity.id.Value);
             WarriorsContainer defenders = new WarriorsContainer(_defendersHex.Entity.warriorsAmount.Value, _defendersHex.Entity.id.Value);
             battlefield.AddBattlefield(new List<WarriorsContainer>{ attackers }, defenders);

@@ -85,6 +85,12 @@ namespace Code.Gameplay.Features.Migration.View.UI
                 return;
             }
             
+            if (_migrationAllSlidersBlocker.isSlidersBlocked.Value && _selectedPeople == 0)
+            {
+                _slider.value = 0;
+                return;
+            }
+            
             if (sliderValue == 0)
                 return;
             
@@ -92,7 +98,7 @@ namespace Code.Gameplay.Features.Migration.View.UI
             _selectedPeople = (int)Math.Round(value * sliderValue);
             _text.text = _selectedPeople + "/" + value;
             _migrationAllSlidersBlocker.isSlidersBlocked.Value = true;
-            _migrationFactory.SetInitialHex(_entityBehaviour, _selectedPeople, ManType.Citizens);
+            _migrationFactory.SetInitialHex(_entityBehaviour, _selectedPeople, ManMigrationType.Citizens);
         }
 
         private void ShowPeopleUi()

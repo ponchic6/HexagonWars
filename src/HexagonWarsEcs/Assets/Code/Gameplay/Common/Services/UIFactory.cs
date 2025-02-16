@@ -26,6 +26,8 @@ namespace Code.Gameplay.Common.Services
 
         public void ShowInfoPanel(EntityBehaviour entityBehaviour)
         {
+            HideAllPanels();
+            
             if (entityBehaviour.Entity.isChildHexagon)
             {
                 if (_buildingInfoPanel == null)
@@ -66,6 +68,15 @@ namespace Code.Gameplay.Common.Services
                 if (_supplyRoutInfoPanel != null) 
                     _supplyRoutInfoPanel.gameObject.SetActive(false);
             }
+        }
+
+        private void HideAllPanels()
+        {
+            if (_buildingInfoPanel != null) 
+                _buildingInfoPanel.gameObject.SetActive(false);
+            
+            if (_supplyRoutInfoPanel != null) 
+                _supplyRoutInfoPanel.gameObject.SetActive(false);
         }
     }
 }

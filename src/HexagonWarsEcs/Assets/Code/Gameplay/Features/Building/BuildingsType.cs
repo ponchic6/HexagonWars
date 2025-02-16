@@ -3,6 +3,7 @@
     public enum BuildingsType
     {
         LivingArea,
-        FoodFarm
+        FoodFarm,
+        Barracks
     }
 }
