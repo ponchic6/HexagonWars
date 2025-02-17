@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.View;
+﻿using Code.Gameplay.Features.Logistics.DataStructure;
+using Code.Infrastructure.View;
 using UnityEngine;
 
 namespace Code.Infrastructure.StaticData
@@ -8,6 +9,7 @@ namespace Code.Infrastructure.StaticData
     {
         public EntityBehaviour Hexagon;
         public Sprite ManSprite;
+        public Sprite FoodIcon;
         public float BattleCooldown;
         public float BattleArrowsVerticalOffset;
         public float StrongCoefficientOfDefenders;
@@ -19,8 +21,9 @@ namespace Code.Infrastructure.StaticData
         [Range(0, 1)] public float CoefficientCitizensDeathByHungerInAct;
         [Range(0, 1)] public float CoefficientWarriorsDeathByHungerInAct;
         public float HungerCooldown;
-        public float CourierFoodCapacity;
         public float FoodPerformancePerSecond;
         public float WarriorTrainingTime;
+        public CourierCapacity[] CourierCapacity;
+        public float AmountPopUpCooldown;
     }
 }

@@ -19,8 +19,8 @@ namespace Code.Gameplay.Features.Logistics.Systems
             
             _entities = _game.GetGroup(GameMatcher.AllOf(
                 GameMatcher.WayIdPoints,
-                GameMatcher.MaxSupplyComplexityWay,
-                GameMatcher.CouriersProgressList ));
+                GameMatcher.SupplyComplexityWay,
+                GameMatcher.CouriersProgressList));
         }
         
         public void Execute()
@@ -32,25 +32,45 @@ namespace Code.Gameplay.Features.Logistics.Systems
 
                 foreach (CurrentCourierProgress courierProgress in entity.couriersProgressList.Value)
                 {
-                    if (courierProgress.currentProgress < entity.maxSupplyComplexityWay.Value)
-                    {
+                    if (courierProgress.currentProgress < entity.supplyComplexityWay.Value)
                         courierProgress.currentProgress += Time.deltaTime;
-                    }
                     else
-                    {
-                        GameEntity finishHex = _game.GetEntityWithId(entity.wayIdPoints.Value.Last());
-                        GameEntity startHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
-
-                        if (startHex.foodAmount.Value >= _commonStaticData.CourierFoodCapacity)
-                        {
-                            finishHex.foodAmount.Value += _commonStaticData.CourierFoodCapacity;
-                            startHex.foodAmount.Value -= _commonStaticData.CourierFoodCapacity;
-                        }
-                        
-                        courierProgress.currentProgress = 0;
-                    }
+                        DeliverResource(entity, courierProgress);
                 }
             }
+        }
+
+        private void DeliverResource(GameEntity entity, CurrentCourierProgress courierProgress)
+        {
+            GameEntity finishHex = _game.GetEntityWithId(entity.wayIdPoints.Value.Last());
+            GameEntity startHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
+
+            float capacity;
+            
+            switch (courierProgress.logisticResources)
+            {
+                case LogisticResources.Food:
+                    capacity = _commonStaticData.CourierCapacity.First(x => x.logisticResources == LogisticResources.Food).capacity;
+                    
+                    if (startHex.foodAmount.Value >= capacity)
+                    {
+                        finishHex.foodAmount.Value += capacity;
+                        startHex.foodAmount.Value -= capacity;
+                    }
+                    break;
+                
+                case LogisticResources.Ammo:
+                    capacity = _commonStaticData.CourierCapacity.First(x => x.logisticResources == LogisticResources.Ammo).capacity;
+                    
+                    if (startHex.ammoAmount.Value >= capacity)
+                    {
+                        finishHex.ammoAmount.Value += capacity;
+                        startHex.ammoAmount.Value -= capacity;
+                    }
+                    break;
+            }
+            
+            courierProgress.currentProgress = 0;
         }
     }
 }

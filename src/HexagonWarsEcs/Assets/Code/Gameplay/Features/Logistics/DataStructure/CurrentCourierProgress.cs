@@ -6,5 +6,15 @@ namespace Code.Gameplay.Features.Logistics.DataStructure
     public class CurrentCourierProgress
     {
         public float currentProgress;
+        public LogisticResources logisticResources;
+
+        public CurrentCourierProgress()
+        {
+        }
+        
+        public CurrentCourierProgress(LogisticResources logisticResources)
+        {
+            this.logisticResources = logisticResources;
+        }
     }
 }

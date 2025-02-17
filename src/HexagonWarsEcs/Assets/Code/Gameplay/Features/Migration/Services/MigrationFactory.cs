@@ -4,6 +4,7 @@ using Code.Gameplay.Common;
 using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Services
 {
@@ -43,6 +44,15 @@ namespace Code.Gameplay.Features.Migration.Services
             _finishHex = entityBehaviour;
 
             List<int> shortestPath = FindShortestPath(_initialHex, _finishHex);
+
+            if (shortestPath == null)
+            {
+                _initialHex = null;
+                _finishHex = null;
+                _migrationAmount = 0;
+                return;
+            }
+            
             GameEntity migration = _game.CreateEntity();
             migration.AddId(_identifierService.Next());
             migration.AddWayIdPoints(shortestPath);
@@ -68,25 +78,33 @@ namespace Code.Gameplay.Features.Migration.Services
         
         private List<int> FindShortestPath(EntityBehaviour startNode, EntityBehaviour endNode)
         {
-            if (startNode == null || endNode == null) return null;
-            
+            if (startNode == null || endNode == null)
+            {
+                return null;
+            }
+    
             Queue<EntityBehaviour> queue = new Queue<EntityBehaviour>();
             queue.Enqueue(startNode);
-            
+    
             Dictionary<EntityBehaviour, EntityBehaviour> cameFrom = new Dictionary<EntityBehaviour, EntityBehaviour>();
             cameFrom[startNode] = null;
-            
+    
             while (queue.Count > 0)
             {
                 EntityBehaviour current = queue.Dequeue();
-                
+        
                 if (current == endNode)
                 {
                     return ReconstructPath(cameFrom, endNode);
                 }
-                
+        
                 foreach (EntityBehaviour neighbor in current.GetComponent<NeighboringHexagons>().NeighboringHexagonsList)
                 {
+                    if (neighbor.Entity.isEnemyHexagon)
+                    {
+                        continue;
+                    }
+
                     if (!cameFrom.ContainsKey(neighbor))
                     {
                         queue.Enqueue(neighbor);
@@ -97,9 +115,8 @@ namespace Code.Gameplay.Features.Migration.Services
             
             return null;
         }
-        
-        private List<int> ReconstructPath(Dictionary<EntityBehaviour, EntityBehaviour> cameFrom,
-            EntityBehaviour endNode)
+
+        private List<int> ReconstructPath(Dictionary<EntityBehaviour, EntityBehaviour> cameFrom, EntityBehaviour endNode)
         {
             List<EntityBehaviour> path = new List<EntityBehaviour>();
             EntityBehaviour current = endNode;
@@ -111,13 +128,13 @@ namespace Code.Gameplay.Features.Migration.Services
             }
 
             path.Reverse();
-            List<int> way = new();
             
+            List<int> way = new();
             foreach (EntityBehaviour entityBehaviour in path)
             {
                 way.Add(entityBehaviour.Entity.id.Value);
             }
-            
+    
             return way;
         }
     }

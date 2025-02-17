@@ -3,12 +3,12 @@ using Entitas;
 
 namespace Code.Gameplay.Features.Battle.Systems
 {
-    public class FinishBattleSystem : IExecuteSystem
+    public class BattleResultSystem : IExecuteSystem
     {
         private readonly IGroup<GameEntity> _entities;
         private readonly GameContext _game;
 
-        public FinishBattleSystem()
+        public BattleResultSystem()
         {
             _game = Contexts.sharedInstance.game;
 

@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Code.Gameplay.Features.Logistics.DataStructure;
 using Code.Infrastructure.View;
@@ -13,6 +15,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         [SerializeField] private TMP_Text _couriersCountTmp;
         [SerializeField] private TMP_InputField _inputField;
         [SerializeField] private Button _destroySupplyButton;
+        [SerializeField] private TMP_Dropdown _dropdown;
         private EntityBehaviour _entityBehaviour;
         private GameContext _game;
         
@@ -31,6 +34,8 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         public void Setup(EntityBehaviour entityBehaviour)
         {
             _entityBehaviour = entityBehaviour;
+            _dropdown.ClearOptions();
+            _dropdown.AddOptions(new List<string>{LogisticResources.Food.ToString(), LogisticResources.Ammo.ToString()});
         }
 
         private void OnSubmit(string input)
@@ -46,7 +51,8 @@ namespace Code.Gameplay.Features.Logistics.View.UI
             
             _inputField.text = string.Empty;
             startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value - result);
-            entity.couriersProgressList.Value.AddRange(Enumerable.Repeat(new CurrentCourierProgress(), result).Select(_ => new CurrentCourierProgress()));
+            Enum.TryParse(_dropdown.options[_dropdown.value].text, out LogisticResources logisticResources);
+            entity.couriersProgressList.Value.AddRange(Enumerable.Repeat(new CurrentCourierProgress(), result).Select(_ => new CurrentCourierProgress(logisticResources)));
         }
 
         private void DestroySupplyRoute()

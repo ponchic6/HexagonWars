@@ -4,6 +4,8 @@ using Code.Gameplay.Features.Citizens.Systems;
 using Code.Gameplay.Features.Logistics.Systems;
 using Code.Gameplay.Features.Map.Systems;
 using Code.Gameplay.Features.Migration.Systems;
+using Code.Gameplay.Features.PopUp.Systems;
+using Code.Gameplay.Features.PopUp.View;
 using Code.Gameplay.Features.Production.Systems;
 using Code.Infrastructure.Destroy;
 using Code.Infrastructure.Systems;
@@ -23,6 +25,7 @@ namespace Code.Gameplay
             Add(systemFactory.Create<SupplyFeature>());
             Add(systemFactory.Create<BattleFeature>());
             Add(systemFactory.Create<ProductionFeature>());
+            Add(systemFactory.Create<PopUpFeature>());
             Add(systemFactory.Create<DestroyFeature>());
         }
     }

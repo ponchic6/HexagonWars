@@ -25,29 +25,32 @@ public static class GameComponentsLookup {
     public const int CitizensAmount = 14;
     public const int CurrentHungerDeathCooldown = 15;
     public const int MaxHungerDeathCooldown = 16;
-    public const int CouriersProgressList = 17;
-    public const int FoodAmount = 18;
-    public const int MaxSupplyComplexityWay = 19;
-    public const int SupplyRoute = 20;
-    public const int ChildHexagon = 21;
-    public const int MapParent = 22;
-    public const int CitizensMigrationAmount = 23;
-    public const int ComplexityWay = 24;
-    public const int FinishMigrationPoint = 25;
-    public const int MigrationArrow = 26;
-    public const int StartMigrationPoint = 27;
-    public const int WayIdPoints = 28;
-    public const int Barracks = 29;
-    public const int FoodFarm = 30;
-    public const int LivingArea = 31;
-    public const int Destructed = 32;
-    public const int InitialTransform = 33;
-    public const int View = 34;
-    public const int ViewPath = 35;
-    public const int ViewPrefab = 36;
-    public const int ViewPrefabWithParent = 37;
+    public const int AmmoAmount = 17;
+    public const int CouriersProgressList = 18;
+    public const int FoodAmount = 19;
+    public const int SupplyComplexityWay = 20;
+    public const int SupplyRoute = 21;
+    public const int ChildHexagon = 22;
+    public const int MapParent = 23;
+    public const int CitizensMigrationAmount = 24;
+    public const int ComplexityWay = 25;
+    public const int FinishMigrationPoint = 26;
+    public const int MigrationArrow = 27;
+    public const int StartMigrationPoint = 28;
+    public const int WayIdPoints = 29;
+    public const int AmountPopUpCooldown = 30;
+    public const int AmountPopUpEvents = 31;
+    public const int Barracks = 32;
+    public const int FoodFarm = 33;
+    public const int LivingArea = 34;
+    public const int Destructed = 35;
+    public const int InitialTransform = 36;
+    public const int View = 37;
+    public const int ViewPath = 38;
+    public const int ViewPrefab = 39;
+    public const int ViewPrefabWithParent = 40;
 
-    public const int TotalComponents = 38;
+    public const int TotalComponents = 41;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -67,9 +70,10 @@ public static class GameComponentsLookup {
         "CitizensAmount",
         "CurrentHungerDeathCooldown",
         "MaxHungerDeathCooldown",
+        "AmmoAmount",
         "CouriersProgressList",
         "FoodAmount",
-        "MaxSupplyComplexityWay",
+        "SupplyComplexityWay",
         "SupplyRoute",
         "ChildHexagon",
         "MapParent",
@@ -79,6 +83,8 @@ public static class GameComponentsLookup {
         "MigrationArrow",
         "StartMigrationPoint",
         "WayIdPoints",
+        "AmountPopUpCooldown",
+        "AmountPopUpEvents",
         "Barracks",
         "FoodFarm",
         "LivingArea",
@@ -108,9 +114,10 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Citizens.CitizensAmount),
         typeof(Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown),
         typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown),
+        typeof(Code.Gameplay.Features.Logistics.AmmoAmount),
         typeof(Code.Gameplay.Features.Logistics.CouriersProgressList),
         typeof(Code.Gameplay.Features.Logistics.FoodAmount),
-        typeof(Code.Gameplay.Features.Logistics.MaxSupplyComplexityWay),
+        typeof(Code.Gameplay.Features.Logistics.SupplyComplexityWay),
         typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),
@@ -120,6 +127,8 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
         typeof(Code.Gameplay.Features.Migration.StartMigrationPoint),
         typeof(Code.Gameplay.Features.Migration.WayIdPoints),
+        typeof(Code.Gameplay.Features.PopUp.AmountPopUpCooldown),
+        typeof(Code.Gameplay.Features.PopUp.AmountPopUpEvents),
         typeof(Code.Gameplay.Features.Production.Barracks),
         typeof(Code.Gameplay.Features.Production.FoodFarm),
         typeof(Code.Gameplay.Features.Production.LivingArea),

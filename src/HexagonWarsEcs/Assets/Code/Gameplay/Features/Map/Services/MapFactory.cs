@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Code.Gameplay.Features.Building;
 using Code.Gameplay.Features.Building.DataStructure;
 using Code.Gameplay.Features.Migration.View.UI;
+using Code.Gameplay.Features.PopUp.DataStructures;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.StaticData;
 using UnityEngine;
@@ -74,6 +76,9 @@ namespace Code.Gameplay.Features.Map.Services
             entity.AddCitizensAmount(new System.Random().Next(1, 101));
             entity.AddWarriorsAmount(new System.Random().Next(1, 101));
             entity.AddFoodAmount(100000);
+            entity.AddAmmoAmount(100000);
+            entity.AddAmountPopUpCooldown(_commonStaticData.AmountPopUpCooldown, _commonStaticData.AmountPopUpCooldown);
+            entity.AddAmountPopUpEvents(new List<AmountPopUpContainer>());
             
             entity.AddBuildingProgress(new ()
             {

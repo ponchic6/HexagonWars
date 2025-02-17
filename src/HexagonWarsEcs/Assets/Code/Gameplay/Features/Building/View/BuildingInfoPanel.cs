@@ -13,6 +13,7 @@ namespace Code.Gameplay.Features.Building.View
     {
         [SerializeField] private TMP_Text _citizensAmount;
         [SerializeField] private TMP_Text _foodAmount;
+        [SerializeField] private TMP_Text _ammoAmount;
         [SerializeField] private RectTransform _content;
         [SerializeField] private SlidersGroup _slidersGroup;
         [SerializeField] private BuildingButton _buildingButtonPrefab;
@@ -26,6 +27,7 @@ namespace Code.Gameplay.Features.Building.View
         {
             _citizensAmount.text = _entityBehaviour.Entity.citizensAmount.Value.ToString();
             _foodAmount.text = _entityBehaviour.Entity.foodAmount.Value.ToString("F1");
+            _ammoAmount.text = _entityBehaviour.Entity.ammoAmount.Value.ToString("F1");
         }
 
         public void Setup(EntityBehaviour entityBehaviour)
