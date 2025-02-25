@@ -4,13 +4,12 @@ using Code.Gameplay.Common;
 using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Services
 {
     public class MigrationFactory : IMigrationFactory
     {
-        private const string MOVING_ARROW_PATH = "Arrows/MigrationArrow/MigrationArrow";
+        private const string MOVING_ARROW_PATH = "Arrows/MigrationArrow/MigrationTrail";
 
         private readonly IIdentifierService _identifierService;
         private readonly GameContext _game;
@@ -32,17 +31,17 @@ namespace Code.Gameplay.Features.Migration.Services
             _migrationAmount = selectedPeople;
         }
 
-        public void SetFinishHexAndCreateMigration(EntityBehaviour entityBehaviour)
+        public GameEntity SetFinishHexAndCreateMigration(EntityBehaviour entityBehaviour)
         {
             if (_initialHex == null)
             {
                 _finishHex = null;
                 _migrationAmount = 0;
-                return;
+                return null;
             }
             
             _finishHex = entityBehaviour;
-
+            
             List<int> shortestPath = FindShortestPath(_initialHex, _finishHex);
 
             if (shortestPath == null)
@@ -50,7 +49,7 @@ namespace Code.Gameplay.Features.Migration.Services
                 _initialHex = null;
                 _finishHex = null;
                 _migrationAmount = 0;
-                return;
+                return null;
             }
             
             GameEntity migration = _game.CreateEntity();
@@ -74,14 +73,28 @@ namespace Code.Gameplay.Features.Migration.Services
             _initialHex = null;
             _finishHex = null;
             _migrationAmount = 0;
+            return migration;
         }
-        
+
+        public EntityBehaviour GetAwailableNeighbourHex(EntityBehaviour finishHex)
+        {
+            List<EntityBehaviour> neighboringHexagonsList = finishHex.GetComponent<NeighboringHexagons>().NeighboringHexagonsList;
+            
+            foreach (EntityBehaviour entity in neighboringHexagonsList)
+            {
+                List<int> findShortestPath = FindShortestPath(_initialHex, entity);
+                
+                if (findShortestPath != null)
+                    return entity;
+            }
+            
+            return null;
+        }
+
         private List<int> FindShortestPath(EntityBehaviour startNode, EntityBehaviour endNode)
         {
             if (startNode == null || endNode == null)
-            {
                 return null;
-            }
     
             Queue<EntityBehaviour> queue = new Queue<EntityBehaviour>();
             queue.Enqueue(startNode);

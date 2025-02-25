@@ -8,6 +8,7 @@ namespace Code.Gameplay.Features.Battle.Systems
         {
             Add(systemFactory.Create<BattleArrowsPositionSystem>());
             Add(systemFactory.Create<WarriorsMigrationProceedSystem>());
+            Add(systemFactory.Create<BattlefieldFromWarriorsMigrationSystem>());
             Add(systemFactory.Create<BattleCooldownSystem>());
             Add(systemFactory.Create<BattleLoopSystem>());
             Add(systemFactory.Create<BattleStopSystem>());

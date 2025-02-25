@@ -18,39 +18,40 @@ public static class GameComponentsLookup {
     public const int Battlefield = 7;
     public const int CurrentBattleCooldown = 8;
     public const int EnemyHexagon = 9;
-    public const int PlayerHexagon = 10;
-    public const int WarriorsAmount = 11;
-    public const int WarriorsMigrationAmount = 12;
-    public const int BuildingProgress = 13;
-    public const int CitizensAmount = 14;
-    public const int CurrentHungerDeathCooldown = 15;
-    public const int MaxHungerDeathCooldown = 16;
-    public const int AmmoAmount = 17;
-    public const int CouriersProgressList = 18;
-    public const int FoodAmount = 19;
-    public const int SupplyComplexityWay = 20;
-    public const int SupplyRoute = 21;
-    public const int ChildHexagon = 22;
-    public const int MapParent = 23;
-    public const int CitizensMigrationAmount = 24;
-    public const int ComplexityWay = 25;
-    public const int FinishMigrationPoint = 26;
-    public const int MigrationArrow = 27;
-    public const int StartMigrationPoint = 28;
-    public const int WayIdPoints = 29;
-    public const int AmountPopUpCooldown = 30;
-    public const int AmountPopUpEvents = 31;
-    public const int Barracks = 32;
-    public const int FoodFarm = 33;
-    public const int LivingArea = 34;
-    public const int Destructed = 35;
-    public const int InitialTransform = 36;
-    public const int View = 37;
-    public const int ViewPath = 38;
-    public const int ViewPrefab = 39;
-    public const int ViewPrefabWithParent = 40;
+    public const int HexagonForAttack = 10;
+    public const int PlayerHexagon = 11;
+    public const int WarriorsAmount = 12;
+    public const int WarriorsMigrationAmount = 13;
+    public const int BuildingProgress = 14;
+    public const int CitizensAmount = 15;
+    public const int CurrentHungerDeathCooldown = 16;
+    public const int MaxHungerDeathCooldown = 17;
+    public const int AmmoAmount = 18;
+    public const int CouriersProgressList = 19;
+    public const int FoodAmount = 20;
+    public const int SupplyComplexityWay = 21;
+    public const int SupplyRoute = 22;
+    public const int ChildHexagon = 23;
+    public const int MapParent = 24;
+    public const int CitizensMigrationAmount = 25;
+    public const int ComplexityWay = 26;
+    public const int FinishMigrationPoint = 27;
+    public const int MigrationArrow = 28;
+    public const int StartMigrationPoint = 29;
+    public const int WayIdPoints = 30;
+    public const int AmountPopUpCooldown = 31;
+    public const int AmountPopUpEvents = 32;
+    public const int Barracks = 33;
+    public const int FoodFarm = 34;
+    public const int LivingArea = 35;
+    public const int Destructed = 36;
+    public const int InitialTransform = 37;
+    public const int View = 38;
+    public const int ViewPath = 39;
+    public const int ViewPrefab = 40;
+    public const int ViewPrefabWithParent = 41;
 
-    public const int TotalComponents = 41;
+    public const int TotalComponents = 42;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -63,6 +64,7 @@ public static class GameComponentsLookup {
         "Battlefield",
         "CurrentBattleCooldown",
         "EnemyHexagon",
+        "HexagonForAttack",
         "PlayerHexagon",
         "WarriorsAmount",
         "WarriorsMigrationAmount",
@@ -107,6 +109,7 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Battle.Battlefield),
         typeof(Code.Gameplay.Features.Battle.CurrentBattleCooldown),
         typeof(Code.Gameplay.Features.Battle.EnemyHexagon),
+        typeof(Code.Gameplay.Features.Battle.HexagonForAttack),
         typeof(Code.Gameplay.Features.Battle.PlayerHexagon),
         typeof(Code.Gameplay.Features.Battle.WarriorsAmount),
         typeof(Code.Gameplay.Features.Battle.WarriorsMigrationAmount),

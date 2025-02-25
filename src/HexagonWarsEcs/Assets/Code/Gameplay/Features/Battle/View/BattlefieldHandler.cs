@@ -40,7 +40,7 @@ namespace Code.Gameplay.Features.Battle.View
             
             if (eventData.button == PointerEventData.InputButton.Right)
             {
-                _battleFieldFactory.SetDefendersAndCreateBattlefield(_entityBehaviour);
+                _battleFieldFactory.TrySetDefendersAndCreateBattlefield(_entityBehaviour);
                 _allSlidersBlocker.isSlidersBlocked.Value = false;
             }
         }

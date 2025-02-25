@@ -36,7 +36,7 @@ namespace Code.Gameplay.Features.Migration.View
         {
             if (_entityBehaviour.Entity.isEnemyHexagon)
                 return;
-
+            
             if (eventData.button == PointerEventData.InputButton.Right)
             {
                 _migrationFactory.SetFinishHexAndCreateMigration(_entityBehaviour);
