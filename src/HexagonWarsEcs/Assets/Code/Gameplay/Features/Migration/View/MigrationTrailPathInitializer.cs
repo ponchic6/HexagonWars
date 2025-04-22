@@ -25,6 +25,8 @@ namespace Code.Gameplay.Features.Migration.View
 
             if (_splineContainer.Spline.Count == 0)
             {
+                _distancePercentageMain = 0;
+                _distancePercentage = 0;
                 CreateSpline();
                 _fillingFragment = Instantiate(_migrationTrailPrefab, transform);
                 TrailRenderer trailRenderer = _fillingFragment.GetComponent<TrailRenderer>();

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Code.Gameplay.Common.Services;
-using Code.Gameplay.Features.Building.DataStructure;
+﻿using Code.Gameplay.Common.Services;
 using Code.Gameplay.Features.Building.View;
 using Entitas;
 
