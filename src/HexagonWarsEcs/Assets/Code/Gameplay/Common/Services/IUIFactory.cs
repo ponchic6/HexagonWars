@@ -1,4 +1,5 @@
 using Code.Gameplay.Features.Building.View;
+using Code.Gameplay.Features.Logistics.View.UI;
 using Code.Gameplay.Features.Production.View.UI;
 using Code.Infrastructure.View;
 
@@ -10,5 +11,6 @@ namespace Code.Gameplay.Common.Services
         public void HideInfoPanel(EntityBehaviour entityBehaviour);
         public BuildingInfoPanel BuildingInfoPanel { get; }
         public ProductionInfoPanel ProductionInfoPanel { get; }
+        public SupplyRoutsInfoPanel SupplyRoutsInfoPanel { get; }
     }
 }

@@ -36,11 +36,9 @@ namespace Code.Gameplay.Features.Building.View
         {
             if (_entityBehaviour.Entity.isEnemyHexagon)
                 return;
-            
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
+
+            if (eventData.button == PointerEventData.InputButton.Left) 
                 _uiFactory.ShowInfoPanel(_entityBehaviour);
-            }
         }
     }
 }

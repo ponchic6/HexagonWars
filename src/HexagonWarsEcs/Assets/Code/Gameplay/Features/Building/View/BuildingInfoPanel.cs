@@ -40,6 +40,8 @@ namespace Code.Gameplay.Features.Building.View
             _slidersGroup.ClearSliders();
             _buildingButtons.Clear();
             _entityBehaviour = entityBehaviour;
+            UpdateBuildersStates(_entityBehaviour.Entity);
+            
         }
 
         public void UpdateBuildersStates(GameEntity entity)

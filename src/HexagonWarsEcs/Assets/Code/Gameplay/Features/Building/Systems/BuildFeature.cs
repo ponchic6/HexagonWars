@@ -6,7 +6,7 @@ namespace Code.Gameplay.Features.Building.Systems
     {
         public BuildFeature(ISystemFactory systemFactory)
         {
-            Add(systemFactory.Create<BuildingButtonsUpdateSystem>());
+            Add(systemFactory.Create<BuildingButtonUpdateReactiveSystem>());
             Add(systemFactory.Create<BuildingProgressSystem>());
             Add(systemFactory.Create<BuildingProgressCleanupSystem>());
         }

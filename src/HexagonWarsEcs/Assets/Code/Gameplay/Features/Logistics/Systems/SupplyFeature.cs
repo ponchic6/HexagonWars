@@ -6,7 +6,12 @@ namespace Code.Gameplay.Features.Logistics.Systems
     {
         public SupplyFeature(ISystemFactory systemFactory)
         {
+            Add(systemFactory.Create<SupplyAvailabilityBuildSystem>());
             Add(systemFactory.Create<SupplyProceedSystem>());
+            Add(systemFactory.Create<SupplyRoutsAddUiReactiveSystem>());
+            Add(systemFactory.Create<SupplyRoutsRemoveUiReactiveSystem>());
+            Add(systemFactory.Create<SupplyRoutHighlightReactiveSystem>());
+            Add(systemFactory.Create<ChangeResourceAmountAtStartHexUiReactiveSystem>());
         }
     }
 }

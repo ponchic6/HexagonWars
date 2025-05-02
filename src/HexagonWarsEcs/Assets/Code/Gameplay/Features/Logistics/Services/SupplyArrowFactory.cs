@@ -1,5 +1,4 @@
-﻿using Code.Gameplay.Common.View.UI;
-using Code.Infrastructure.View;
+﻿using Code.Infrastructure.View;
 using Logic.Logistic;
 using UnityEngine;
 using Zenject;
@@ -19,7 +18,7 @@ namespace Code.Gameplay.Features.Logistics.Services
             _diContainer = diContainer;
         }
 
-        public LineRenderer AddPoint(Vector3 position)
+        public LineRenderer AddPoint(Vector3 position, Color color)
         {
             if (_currentLine == null)
             {
@@ -30,11 +29,12 @@ namespace Code.Gameplay.Features.Logistics.Services
             position.y = 0.5f;
             _currentLine.positionCount += 1;
             _currentLine.SetPosition(_currentLine.positionCount - 1, position);
+            _lineMaterial.SetVector("_Color", color);
             UpdateTiling();
             return _currentLine;
         }
 
-        public void RemoveLastPoint()
+        public void RemoveLastPoint(Color color)
         {
             if (_currentLine == null)
                 return;
@@ -50,6 +50,7 @@ namespace Code.Gameplay.Features.Logistics.Services
             
             _currentLine.positionCount = newPositions.Length;
             _currentLine.SetPositions(newPositions);
+            _lineMaterial.SetVector("_Color", color);
             UpdateTiling();
         }
 
@@ -60,7 +61,6 @@ namespace Code.Gameplay.Features.Logistics.Services
             EntityBehaviour entityBehaviour = _currentLine.gameObject.GetComponent<EntityBehaviour>();
             entityBehaviour.SetEntity(entity);
             UpdateTiling();
-            _currentLine.gameObject.GetComponent<LineRendererCollider>().UpdateMeshCollider();
             _lineMaterial = null;
             _currentLine = null;
             return entity;

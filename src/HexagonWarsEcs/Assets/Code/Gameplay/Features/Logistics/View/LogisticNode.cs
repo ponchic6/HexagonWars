@@ -12,14 +12,14 @@ namespace Code.Gameplay.Features.Logistics.View
     {
         [SerializeField] private PointerHandler pointerHandler;
         [SerializeField] private EntityBehaviour _entityBehaviour;
-        private ISupplyRouteFactory _supplyRouteFactory;
+        private ISupplyRoutFactory _supplyRoutFactory;
         
         public EntityBehaviour EntityBehaviour => _entityBehaviour;
 
         [Inject]
-        public void Construct(ISupplyRouteFactory supplyRouteFactory)
+        public void Construct(ISupplyRoutFactory supplyRoutFactory)
         {
-            _supplyRouteFactory = supplyRouteFactory;
+            _supplyRoutFactory = supplyRoutFactory;
         }
 
         private void Awake()
@@ -44,23 +44,13 @@ namespace Code.Gameplay.Features.Logistics.View
             if (pointerEventData.button != PointerEventData.InputButton.Left)
                 return;
 
-            _supplyRouteFactory.StartCreateRoute(this);
+            _supplyRoutFactory.StartCreateRoute(this);
         }
 
-        private void OnPointerHandlerEnterEvent(PointerEventData pointerEventData)
-        {
-            if (_entityBehaviour.Entity.isEnemyHexagon)
-                return;
-            
-            _supplyRouteFactory.TryAjustLogicNode(this);
-        }
+        private void OnPointerHandlerEnterEvent(PointerEventData pointerEventData) => 
+            _supplyRoutFactory.TryAjustLogicNode(this);
 
-        private void OnPointerHandlerUpEvent(PointerEventData pointerEventData)
-        {
-            if (_entityBehaviour.Entity.isEnemyHexagon)
-                return;
-
-            _supplyRouteFactory.TryFinishOfCreatingRoute(this);
-        }
+        private void OnPointerHandlerUpEvent(PointerEventData pointerEventData) =>
+            _supplyRoutFactory.TryFinishOfCreatingRoute();
     }
 }

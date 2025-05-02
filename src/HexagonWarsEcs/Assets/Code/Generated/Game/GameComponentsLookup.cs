@@ -27,31 +27,34 @@ public static class GameComponentsLookup {
     public const int CurrentHungerDeathCooldown = 16;
     public const int MaxHungerDeathCooldown = 17;
     public const int AmmoAmount = 18;
-    public const int CouriersProgressList = 19;
-    public const int FoodAmount = 20;
-    public const int SupplyComplexityWay = 21;
-    public const int SupplyRoute = 22;
-    public const int ChildHexagon = 23;
-    public const int MapParent = 24;
-    public const int CitizensMigrationAmount = 25;
-    public const int ComplexityWay = 26;
-    public const int FinishMigrationPoint = 27;
-    public const int MigrationArrow = 28;
-    public const int StartMigrationPoint = 29;
-    public const int WayIdPoints = 30;
-    public const int AmountPopUpCooldown = 31;
-    public const int AmountPopUpEvents = 32;
-    public const int Barracks = 33;
-    public const int FoodFarm = 34;
-    public const int LivingArea = 35;
-    public const int Destructed = 36;
-    public const int InitialTransform = 37;
-    public const int View = 38;
-    public const int ViewPath = 39;
-    public const int ViewPrefab = 40;
-    public const int ViewPrefabWithParent = 41;
+    public const int AvailabilityForSupplyRout = 19;
+    public const int CouriersProgressList = 20;
+    public const int FoodAmount = 21;
+    public const int HighlightedSupplyRout = 22;
+    public const int SupplyComplexityWay = 23;
+    public const int SupplyHighlighter = 24;
+    public const int SupplyRoute = 25;
+    public const int ChildHexagon = 26;
+    public const int MapParent = 27;
+    public const int CitizensMigrationAmount = 28;
+    public const int ComplexityWay = 29;
+    public const int FinishMigrationPoint = 30;
+    public const int MigrationArrow = 31;
+    public const int StartMigrationPoint = 32;
+    public const int WayIdPoints = 33;
+    public const int AmountPopUpCooldown = 34;
+    public const int AmountPopUpEvents = 35;
+    public const int Barracks = 36;
+    public const int FoodFarm = 37;
+    public const int LivingArea = 38;
+    public const int Destructed = 39;
+    public const int InitialTransform = 40;
+    public const int View = 41;
+    public const int ViewPath = 42;
+    public const int ViewPrefab = 43;
+    public const int ViewPrefabWithParent = 44;
 
-    public const int TotalComponents = 42;
+    public const int TotalComponents = 45;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -73,9 +76,12 @@ public static class GameComponentsLookup {
         "CurrentHungerDeathCooldown",
         "MaxHungerDeathCooldown",
         "AmmoAmount",
+        "AvailabilityForSupplyRout",
         "CouriersProgressList",
         "FoodAmount",
+        "HighlightedSupplyRout",
         "SupplyComplexityWay",
+        "SupplyHighlighter",
         "SupplyRoute",
         "ChildHexagon",
         "MapParent",
@@ -118,9 +124,12 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown),
         typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown),
         typeof(Code.Gameplay.Features.Logistics.AmmoAmount),
+        typeof(Code.Gameplay.Features.Logistics.AvailabilityForSupplyRout),
         typeof(Code.Gameplay.Features.Logistics.CouriersProgressList),
         typeof(Code.Gameplay.Features.Logistics.FoodAmount),
+        typeof(Code.Gameplay.Features.Logistics.HighlightedSupplyRout),
         typeof(Code.Gameplay.Features.Logistics.SupplyComplexityWay),
+        typeof(Code.Gameplay.Features.Logistics.SupplyHighlighter),
         typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),

@@ -600,6 +600,7 @@ GameObject:
   - component: {fileID: 6434937132516860306}
   - component: {fileID: 8575431155741185573}
   - component: {fileID: 7935312392405063186}
+  - component: {fileID: 4333465938361549897}
   - component: {fileID: -3125488246894819592}
   - component: {fileID: 2311989428022930361}
   - component: {fileID: 8786936103212503177}
@@ -608,7 +609,6 @@ GameObject:
   - component: {fileID: 6139105098252316419}
   - component: {fileID: 426827041464429389}
   - component: {fileID: 8180901549282218489}
-  - component: {fileID: 4333465938361549897}
   - component: {fileID: 5770923189635765875}
   - component: {fileID: 3408284145224947107}
   m_Layer: 0
@@ -710,6 +710,33 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -951608786083511892, guid: e52cf1aab1224de45970ce2747ef7180, type: 3}
+--- !u!54 &4333465938361549897
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5910288373307850574}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &-3125488246894819592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,33 +844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _entityBehaviour: {fileID: -3125488246894819592}
---- !u!54 &4333465938361549897
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5910288373307850574}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 0
-  m_ImplicitTensor: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &5770923189635765875
 MonoBehaviour:
   m_ObjectHideFlags: 0

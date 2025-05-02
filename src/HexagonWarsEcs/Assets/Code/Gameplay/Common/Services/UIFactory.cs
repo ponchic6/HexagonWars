@@ -13,15 +13,22 @@ namespace Code.Gameplay.Common.Services
 
         private BuildingInfoPanel _buildingInfoPanel;
         private ProductionInfoPanel _productionInfoPanel;
-        private SupplyRoutInfoPanel _supplyRoutInfoPanel;
+        private SupplyRoutsInfoPanel _supplyRoutsInfoPanel;
         private DiContainer _diContainer;
 
         public BuildingInfoPanel BuildingInfoPanel => _buildingInfoPanel;
         public ProductionInfoPanel ProductionInfoPanel => _productionInfoPanel;
+        public SupplyRoutsInfoPanel SupplyRoutsInfoPanel => _supplyRoutsInfoPanel;
 
         public UIFactory(DiContainer diContainer)
         {
             _diContainer = diContainer;
+
+            _buildingInfoPanel = _diContainer.InstantiatePrefabResourceForComponent<BuildingInfoPanel>(HEX_RESOURCES_INFO_PANEL_PATH);
+            _productionInfoPanel = _buildingInfoPanel.GetComponent<ProductionInfoPanel>();
+            _supplyRoutsInfoPanel = _diContainer.InstantiatePrefabResourceForComponent<SupplyRoutsInfoPanel>(SUPPLY_ROUTE_INFO_PANEL_PATH);
+            _buildingInfoPanel.gameObject.SetActive(false);
+            _supplyRoutsInfoPanel.gameObject.SetActive(false);
         }
 
         public void ShowInfoPanel(EntityBehaviour entityBehaviour)
@@ -37,21 +44,15 @@ namespace Code.Gameplay.Common.Services
                 }
                 else
                     _buildingInfoPanel.gameObject.SetActive(true);
-
+                
+                if (_supplyRoutsInfoPanel == null)
+                    _supplyRoutsInfoPanel = _diContainer.InstantiatePrefabResourceForComponent<SupplyRoutsInfoPanel>(SUPPLY_ROUTE_INFO_PANEL_PATH);
+                else
+                    _supplyRoutsInfoPanel.gameObject.SetActive(true);
+                
                 _buildingInfoPanel.Setup(entityBehaviour);
                 _productionInfoPanel.Setup(entityBehaviour);
-                return;
-            }
-
-            if (entityBehaviour.Entity.isSupplyRoute)
-            {
-                if (_supplyRoutInfoPanel == null)
-                    _supplyRoutInfoPanel = _diContainer.InstantiatePrefabResourceForComponent<SupplyRoutInfoPanel>(SUPPLY_ROUTE_INFO_PANEL_PATH);
-                else
-                    _supplyRoutInfoPanel.gameObject.SetActive(true);
-
-                _supplyRoutInfoPanel.Setup(entityBehaviour);
-                return;
+                _supplyRoutsInfoPanel.Setup(entityBehaviour);
             }
         }
 
@@ -61,12 +62,9 @@ namespace Code.Gameplay.Common.Services
             {
                 if (_buildingInfoPanel != null) 
                     _buildingInfoPanel.gameObject.SetActive(false);
-            }
-
-            if (entityBehaviour.Entity.isSupplyRoute)
-            {
-                if (_supplyRoutInfoPanel != null) 
-                    _supplyRoutInfoPanel.gameObject.SetActive(false);
+                
+                if (_supplyRoutsInfoPanel != null)
+                    _supplyRoutsInfoPanel.gameObject.SetActive(false);
             }
         }
 
@@ -75,8 +73,8 @@ namespace Code.Gameplay.Common.Services
             if (_buildingInfoPanel != null) 
                 _buildingInfoPanel.gameObject.SetActive(false);
             
-            if (_supplyRoutInfoPanel != null) 
-                _supplyRoutInfoPanel.gameObject.SetActive(false);
+            if (_supplyRoutsInfoPanel != null) 
+                _supplyRoutsInfoPanel.gameObject.SetActive(false);
         }
     }
 }

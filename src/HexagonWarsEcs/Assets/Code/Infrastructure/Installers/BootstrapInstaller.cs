@@ -9,6 +9,7 @@ using Code.Infrastructure.Services;
 using Code.Infrastructure.StaticData;
 using Code.Infrastructure.Systems;
 using Code.Infrastructure.View;
+using Entitas;
 using Logic.Logistic;
 using UnityEngine;
 using Zenject;
@@ -21,12 +22,14 @@ namespace Code.Infrastructure.Installers
         
         public override void InstallBindings()
         {
+            Container.Bind<IContext<GameEntity>>().FromInstance(Contexts.sharedInstance.game).AsSingle();
+            
             Container.Bind<CommonStaticData>().FromInstance(_commonStaticData).AsSingle();
             Container.Bind<IIdentifierService>().To<IdentifierService>().AsSingle();
             Container.Bind<IPopUpFactory>().To<PopUpFactory>().AsSingle();
             Container.Bind<IUIFactory>().To<UIFactory>().AsSingle();
             Container.Bind<ISupplyArrowFactory>().To<SupplyArrowFactory>().AsSingle();
-            Container.Bind<ISupplyRouteFactory>().To<SupplyRouteFactory>().AsSingle();
+            Container.Bind<ISupplyRoutFactory>().To<SupplyRoutFactory>().AsSingle();
             Container.Bind<ISystemFactory>().To<SystemFactory>().AsSingle();
             Container.Bind<IEntityViewFactory>().To<EntityViewFactory>().AsSingle();
             Container.Bind<IMapFactory>().To<MapFactory>().AsSingle();

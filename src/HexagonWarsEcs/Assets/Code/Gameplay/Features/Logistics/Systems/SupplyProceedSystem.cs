@@ -17,10 +17,7 @@ namespace Code.Gameplay.Features.Logistics.Systems
             _commonStaticData = commonStaticData;
             _game = Contexts.sharedInstance.game;
             
-            _entities = _game.GetGroup(GameMatcher.AllOf(
-                GameMatcher.WayIdPoints,
-                GameMatcher.SupplyComplexityWay,
-                GameMatcher.CouriersProgressList));
+            _entities = _game.GetGroup(GameMatcher.SupplyRoute);
         }
         
         public void Execute()
