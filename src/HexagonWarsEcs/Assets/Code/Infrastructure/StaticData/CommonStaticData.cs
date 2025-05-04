@@ -22,6 +22,8 @@ namespace Code.Infrastructure.StaticData
         [Range(0, 1)] public float CoefficientWarriorsDeathByHungerInAct;
         public float HungerCooldown;
         public float FoodPerformancePerSecond;
+        public float IronPerformancePerSecond;
+        public float CoalPerformancePerSecond;
         public float WarriorTrainingTime;
         public CourierCapacity[] CourierCapacity;
         public float AmountPopUpCooldown;

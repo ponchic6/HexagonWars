@@ -28,33 +28,36 @@ public static class GameComponentsLookup {
     public const int MaxHungerDeathCooldown = 17;
     public const int AmmoAmount = 18;
     public const int AvailabilityForSupplyRout = 19;
-    public const int CouriersProgressList = 20;
-    public const int FoodAmount = 21;
-    public const int HighlightedSupplyRout = 22;
-    public const int SupplyComplexityWay = 23;
-    public const int SupplyHighlighter = 24;
-    public const int SupplyRoute = 25;
-    public const int ChildHexagon = 26;
-    public const int MapParent = 27;
-    public const int CitizensMigrationAmount = 28;
-    public const int ComplexityWay = 29;
-    public const int FinishMigrationPoint = 30;
-    public const int MigrationArrow = 31;
-    public const int StartMigrationPoint = 32;
-    public const int WayIdPoints = 33;
-    public const int AmountPopUpCooldown = 34;
-    public const int AmountPopUpEvents = 35;
-    public const int Barracks = 36;
-    public const int FoodFarm = 37;
-    public const int LivingArea = 38;
-    public const int Destructed = 39;
-    public const int InitialTransform = 40;
-    public const int View = 41;
-    public const int ViewPath = 42;
-    public const int ViewPrefab = 43;
-    public const int ViewPrefabWithParent = 44;
+    public const int CoalAmount = 20;
+    public const int CouriersProgressList = 21;
+    public const int FoodAmount = 22;
+    public const int HighlightedSupplyRout = 23;
+    public const int IronAmount = 24;
+    public const int SupplyComplexityWay = 25;
+    public const int SupplyHighlighter = 26;
+    public const int SupplyRoute = 27;
+    public const int ChildHexagon = 28;
+    public const int MapParent = 29;
+    public const int CitizensMigrationAmount = 30;
+    public const int ComplexityWay = 31;
+    public const int FinishMigrationPoint = 32;
+    public const int MigrationArrow = 33;
+    public const int StartMigrationPoint = 34;
+    public const int WayIdPoints = 35;
+    public const int AmountPopUpCooldown = 36;
+    public const int AmountPopUpEvents = 37;
+    public const int Barracks = 38;
+    public const int FoodFarm = 39;
+    public const int LivingArea = 40;
+    public const int Mine = 41;
+    public const int Destructed = 42;
+    public const int InitialTransform = 43;
+    public const int View = 44;
+    public const int ViewPath = 45;
+    public const int ViewPrefab = 46;
+    public const int ViewPrefabWithParent = 47;
 
-    public const int TotalComponents = 45;
+    public const int TotalComponents = 48;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -77,9 +80,11 @@ public static class GameComponentsLookup {
         "MaxHungerDeathCooldown",
         "AmmoAmount",
         "AvailabilityForSupplyRout",
+        "CoalAmount",
         "CouriersProgressList",
         "FoodAmount",
         "HighlightedSupplyRout",
+        "IronAmount",
         "SupplyComplexityWay",
         "SupplyHighlighter",
         "SupplyRoute",
@@ -96,6 +101,7 @@ public static class GameComponentsLookup {
         "Barracks",
         "FoodFarm",
         "LivingArea",
+        "Mine",
         "Destructed",
         "InitialTransform",
         "View",
@@ -125,9 +131,11 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown),
         typeof(Code.Gameplay.Features.Logistics.AmmoAmount),
         typeof(Code.Gameplay.Features.Logistics.AvailabilityForSupplyRout),
+        typeof(Code.Gameplay.Features.Logistics.CoalAmount),
         typeof(Code.Gameplay.Features.Logistics.CouriersProgressList),
         typeof(Code.Gameplay.Features.Logistics.FoodAmount),
         typeof(Code.Gameplay.Features.Logistics.HighlightedSupplyRout),
+        typeof(Code.Gameplay.Features.Logistics.IronAmount),
         typeof(Code.Gameplay.Features.Logistics.SupplyComplexityWay),
         typeof(Code.Gameplay.Features.Logistics.SupplyHighlighter),
         typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
@@ -144,6 +152,7 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Production.Barracks),
         typeof(Code.Gameplay.Features.Production.FoodFarm),
         typeof(Code.Gameplay.Features.Production.LivingArea),
+        typeof(Code.Gameplay.Features.Production.Mine),
         typeof(Code.Infrastructure.Destroy.Destructed),
         typeof(Code.Infrastructure.View.InitialTransform),
         typeof(Code.Infrastructure.View.View),

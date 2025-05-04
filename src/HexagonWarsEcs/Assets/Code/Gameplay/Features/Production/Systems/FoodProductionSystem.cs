@@ -9,7 +9,6 @@ namespace Code.Gameplay.Features.Production.Systems
     {
         private readonly CommonStaticData _commonStaticData;
         private readonly IGroup<GameEntity> _entities;
-        private List<GameEntity> _buffer = new(128);
 
         public FoodProductionSystem(CommonStaticData commonStaticData)
         {
@@ -21,7 +20,7 @@ namespace Code.Gameplay.Features.Production.Systems
         
         public void Execute()
         {
-            foreach (GameEntity entity in _entities.GetEntities(_buffer)) 
+            foreach (GameEntity entity in _entities) 
                 entity.ReplaceFoodAmount(entity.foodAmount.Value + entity.foodFarm.Workers * Time.deltaTime * _commonStaticData.FoodPerformancePerSecond);
         }
     }

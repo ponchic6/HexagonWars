@@ -77,6 +77,8 @@ namespace Code.Gameplay.Features.Map.Services
             entity.AddWarriorsAmount(new System.Random().Next(1, 101));
             entity.AddFoodAmount(100000);
             entity.AddAmmoAmount(100000);
+            entity.AddCoalAmount(0);
+            entity.AddIronAmount(0);
             entity.AddAmountPopUpCooldown(_commonStaticData.AmountPopUpCooldown, _commonStaticData.AmountPopUpCooldown);
             entity.AddAmountPopUpEvents(new List<AmountPopUpContainer>());
             
@@ -88,7 +90,6 @@ namespace Code.Gameplay.Features.Map.Services
                     currentProgress = 0,
                     buildingType = BuildingsType.FoodFarm,
                     buildersAmount = 0,
-                    ready = false
                 },
                 new BuildProgressContainer
                 {
@@ -96,7 +97,13 @@ namespace Code.Gameplay.Features.Map.Services
                     currentProgress = 0,
                     buildingType = BuildingsType.Barracks,
                     buildersAmount = 0,
-                    ready = false
+                },
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.Mine,
+                    buildersAmount = 0,
                 }
             });
 

@@ -10,6 +10,7 @@ namespace Code.Gameplay.Features.Production.Systems
             Add(systemFactory.Create<FoodProductionSystem>());
             Add(systemFactory.Create<FoodPopUpSystem>());
             Add(systemFactory.Create<WarriorsTrainSystem>());
+            Add(systemFactory.Create<MineSystem>());
         }
     }
 }

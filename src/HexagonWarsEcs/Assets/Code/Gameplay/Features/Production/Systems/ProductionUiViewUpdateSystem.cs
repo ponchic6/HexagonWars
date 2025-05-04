@@ -22,15 +22,15 @@ namespace Code.Gameplay.Features.Production.Systems
         {
             foreach (GameEntity entity in _entities)
             {
-                ProductionInfoPanel infoPanel = _uiFactory.ProductionInfoPanel;
+                ProductionInfoPanel productionInfoPanel = _uiFactory.ProductionInfoPanel;
                 
-                if (infoPanel == null || !infoPanel.gameObject.activeSelf)
+                if (productionInfoPanel == null || !productionInfoPanel.gameObject.activeSelf)
                     continue;
 
-                if (infoPanel.EntityBehaviour.Entity.id.Value != entity.id.Value)
+                if (productionInfoPanel.HexEntityBehaviour.Entity.id.Value != entity.id.Value)
                     continue;
 
-                infoPanel.UpdateProductionUi(entity);
+                productionInfoPanel.UpdateProductionUi();
             }
         }
     }

@@ -4,6 +4,7 @@
     {
         LivingArea,
         FoodFarm,
-        Barracks
+        Barracks,
+        Mine
     }
 }

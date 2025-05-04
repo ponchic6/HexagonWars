@@ -9,6 +9,6 @@ namespace Code.Gameplay.Features.Building.DataStructure
         public float currentProgress;
         public int buildersAmount;
         public BuildingsType buildingType;
-        public bool ready;
+        public bool Ready => currentProgress >= fullProgress;
     }
 }

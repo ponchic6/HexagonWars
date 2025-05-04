@@ -1,4 +1,5 @@
 ﻿using Code.Gameplay.Features.Building.DataStructure;
+using Code.Gameplay.Features.Production;
 using Code.Infrastructure.StaticData;
 using Entitas;
 using UnityEngine;
@@ -24,29 +25,29 @@ namespace Code.Gameplay.Features.Building.Systems
             {
                 foreach (BuildProgressContainer buildProgressContainer in entity.buildingProgress.Value)
                 {
-                    if (buildProgressContainer.currentProgress < buildProgressContainer.fullProgress)
-                    {
-                        if (buildProgressContainer.buildersAmount != 0)
-                        {
-                            buildProgressContainer.currentProgress += Time.deltaTime * buildProgressContainer.buildersAmount;
-                            entity.ReplaceBuildingProgress(entity.buildingProgress.Value);
-                        }
-                    }
-                    else if (!buildProgressContainer.ready)
+                    if (buildProgressContainer.currentProgress >= buildProgressContainer.fullProgress)
+                        continue;
+                    
+                    if (buildProgressContainer.buildersAmount == 0)
+                        continue;
+                    
+                    buildProgressContainer.currentProgress += Time.deltaTime * buildProgressContainer.buildersAmount;
+                    
+                    if (buildProgressContainer.currentProgress >= buildProgressContainer.fullProgress)
                     {
                         FinishBuildingProcess(buildProgressContainer, entity);
                         entity.ReplaceBuildingProgress(entity.buildingProgress.Value);
                     }
+                    
+                    entity.ReplaceBuildingProgress(entity.buildingProgress.Value);
                 }
             }
         }
-
         private void FinishBuildingProcess(BuildProgressContainer buildProgressContainer, GameEntity entity)
         {
             AddBuilding(buildProgressContainer, entity);
             entity.ReplaceCitizensAmount(buildProgressContainer.buildersAmount + entity.citizensAmount.Value);
             buildProgressContainer.buildersAmount = 0;
-            buildProgressContainer.ready = true;
         }
         
         private void AddBuilding(BuildProgressContainer buildProgressContainer, GameEntity entity)
@@ -63,6 +64,10 @@ namespace Code.Gameplay.Features.Building.Systems
                 
                 case BuildingsType.Barracks:
                     entity.AddBarracks(0, _commonStaticData.WarriorTrainingTime, _commonStaticData.WarriorTrainingTime);
+                    break;
+                
+                case BuildingsType.Mine:
+                    entity.AddMine(0, OreType.Iron);
                     break;
             }
         }

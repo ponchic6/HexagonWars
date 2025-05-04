@@ -32,10 +32,10 @@ namespace Code.Gameplay.Features.Building.Systems
                 if (infoPanel == null || !infoPanel.gameObject.activeSelf)
                     continue;
 
-                if (infoPanel.EntityBehaviour.Entity.id.Value != entity.id.Value)
+                if (infoPanel.HexEntityBehaviour.Entity.id.Value != entity.id.Value)
                     continue;
 
-                infoPanel.UpdateBuildersStates(entity);
+                infoPanel.UpdateBuildingProgress();
             }
         }
     }

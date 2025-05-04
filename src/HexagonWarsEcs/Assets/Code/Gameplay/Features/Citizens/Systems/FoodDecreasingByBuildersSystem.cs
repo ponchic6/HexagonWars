@@ -26,7 +26,7 @@ namespace Code.Gameplay.Features.Citizens.Systems
                     entity.ReplaceFoodAmount(0);
                 else
                 {
-                    int total = entity.buildingProgress.Value.Where(x => !x.ready).Sum(x => x.buildersAmount);
+                    int total = entity.buildingProgress.Value.Where(x => !x.Ready).Sum(x => x.buildersAmount);
                     entity.ReplaceFoodAmount(entity.foodAmount.Value - total * Time.deltaTime * _commonStaticData.FoodPerSecondByBuilders);
                 }
             }

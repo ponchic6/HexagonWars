@@ -27,6 +27,8 @@ MonoBehaviour:
   CoefficientWarriorsDeathByHungerInAct: 0.9
   HungerCooldown: 3
   FoodPerformancePerSecond: 0.7
+  IronPerformancePerSecond: 1
+  CoalPerformancePerSecond: 2
   WarriorTrainingTime: 1
   CourierCapacity:
   - logisticResources: 0

@@ -31,7 +31,6 @@ namespace Code.Gameplay.Features.Production.Systems
                 {
                     entity.barracks.CurrentCooldown = entity.barracks.Cooldown;
                     entity.barracks.WarriorsOrdered--;
-                    entity.citizensAmount.Value--;
                     entity.warriorsAmount.Value++;
                 }
             }
