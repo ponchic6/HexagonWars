@@ -59,7 +59,7 @@ namespace Code.Gameplay.Features.Migration.View
             foreach (Vector3 vector3 in array) 
                 _splineContainer.Spline.Add(vector3);
 
-            _complexity = _entityBehaviour.Entity.complexityWay.Value.ToArray();
+            _complexity = _entityBehaviour.Entity.migrationComplexityWay.Value.ToArray();
         }
 
         private void MoveMainTrail()

@@ -7,6 +7,7 @@ using Code.Gameplay.Features.Migration.Systems;
 using Code.Gameplay.Features.PopUp.Systems;
 using Code.Gameplay.Features.PopUp.View;
 using Code.Gameplay.Features.Production.Systems;
+using Code.Gameplay.Features.Warriors.Systems;
 using Code.Infrastructure.Destroy;
 using Code.Infrastructure.Systems;
 using Code.Infrastructure.View;
@@ -21,6 +22,7 @@ namespace Code.Gameplay
             Add(systemFactory.Create<MapFeature>());
             Add(systemFactory.Create<MigrationFeature>());
             Add(systemFactory.Create<CitizensFeature>());
+            Add(systemFactory.Create<WarriorsFeature>());
             Add(systemFactory.Create<BuildFeature>());
             Add(systemFactory.Create<SupplyFeature>());
             Add(systemFactory.Create<BattleFeature>());

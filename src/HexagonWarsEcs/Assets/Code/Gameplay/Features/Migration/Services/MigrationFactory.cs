@@ -56,7 +56,7 @@ namespace Code.Gameplay.Features.Migration.Services
             migration.AddId(_identifierService.Next());
             migration.AddWayIdPoints(shortestPath);
             migration.AddViewPath(MOVING_ARROW_PATH);
-            migration.AddComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
+            migration.AddMigrationComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
             migration.isMigrationArrow = true;
 
             switch (_manMigrationType)

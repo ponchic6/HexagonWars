@@ -17,9 +17,9 @@ namespace Code.Gameplay.Features.Battle.Services
         private readonly IIdentifierService _identifierService;
         private readonly CommonStaticData _commonStaticData;
         private readonly IMigrationFactory _migrationFactory;
+        private readonly GameContext _game;
         private EntityBehaviour _attackersHex, _defendersHex;
         private int _warriorsAmount;
-        private GameContext _game;
 
         public BattleFieldFactory(IIdentifierService identifierService, CommonStaticData commonStaticData, IMigrationFactory migrationFactory)
         {
@@ -87,8 +87,6 @@ namespace Code.Gameplay.Features.Battle.Services
             {
                 GameEntity migration = _migrationFactory.SetFinishHexAndCreateMigration(neighbourHex);
                 migration.AddHexagonForAttack(_defendersHex.Entity.id.Value);
-                ResetFactoryState();
-                return;
             }
                 
             ResetFactoryState();

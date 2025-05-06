@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Entitas;
+﻿using Entitas;
 using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Systems
@@ -7,48 +6,51 @@ namespace Code.Gameplay.Features.Migration.Systems
     public class CitizensMigrationProceedSystem : IExecuteSystem
     {
         private readonly IGroup<GameEntity> _entities;
-        private List<GameEntity> _buffer = new(64);
-        private GameContext _game;
+        private readonly GameContext _game;
 
         public CitizensMigrationProceedSystem()
         {
             _game = Contexts.sharedInstance.game;
 
             _entities = _game.GetGroup(GameMatcher.AllOf(
-                GameMatcher.ComplexityWay,
+                GameMatcher.MigrationComplexityWay,
                 GameMatcher.WayIdPoints,
                 GameMatcher.CitizensMigrationAmount));
         }
-        
+
         public void Execute()
         {
-            foreach (GameEntity entity in _entities.GetEntities(_buffer))
+            foreach (GameEntity routEntity in _entities)
             {
-                if (entity.complexityWay.Value.Count > 0)
+                if (routEntity.migrationComplexityWay.Value.Count <= 0)
                 {
-                    entity.complexityWay.Value[0] -= Time.deltaTime;
-                    entity.ReplaceComplexityWay(entity.complexityWay.Value);
-                }
-                else
-                {
-                    entity.isDestructed = true;
+                    routEntity.isDestructed = true;
                     return;
                 }
                 
-                if (entity.complexityWay.Value[0] <= 0)
+                if (routEntity.migrationComplexityWay.Value[0] > 0)
                 {
-                    if (_game.GetEntityWithId(entity.wayIdPoints.Value[0]).citizensAmount.Value < entity.citizensMigrationAmount.Value)
-                    {
-                        entity.isDestructed = true;
-                        return;
-                    }
-                    _game.GetEntityWithId(entity.wayIdPoints.Value[0]).citizensAmount.Value -= entity.citizensMigrationAmount.Value;
-                    _game.GetEntityWithId(entity.wayIdPoints.Value[1]).citizensAmount.Value += entity.citizensMigrationAmount.Value;
-                    entity.complexityWay.Value.RemoveAt(0);
-                    entity.ReplaceComplexityWay(entity.complexityWay.Value);
-                    entity.wayIdPoints.Value.RemoveAt(0);
-                    entity.ReplaceWayIdPoints(entity.wayIdPoints.Value);
+                    routEntity.migrationComplexityWay.Value[0] -= Time.deltaTime;
+                    routEntity.ReplaceMigrationComplexityWay(routEntity.migrationComplexityWay.Value);
+                    continue;
                 }
+                
+                GameEntity currentHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
+                GameEntity nextHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[1]);
+                    
+                if (currentHex.citizensAmount.Value < routEntity.citizensMigrationAmount.Value)
+                {
+                    routEntity.isDestructed = true;
+                    return;
+                }
+                    
+                currentHex.ReplaceCitizensAmount(currentHex.citizensAmount.Value - routEntity.citizensMigrationAmount.Value);
+                nextHex.ReplaceCitizensAmount(nextHex.citizensAmount.Value + routEntity.citizensMigrationAmount.Value);
+                    
+                routEntity.migrationComplexityWay.Value.RemoveAt(0);
+                routEntity.ReplaceMigrationComplexityWay(routEntity.migrationComplexityWay.Value);
+                routEntity.wayIdPoints.Value.RemoveAt(0);
+                routEntity.ReplaceWayIdPoints(routEntity.wayIdPoints.Value);
             }
         }
     }

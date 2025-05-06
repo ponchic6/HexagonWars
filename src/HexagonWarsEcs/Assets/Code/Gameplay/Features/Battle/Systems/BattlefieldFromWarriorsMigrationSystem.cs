@@ -15,7 +15,7 @@ namespace Code.Gameplay.Features.Battle.Systems
             _game = Contexts.sharedInstance.game;
             
             _entities = _game.GetGroup(GameMatcher.AllOf(
-                GameMatcher.ComplexityWay,
+                GameMatcher.MigrationComplexityWay,
                 GameMatcher.WayIdPoints,
                 GameMatcher.WarriorsMigrationAmount,
                 GameMatcher.HexagonForAttack,

@@ -39,25 +39,24 @@ public static class GameComponentsLookup {
     public const int ChildHexagon = 28;
     public const int MapParent = 29;
     public const int CitizensMigrationAmount = 30;
-    public const int ComplexityWay = 31;
-    public const int FinishMigrationPoint = 32;
-    public const int MigrationArrow = 33;
-    public const int StartMigrationPoint = 34;
-    public const int WayIdPoints = 35;
-    public const int AmountPopUpCooldown = 36;
-    public const int AmountPopUpEvents = 37;
-    public const int Barracks = 38;
-    public const int FoodFarm = 39;
-    public const int LivingArea = 40;
-    public const int Mine = 41;
-    public const int Destructed = 42;
-    public const int InitialTransform = 43;
-    public const int View = 44;
-    public const int ViewPath = 45;
-    public const int ViewPrefab = 46;
-    public const int ViewPrefabWithParent = 47;
+    public const int MigrationArrow = 31;
+    public const int MigrationComplexityWay = 32;
+    public const int MigrationHandler = 33;
+    public const int WayIdPoints = 34;
+    public const int AmountPopUpCooldown = 35;
+    public const int AmountPopUpEvents = 36;
+    public const int Barracks = 37;
+    public const int FoodFarm = 38;
+    public const int LivingArea = 39;
+    public const int Mine = 40;
+    public const int Destructed = 41;
+    public const int InitialTransform = 42;
+    public const int View = 43;
+    public const int ViewPath = 44;
+    public const int ViewPrefab = 45;
+    public const int ViewPrefabWithParent = 46;
 
-    public const int TotalComponents = 48;
+    public const int TotalComponents = 47;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -91,10 +90,9 @@ public static class GameComponentsLookup {
         "ChildHexagon",
         "MapParent",
         "CitizensMigrationAmount",
-        "ComplexityWay",
-        "FinishMigrationPoint",
         "MigrationArrow",
-        "StartMigrationPoint",
+        "MigrationComplexityWay",
+        "MigrationHandler",
         "WayIdPoints",
         "AmountPopUpCooldown",
         "AmountPopUpEvents",
@@ -142,10 +140,9 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),
         typeof(Code.Gameplay.Features.Migration.CitizensMigrationAmount),
-        typeof(Code.Gameplay.Features.Migration.ComplexityWay),
-        typeof(Code.Gameplay.Features.Migration.FinishMigrationPoint),
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
-        typeof(Code.Gameplay.Features.Migration.StartMigrationPoint),
+        typeof(Code.Gameplay.Features.Migration.MigrationComplexityWay),
+        typeof(Code.Gameplay.Features.Migration.MigrationHandlerComponent),
         typeof(Code.Gameplay.Features.Migration.WayIdPoints),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpCooldown),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpEvents),

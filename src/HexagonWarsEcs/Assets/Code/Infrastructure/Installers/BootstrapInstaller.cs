@@ -5,6 +5,7 @@ using Code.Gameplay.Features.Logistics.Services;
 using Code.Gameplay.Features.Map.Services;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Gameplay.Features.PopUp.Services;
+using Code.Gameplay.Features.Warriors.Services;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.StaticData;
 using Code.Infrastructure.Systems;
@@ -34,6 +35,7 @@ namespace Code.Infrastructure.Installers
             Container.Bind<IEntityViewFactory>().To<EntityViewFactory>().AsSingle();
             Container.Bind<IMapFactory>().To<MapFactory>().AsSingle();
             Container.Bind<ICitizensModelFactory>().To<CitizensModelFactory>().AsSingle();
+            Container.Bind<ISoldiersModelFactory>().To<SoldiersModelFactory>().AsSingle();
             Container.Bind<IMigrationFactory>().To<MigrationFactory>().AsSingle();
             Container.Bind<IBattleFieldFactory>().To<BattleFieldFactory>().AsSingle();
         }

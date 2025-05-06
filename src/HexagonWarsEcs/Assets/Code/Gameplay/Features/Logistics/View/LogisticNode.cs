@@ -1,7 +1,6 @@
 ﻿using Code.Gameplay.Common.View;
 using Code.Gameplay.Features.Logistics.Services;
 using Code.Infrastructure.View;
-using Logic.Common;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;

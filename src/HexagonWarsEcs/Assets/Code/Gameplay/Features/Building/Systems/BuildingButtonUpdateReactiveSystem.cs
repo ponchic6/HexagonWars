@@ -8,8 +8,6 @@ namespace Code.Gameplay.Features.Building.Systems
 {
     public class BuildingButtonUpdateReactiveSystem : ReactiveSystem<GameEntity>
     {
-        private readonly IGroup<GameEntity> _entities;
-        private readonly IContext<GameEntity> _gameContext;
         private readonly IUIFactory _uiFactory;
 
         public BuildingButtonUpdateReactiveSystem(IContext<GameEntity> context, IUIFactory uiFactory) : base(context)

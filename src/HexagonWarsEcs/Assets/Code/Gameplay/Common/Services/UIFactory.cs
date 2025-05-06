@@ -1,5 +1,6 @@
 using Code.Gameplay.Features.Building.View;
 using Code.Gameplay.Features.Logistics.View.UI;
+using Code.Gameplay.Features.Migration.View.UI;
 using Code.Gameplay.Features.Production.View.UI;
 using Code.Infrastructure.View;
 using Zenject;
@@ -10,12 +11,15 @@ namespace Code.Gameplay.Common.Services
     {
         private const string HEX_RESOURCES_INFO_PANEL_PATH = "Hexagons/UI/HexagonInfoPanel";
         private const string SUPPLY_ROUTE_INFO_PANEL_PATH = "Hexagons/UI/SupplyRouteInfoPanel";
+        private const string MIGRATION_SLIDER_CHOOSER_PATH = "Hexagons/UI/MigrationSlider";
 
         private BuildingInfoPanel _buildingInfoPanel;
         private ProductionInfoPanel _productionInfoPanel;
         private SupplyRoutsInfoPanel _supplyRoutsInfoPanel;
         private DiContainer _diContainer;
+        private MigrationAmountChooser _migrationAmountChooser;
 
+        public MigrationAmountChooser MigrationAmountChooser => _migrationAmountChooser;
         public BuildingInfoPanel BuildingInfoPanel => _buildingInfoPanel;
         public ProductionInfoPanel ProductionInfoPanel => _productionInfoPanel;
         public SupplyRoutsInfoPanel SupplyRoutsInfoPanel => _supplyRoutsInfoPanel;
@@ -27,8 +31,10 @@ namespace Code.Gameplay.Common.Services
             _buildingInfoPanel = _diContainer.InstantiatePrefabResourceForComponent<BuildingInfoPanel>(HEX_RESOURCES_INFO_PANEL_PATH);
             _productionInfoPanel = _buildingInfoPanel.GetComponent<ProductionInfoPanel>();
             _supplyRoutsInfoPanel = _diContainer.InstantiatePrefabResourceForComponent<SupplyRoutsInfoPanel>(SUPPLY_ROUTE_INFO_PANEL_PATH);
+            _migrationAmountChooser = _diContainer.InstantiatePrefabResourceForComponent<MigrationAmountChooser>(MIGRATION_SLIDER_CHOOSER_PATH);
             _buildingInfoPanel.gameObject.SetActive(false);
             _supplyRoutsInfoPanel.gameObject.SetActive(false);
+            _migrationAmountChooser.gameObject.SetActive(false);
         }
 
         public void ShowInfoPanel(EntityBehaviour entityBehaviour)
@@ -67,6 +73,12 @@ namespace Code.Gameplay.Common.Services
                     _supplyRoutsInfoPanel.gameObject.SetActive(false);
             }
         }
+
+        public void SliderMigrationChooserActivate(EntityBehaviour hexEntity, ManMigrationType manMigrationType) =>
+            _migrationAmountChooser.Show(hexEntity, manMigrationType);
+
+        public void SliderMigrationChooserDeactivate() =>
+            _migrationAmountChooser.Hide();
 
         private void HideAllPanels()
         {
