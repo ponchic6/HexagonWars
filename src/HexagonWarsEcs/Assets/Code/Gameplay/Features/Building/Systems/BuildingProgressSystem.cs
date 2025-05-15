@@ -54,8 +54,8 @@ namespace Code.Gameplay.Features.Building.Systems
         {
             switch (buildProgressContainer.buildingType)
             {
-                case BuildingsType.LivingArea:
-                    entity.isLivingArea = true;
+                case BuildingsType.City:
+                    entity.AddCity(0, _commonStaticData.CitizenCreationTime, _commonStaticData.CitizenCreationTime);
                     break;
                 
                 case BuildingsType.FoodFarm:

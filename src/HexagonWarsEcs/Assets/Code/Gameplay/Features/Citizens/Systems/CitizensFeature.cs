@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.Systems;
+﻿using Code.Gameplay.Features.Migration.Systems;
+using Code.Infrastructure.Systems;
 
 namespace Code.Gameplay.Features.Citizens.Systems
 {
@@ -6,13 +7,11 @@ namespace Code.Gameplay.Features.Citizens.Systems
     {
         public CitizensFeature(ISystemFactory systemFactory)
         {
-            Add(systemFactory.Create<FoodDecreasingByCitizensSystem>());
-            Add(systemFactory.Create<FoodDecreasingByBuildersSystem>());
-            Add(systemFactory.Create<FoodDecreasingByWarriorsSystem>());
-            Add(systemFactory.Create<DeathBuildersByHungerSystem>());
-            Add(systemFactory.Create<DeathCitizensByHungerSystem>());
-            Add(systemFactory.Create<DeathWarriorsByHungerSystem>());
+            Add(systemFactory.Create<DeathByHungerSystem>());
             Add(systemFactory.Create<HungerSystem>());
+            
+            Add(systemFactory.Create<IdleCitizensViewControlReactiveSystem>());
+            Add(systemFactory.Create<RunningCitizensViewControlReactiveSystem>());
         }
     }
 }

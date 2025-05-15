@@ -15,10 +15,9 @@ MonoBehaviour:
   Hexagon: {fileID: -3125488246894819592, guid: e0123509e35e61e468158ee0292593d9, type: 3}
   ManSprite: {fileID: 21300000, guid: 586222d5524d5d244afd4b834f1813e2, type: 3}
   FoodIcon: {fileID: 21300000, guid: aefbd44fe3ff1af44bc55cde38080591, type: 3}
-  BattleCooldown: 2
-  BattleArrowsVerticalOffset: 0.5
-  StrongCoefficientOfDefenders: 0.001
-  StrongCoefficientOfAttackers: 0.001
+  BattleCooldown: 1
+  StrongCoefficientOfDefenders: 0.002
+  StrongCoefficientOfAttackers: 0.002
   FoodPerSecondByBuilders: 0.1
   FoodPerSecondByWarriors: 0.1
   FoodPerSecondByCitizens: 0.1
@@ -35,4 +34,10 @@ MonoBehaviour:
     capacity: 4
   - logisticResources: 1
     capacity: 2
+  - logisticResources: 2
+    capacity: 2
+  - logisticResources: 3
+    capacity: 2
   AmountPopUpCooldown: 3
+  FoodPricePerCitizen: 300
+  CitizenCreationTime: 1

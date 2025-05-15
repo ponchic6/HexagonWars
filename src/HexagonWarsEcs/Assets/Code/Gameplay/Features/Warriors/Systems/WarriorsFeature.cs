@@ -8,6 +8,8 @@ namespace Code.Gameplay.Features.Warriors.Systems
         {
             Add(systemFactory.Create<IdleSoldiersViewControlReactiveSystem>());
             Add(systemFactory.Create<RunningSoldiersViewControlReactiveSystem>());
+            Add(systemFactory.Create<SoldiersAnimationStartShootingSystem>());
+            Add(systemFactory.Create<SoldiersAnimationStopShootingSystem>());
         }
     }
 } 

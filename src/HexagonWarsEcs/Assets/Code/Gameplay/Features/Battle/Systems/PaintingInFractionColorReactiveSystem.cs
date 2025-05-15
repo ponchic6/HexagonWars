@@ -1,0 +1,30 @@
+﻿using System.Collections.Generic;
+using Entitas;
+
+namespace Code.Gameplay.Features.Battle.Systems
+{
+    public class PaintingInFractionColorReactiveSystem : ReactiveSystem<GameEntity>
+    {
+        public PaintingInFractionColorReactiveSystem(IContext<GameEntity> context) : base(context)
+        {
+            GameContext game = Contexts.sharedInstance.game;
+        }
+
+        protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
+            context.CreateCollector(GameMatcher.PlayerHexagon);
+
+        protected override bool Filter(GameEntity entity) =>
+            true;
+
+        protected override void Execute(List<GameEntity> entities)
+        {
+            foreach (GameEntity entity in entities)
+            {
+                if (entity.isPlayerHexagon) 
+                    entity.renderer.Value.material.SetFloat("_FillAmount", 0.4f);
+                else
+                    entity.renderer.Value.material.SetFloat("_FillAmount", -0.4f);
+            }
+        }
+    }
+}

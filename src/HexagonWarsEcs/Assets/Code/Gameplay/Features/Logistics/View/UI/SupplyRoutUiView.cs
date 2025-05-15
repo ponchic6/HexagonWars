@@ -25,19 +25,25 @@ namespace Code.Gameplay.Features.Logistics.View.UI
 
         public void Setup(GameEntity routEntity)
         {
+            _routEntity = routEntity;
+            
             _plus.onClick.AsObservable().Subscribe(_ => OnPlusButton(routEntity)).AddTo(this);
             _minus.onClick.AsObservable().Subscribe(_ => OnMinusButton(routEntity)).AddTo(this);
             _deleteButton.onClick.AsObservable().Subscribe(_ => OnDeleteButton(routEntity)).AddTo(this);
 
             _couriersInputField.text = routEntity.couriersProgressList.Value.Count.ToString();
 
-            _resourcesDropdown.onValueChanged.AsObservable().Subscribe(i => OnValueChanged(i, routEntity)).AddTo(this);
+            _resourcesDropdown.onValueChanged.AsObservable().Subscribe(OnValueChanged).AddTo(this);
             _resourcesDropdown.options.Add(new TMP_Dropdown.OptionData(nameof(LogisticResources.Food)));
             _resourcesDropdown.options.Add(new TMP_Dropdown.OptionData(nameof(LogisticResources.Ammo)));
-            
-            _routEntity = routEntity;
+            _resourcesDropdown.options.Add(new TMP_Dropdown.OptionData(nameof(LogisticResources.Iron)));
+            _resourcesDropdown.options.Add(new TMP_Dropdown.OptionData(nameof(LogisticResources.Coal)));
+
+
+            if (routEntity.couriersProgressList.Value.Count > 0) 
+                SetDropDownValue();
         }
-        
+
         public void OnPointerEnter(PointerEventData eventData) =>
             _routEntity.isHighlightedSupplyRout = true;
 
@@ -48,25 +54,35 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         {
             GameEntity startHex = _gameContext.GetEntityWithId(_routEntity.wayIdPoints.Value[0]);
 
-            switch (_dropDownValue)
+            _resourceAmountAtStartHex.text = _dropDownValue switch
             {
-                case LogisticResources.Food:
-                    _resourceAmountAtStartHex.text = startHex.foodAmount.Value.ToString(); 
-                    break;
-                
-                case LogisticResources.Ammo:
-                    _resourceAmountAtStartHex.text = startHex.ammoAmount.Value.ToString();
-                    break;
-            }
+                LogisticResources.Food => startHex.foodAmount.Value.ToString(),
+                LogisticResources.Ammo => startHex.ammoAmount.Value.ToString(),
+                LogisticResources.Iron => startHex.ironAmount.Value.ToString(),
+                LogisticResources.Coal => startHex.coalAmount.Value.ToString(),
+                _ => _resourceAmountAtStartHex.text
+            };
         }
 
-        private void OnValueChanged(int i, GameEntity routEntity)
+        private void SetDropDownValue()
+        {
+            _resourcesDropdown.value = _routEntity.couriersProgressList.Value[0].logisticResources switch
+            {
+                LogisticResources.Food => 0,
+                LogisticResources.Ammo => 1,
+                LogisticResources.Iron => 2,
+                LogisticResources.Coal => 3,
+                _ => _resourcesDropdown.value
+            };
+        }
+
+        private void OnValueChanged(int i)
         {
             TMP_Dropdown.OptionData optionData = _resourcesDropdown.options[i];
             Enum.TryParse(optionData.text, out LogisticResources resource);
             _dropDownValue = resource;
             
-            foreach (CurrentCourierProgress courierProgress in routEntity.couriersProgressList.Value) 
+            foreach (CurrentCourierProgress courierProgress in _routEntity.couriersProgressList.Value) 
                 courierProgress.logisticResources = resource;
         }
 
@@ -77,7 +93,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
             if (startHexEntity.citizensAmount.Value <= 0)
                 return;
             
-            startHexEntity.citizensAmount.Value--;
+            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value - 1);
             var value = _resourcesDropdown.value;
             TMP_Dropdown.OptionData optionData = _resourcesDropdown.options[value];
             Enum.TryParse(optionData.text, out LogisticResources resource);
@@ -92,7 +108,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
             if (routEntity.couriersProgressList.Value.Count == 0)
                 return;
             
-            startHexEntity.citizensAmount.Value++;
+            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value + 1);
             routEntity.couriersProgressList.Value.RemoveAt(0);
             _couriersInputField.text = routEntity.couriersProgressList.Value.Count.ToString();
         }
@@ -100,7 +116,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         private void OnDeleteButton(GameEntity routEntity)
         {
             GameEntity startHexEntity = _gameContext.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
-            startHexEntity.citizensAmount.Value += routEntity.couriersProgressList.Value.Count;
+            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value + routEntity.couriersProgressList.Value.Count);
             routEntity.isDestructed = true;
         }
     }

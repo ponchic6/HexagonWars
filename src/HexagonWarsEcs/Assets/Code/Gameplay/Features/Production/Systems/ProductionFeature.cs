@@ -8,8 +8,10 @@ namespace Code.Gameplay.Features.Production.Systems
         {
             Add(systemFactory.Create<ProductionUiViewUpdateSystem>());
             Add(systemFactory.Create<FoodProductionSystem>());
+            Add(systemFactory.Create<FoodDecreasingSystem>());
             Add(systemFactory.Create<FoodPopUpSystem>());
             Add(systemFactory.Create<WarriorsTrainSystem>());
+            Add(systemFactory.Create<CitizenCreationSystem>());
             Add(systemFactory.Create<MineSystem>());
         }
     }

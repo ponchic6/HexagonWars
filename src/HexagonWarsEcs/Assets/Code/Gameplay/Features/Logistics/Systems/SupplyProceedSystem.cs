@@ -65,6 +65,26 @@ namespace Code.Gameplay.Features.Logistics.Systems
                         startHex.ammoAmount.Value -= capacity;
                     }
                     break;
+                
+                case LogisticResources.Iron:
+                    capacity = _commonStaticData.CourierCapacity.First(x => x.logisticResources == LogisticResources.Iron).capacity;
+                    
+                    if (startHex.ironAmount.Value >= capacity)
+                    {
+                        finishHex.ironAmount.Value += capacity;
+                        startHex.ironAmount.Value -= capacity;
+                    }
+                    break;
+                
+                case LogisticResources.Coal:
+                    capacity = _commonStaticData.CourierCapacity.First(x => x.logisticResources == LogisticResources.Coal).capacity;
+                    
+                    if (startHex.coalAmount.Value >= capacity)
+                    {
+                        finishHex.coalAmount.Value += capacity;
+                        startHex.coalAmount.Value -= capacity;
+                    }
+                    break;
             }
             
             courierProgress.currentProgress = 0;

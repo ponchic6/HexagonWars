@@ -19,21 +19,24 @@ namespace Code.Gameplay.Features.Battle.Systems
         {
             foreach (GameEntity entity in _entities)
             {
-                GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonContainer.hexagonId);
+                GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
 
-                if (entity.battlefield.DefenderHexagonContainer.warriorsCount <= 0)
+                if (defenderEntity.warriorsAmount.Value <= 0)
                 {
                     defenderEntity.isEnemyHexagon = false;
                     defenderEntity.isPlayerHexagon = true;
-                    entity.battlefield.AttackerHexagonContainers.ForEach(x => defenderEntity.warriorsAmount.Value += x.warriorsCount);
+                    
+                    entity.battlefield.AttackerHexagonsId.ForEach(x =>
+                    {
+                        GameEntity attackerEntity = _game.GetEntityWithId(x);
+                        defenderEntity.warriorsAmount.Value += attackerEntity.warriorsAmount.Value;
+                        attackerEntity.warriorsAmount.Value = 0;
+                    });
                     entity.isDestructed = true;
                 }
-                
-                if (entity.battlefield.AttackerHexagonContainers.All(x => x.warriorsCount <= 0))
-                {
-                    defenderEntity.warriorsAmount.Value += entity.battlefield.DefenderHexagonContainer.warriorsCount;
+
+                if (entity.battlefield.AttackerHexagonsId.All(x => _game.GetEntityWithId(x).warriorsAmount.Value <= 0))
                     entity.isDestructed = true;
-                }
             }
         }
     }

@@ -23,7 +23,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (_hexEntity.citizensAmount.Value <= 0)
                     return;
                 
-                _hexEntity.citizensAmount.Value--;
+                _hexEntity.ReplaceCitizensAmount(_hexEntity.citizensAmount.Value - 1);
                 _hexEntity.barracks.WarriorsOrdered++;
                 _orderedWarriors.text = _hexEntity.barracks.WarriorsOrdered.ToString();
             }).AddTo(this);
@@ -33,7 +33,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (_hexEntity.barracks.WarriorsOrdered <= 0)
                     return;
                 
-                _hexEntity.citizensAmount.Value++;
+                _hexEntity.ReplaceCitizensAmount(_hexEntity.citizensAmount.Value + 1);
                 _hexEntity.barracks.WarriorsOrdered--;
                 _orderedWarriors.text = _hexEntity.barracks.WarriorsOrdered.ToString();
             }).AddTo(this);

@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Gameplay.Common;
 using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
+using Entitas;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Services
 {
@@ -52,23 +55,7 @@ namespace Code.Gameplay.Features.Migration.Services
                 return null;
             }
             
-            GameEntity migration = _game.CreateEntity();
-            migration.AddId(_identifierService.Next());
-            migration.AddWayIdPoints(shortestPath);
-            migration.AddViewPath(MOVING_ARROW_PATH);
-            migration.AddMigrationComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
-            migration.isMigrationArrow = true;
-
-            switch (_manMigrationType)
-            {
-                case ManMigrationType.Citizens:
-                    migration.AddCitizensMigrationAmount(_migrationAmount);
-                    break;
-                
-                case ManMigrationType.Warriors:
-                    migration.AddWarriorsMigrationAmount(_migrationAmount);
-                    break;
-            }
+            GameEntity migration = CreateMigrationEntity(shortestPath);
 
             _initialHex = null;
             _finishHex = null;
@@ -89,6 +76,63 @@ namespace Code.Gameplay.Features.Migration.Services
             }
             
             return null;
+        }
+
+        private GameEntity CreateMigrationEntity(List<int> shortestPath)
+        {
+            GameEntity migration = _game.CreateEntity();
+            migration.AddId(_identifierService.Next());
+            migration.AddWayIdPoints(shortestPath);
+            migration.AddMigrationComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
+
+            switch (_manMigrationType)
+            {
+                case ManMigrationType.Citizens:
+                    migration.AddCitizensMigrationAmount(_migrationAmount);
+                    break;
+                
+                case ManMigrationType.Warriors:
+                    migration.AddWarriorsMigrationAmount(_migrationAmount);
+                    break;
+            }
+
+            return migration;
+        }
+
+        public List<GameEntity> CreateMigrationViewTrail(EntityBehaviour migrationHexBehaviour, ManMigrationType manMigrationType)
+        {
+            IGroup<GameEntity> group = manMigrationType switch
+            {
+                ManMigrationType.Citizens => _game.GetGroup(GameMatcher.CitizensMigrationAmount),
+                ManMigrationType.Warriors => _game.GetGroup(GameMatcher.WarriorsMigrationAmount),
+                _ => throw new ArgumentOutOfRangeException(nameof(manMigrationType), manMigrationType, null)
+            };
+
+            List<GameEntity> entityMigrations = new();
+
+            foreach (GameEntity entity in group)
+            {
+                if (entity.wayIdPoints.Value[0] != migrationHexBehaviour.Entity.id.Value)
+                    continue;
+                
+                entityMigrations.Add(entity);
+            }
+
+            if (entityMigrations.Count == 0)
+                return null;
+            
+            List<GameEntity> trailsEntity = new();
+
+            foreach (GameEntity entity in entityMigrations)
+            {
+                GameEntity viewTrail = _game.CreateEntity();
+                viewTrail.AddId(_identifierService.Next());
+                viewTrail.AddViewPath(MOVING_ARROW_PATH);
+                viewTrail.AddMigrationArrow(entity.id.Value);
+                trailsEntity.Add(viewTrail);
+            }
+            
+            return trailsEntity;
         }
 
         private List<int> FindShortestPath(EntityBehaviour startNode, EntityBehaviour endNode)

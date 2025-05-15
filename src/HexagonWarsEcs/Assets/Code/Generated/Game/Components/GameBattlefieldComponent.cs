@@ -11,19 +11,19 @@ public partial class GameEntity {
     public Code.Gameplay.Features.Battle.Battlefield battlefield { get { return (Code.Gameplay.Features.Battle.Battlefield)GetComponent(GameComponentsLookup.Battlefield); } }
     public bool hasBattlefield { get { return HasComponent(GameComponentsLookup.Battlefield); } }
 
-    public void AddBattlefield(System.Collections.Generic.List<Code.Gameplay.Features.Battle.DataStructures.WarriorsContainer> newAttackerHexagonContainers, Code.Gameplay.Features.Battle.DataStructures.WarriorsContainer newDefenderHexagonContainer) {
+    public void AddBattlefield(System.Collections.Generic.List<int> newAttackerHexagonsId, int newDefenderHexagonId) {
         var index = GameComponentsLookup.Battlefield;
         var component = (Code.Gameplay.Features.Battle.Battlefield)CreateComponent(index, typeof(Code.Gameplay.Features.Battle.Battlefield));
-        component.AttackerHexagonContainers = newAttackerHexagonContainers;
-        component.DefenderHexagonContainer = newDefenderHexagonContainer;
+        component.AttackerHexagonsId = newAttackerHexagonsId;
+        component.DefenderHexagonId = newDefenderHexagonId;
         AddComponent(index, component);
     }
 
-    public void ReplaceBattlefield(System.Collections.Generic.List<Code.Gameplay.Features.Battle.DataStructures.WarriorsContainer> newAttackerHexagonContainers, Code.Gameplay.Features.Battle.DataStructures.WarriorsContainer newDefenderHexagonContainer) {
+    public void ReplaceBattlefield(System.Collections.Generic.List<int> newAttackerHexagonsId, int newDefenderHexagonId) {
         var index = GameComponentsLookup.Battlefield;
         var component = (Code.Gameplay.Features.Battle.Battlefield)CreateComponent(index, typeof(Code.Gameplay.Features.Battle.Battlefield));
-        component.AttackerHexagonContainers = newAttackerHexagonContainers;
-        component.DefenderHexagonContainer = newDefenderHexagonContainer;
+        component.AttackerHexagonsId = newAttackerHexagonsId;
+        component.DefenderHexagonId = newDefenderHexagonId;
         ReplaceComponent(index, component);
     }
 

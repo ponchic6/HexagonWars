@@ -12,7 +12,8 @@ namespace Code.Gameplay.Features.Migration.Systems
         {
             _game = Contexts.sharedInstance.game;
 
-            _entities = _game.GetGroup(GameMatcher.AllOf(
+            _entities = _game.GetGroup(GameMatcher
+                .AllOf(
                 GameMatcher.MigrationComplexityWay,
                 GameMatcher.WayIdPoints,
                 GameMatcher.CitizensMigrationAmount));

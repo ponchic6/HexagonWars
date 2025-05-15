@@ -13,7 +13,7 @@ namespace Code.Gameplay.Features.Warriors.Services
         private readonly DiContainer _diContainer;
         private readonly GameContext _game;
         private readonly Dictionary<int, SoldierAnimationController> _hexWithSoldiers = new();
-
+        
         public Dictionary<int, SoldierAnimationController> HexWithSoldiers => _hexWithSoldiers;
 
         public SoldiersModelFactory(DiContainer diContainer)
@@ -59,6 +59,21 @@ namespace Code.Gameplay.Features.Warriors.Services
             animationController.transform
                 .DOMove(finishPoint, 1f)
                 .OnComplete(() => Object.Destroy(animationController.gameObject));
+        }
+        
+        public void TryStartShootAlongDirection(GameEntity currentHex, GameEntity nextHex)
+        {
+            if (!_hexWithSoldiers.TryGetValue(currentHex.id.Value, out SoldierAnimationController soldierAnimationController)) 
+                return;
+            
+            soldierAnimationController.StartShooting();
+            Vector3 finishPoint = nextHex.transform.Value.position;
+            Vector3 direction = finishPoint - currentHex.transform.Value.position;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Vector3 euler = lookRotation.eulerAngles;
+            Vector3 currentRotation = soldierAnimationController.transform.rotation.eulerAngles;
+            Vector3 newRotation = new Vector3(currentRotation.x, euler.y, currentRotation.z);
+            soldierAnimationController.transform.rotation = Quaternion.Euler(newRotation);
         }
     }
 } 

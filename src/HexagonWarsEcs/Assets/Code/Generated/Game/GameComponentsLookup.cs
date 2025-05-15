@@ -16,47 +16,49 @@ public static class GameComponentsLookup {
     public const int BattleArrow = 5;
     public const int BattleCooldown = 6;
     public const int Battlefield = 7;
-    public const int CurrentBattleCooldown = 8;
-    public const int EnemyHexagon = 9;
-    public const int HexagonForAttack = 10;
-    public const int PlayerHexagon = 11;
-    public const int WarriorsAmount = 12;
-    public const int WarriorsMigrationAmount = 13;
-    public const int BuildingProgress = 14;
-    public const int CitizensAmount = 15;
-    public const int CurrentHungerDeathCooldown = 16;
-    public const int MaxHungerDeathCooldown = 17;
-    public const int AmmoAmount = 18;
-    public const int AvailabilityForSupplyRout = 19;
-    public const int CoalAmount = 20;
-    public const int CouriersProgressList = 21;
-    public const int FoodAmount = 22;
-    public const int HighlightedSupplyRout = 23;
-    public const int IronAmount = 24;
-    public const int SupplyComplexityWay = 25;
-    public const int SupplyHighlighter = 26;
-    public const int SupplyRoute = 27;
-    public const int ChildHexagon = 28;
-    public const int MapParent = 29;
-    public const int CitizensMigrationAmount = 30;
-    public const int MigrationArrow = 31;
-    public const int MigrationComplexityWay = 32;
-    public const int MigrationHandler = 33;
-    public const int WayIdPoints = 34;
-    public const int AmountPopUpCooldown = 35;
-    public const int AmountPopUpEvents = 36;
-    public const int Barracks = 37;
-    public const int FoodFarm = 38;
-    public const int LivingArea = 39;
-    public const int Mine = 40;
-    public const int Destructed = 41;
-    public const int InitialTransform = 42;
-    public const int View = 43;
-    public const int ViewPath = 44;
-    public const int ViewPrefab = 45;
-    public const int ViewPrefabWithParent = 46;
+    public const int BattleIndicator = 8;
+    public const int BattleIndicatorController = 9;
+    public const int CurrentBattleCooldown = 10;
+    public const int EnemyHexagon = 11;
+    public const int HexagonForAttack = 12;
+    public const int PlayerHexagon = 13;
+    public const int WarriorsAmount = 14;
+    public const int WarriorsMigrationAmount = 15;
+    public const int BuildingProgress = 16;
+    public const int CitizensAmount = 17;
+    public const int CurrentHungerDeathCooldown = 18;
+    public const int MaxHungerDeathCooldown = 19;
+    public const int AmmoAmount = 20;
+    public const int AvailabilityForSupplyRout = 21;
+    public const int CoalAmount = 22;
+    public const int CouriersProgressList = 23;
+    public const int FoodAmount = 24;
+    public const int HighlightedSupplyRout = 25;
+    public const int IronAmount = 26;
+    public const int SupplyComplexityWay = 27;
+    public const int SupplyHighlighter = 28;
+    public const int SupplyRoute = 29;
+    public const int ChildHexagon = 30;
+    public const int MapParent = 31;
+    public const int CitizensMigrationAmount = 32;
+    public const int MigrationArrow = 33;
+    public const int MigrationComplexityWay = 34;
+    public const int MigrationHandler = 35;
+    public const int WayIdPoints = 36;
+    public const int AmountPopUpCooldown = 37;
+    public const int AmountPopUpEvents = 38;
+    public const int Barracks = 39;
+    public const int City = 40;
+    public const int FoodFarm = 41;
+    public const int Mine = 42;
+    public const int Destructed = 43;
+    public const int InitialTransform = 44;
+    public const int View = 45;
+    public const int ViewPath = 46;
+    public const int ViewPrefab = 47;
+    public const int ViewPrefabWithParent = 48;
 
-    public const int TotalComponents = 47;
+    public const int TotalComponents = 49;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -67,6 +69,8 @@ public static class GameComponentsLookup {
         "BattleArrow",
         "BattleCooldown",
         "Battlefield",
+        "BattleIndicator",
+        "BattleIndicatorController",
         "CurrentBattleCooldown",
         "EnemyHexagon",
         "HexagonForAttack",
@@ -97,8 +101,8 @@ public static class GameComponentsLookup {
         "AmountPopUpCooldown",
         "AmountPopUpEvents",
         "Barracks",
+        "City",
         "FoodFarm",
-        "LivingArea",
         "Mine",
         "Destructed",
         "InitialTransform",
@@ -117,6 +121,8 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Battle.BattleArrow),
         typeof(Code.Gameplay.Features.Battle.BattleCooldown),
         typeof(Code.Gameplay.Features.Battle.Battlefield),
+        typeof(Code.Gameplay.Features.Battle.BattleIndicator),
+        typeof(Code.Gameplay.Features.Battle.BattleIndicatorControllerComponent),
         typeof(Code.Gameplay.Features.Battle.CurrentBattleCooldown),
         typeof(Code.Gameplay.Features.Battle.EnemyHexagon),
         typeof(Code.Gameplay.Features.Battle.HexagonForAttack),
@@ -147,8 +153,8 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpCooldown),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpEvents),
         typeof(Code.Gameplay.Features.Production.Barracks),
+        typeof(Code.Gameplay.Features.Production.City),
         typeof(Code.Gameplay.Features.Production.FoodFarm),
-        typeof(Code.Gameplay.Features.Production.LivingArea),
         typeof(Code.Gameplay.Features.Production.Mine),
         typeof(Code.Infrastructure.Destroy.Destructed),
         typeof(Code.Infrastructure.View.InitialTransform),

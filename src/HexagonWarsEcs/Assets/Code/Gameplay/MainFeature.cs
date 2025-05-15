@@ -22,10 +22,10 @@ namespace Code.Gameplay
             Add(systemFactory.Create<MapFeature>());
             Add(systemFactory.Create<MigrationFeature>());
             Add(systemFactory.Create<CitizensFeature>());
-            Add(systemFactory.Create<WarriorsFeature>());
             Add(systemFactory.Create<BuildFeature>());
             Add(systemFactory.Create<SupplyFeature>());
             Add(systemFactory.Create<BattleFeature>());
+            Add(systemFactory.Create<WarriorsFeature>());
             Add(systemFactory.Create<ProductionFeature>());
             Add(systemFactory.Create<PopUpFeature>());
             Add(systemFactory.Create<DestroyFeature>());

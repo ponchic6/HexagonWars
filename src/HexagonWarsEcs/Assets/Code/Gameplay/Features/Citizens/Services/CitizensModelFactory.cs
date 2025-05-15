@@ -56,7 +56,8 @@ namespace Code.Gameplay.Features.Citizens.Services
             animationController.transform.LookAt(finishPoint);
             
             animationController.StartRun();
-            animationController.transform
+            animationController
+                .transform
                 .DOMove(finishPoint, 1f)
                 .OnComplete(() => Object.Destroy(animationController.gameObject));
         }

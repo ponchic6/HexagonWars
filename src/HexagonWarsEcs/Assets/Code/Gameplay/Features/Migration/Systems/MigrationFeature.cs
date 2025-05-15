@@ -1,5 +1,4 @@
-﻿using Code.Gameplay.Features.Citizens.Systems;
-using Code.Infrastructure.Systems;
+﻿using Code.Infrastructure.Systems;
 
 namespace Code.Gameplay.Features.Migration.Systems
 {
@@ -9,11 +8,13 @@ namespace Code.Gameplay.Features.Migration.Systems
         {
             Add(systemFactory.Create<CitizensMigrationProceedSystem>());
             Add(systemFactory.Create<WarriorsMigrationProceedSystem>());
+            Add(systemFactory.Create<CitizensRunningAnimationOnPlaceSystem>());
+            Add(systemFactory.Create<WarriorsRunningAnimationOnPlaceSystem>());
+            Add(systemFactory.Create<MigrationTrailClearSystem>());
+            
             Add(systemFactory.Create<MigrationChooserUiReactiveSystem>());
             Add(systemFactory.Create<MigrationHexButtonsReactiveSystem>());
             Add(systemFactory.Create<MigrationEnemyHexButtonsReactiveSystem>());
-            Add(systemFactory.Create<IdleCitizensViewControlReactiveSystem>());
-            Add(systemFactory.Create<RunningCitizensViewControlReactiveSystem>());
         }
     }
 }

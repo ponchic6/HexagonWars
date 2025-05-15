@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Code.Gameplay.Features.Building;
 using Code.Gameplay.Features.Building.DataStructure;
+using Code.Gameplay.Features.Map.View;
 using Code.Gameplay.Features.Migration.View.UI;
 using Code.Gameplay.Features.PopUp.DataStructures;
 using Code.Infrastructure.Services;
@@ -32,7 +33,7 @@ namespace Code.Gameplay.Features.Map.Services
         private void GenerateHexMap()
         {
             GameObject map = new GameObject("Map");
-            map.AddComponent<MigrationAllSlidersBlocker>();
+            map.AddComponent<MapOutlinesController>();
             
             float hexWidth = hexSize * 2f;
             float hexHeight = Mathf.Sqrt(3f) * hexSize;
@@ -43,7 +44,7 @@ namespace Code.Gameplay.Features.Map.Services
             {
                 for (int y = 0; y < _mapHeight; y++)
                 {
-                    GameEntity hexagonEntity = CreateHexagonEntity();
+                    GameEntity hexagonEntity = CreateHexagonEntity(x, y);
                     float xPos = x * offsetX;
                     float yPos = y * offsetY;
                     
@@ -58,25 +59,27 @@ namespace Code.Gameplay.Features.Map.Services
             }
         }
 
-        private GameEntity CreateHexagonEntity()
+        private GameEntity CreateHexagonEntity(int x, int y)
         {
             GameEntity entity = _game.CreateEntity();
             entity.isChildHexagon = true;
             entity.AddId(_identifierService.Next());
 
-            if (Random.value > 0.5f)
-            {
+            if (x < 2)
                 entity.isPlayerHexagon = true;
-            }
             else
-            {
                 entity.isEnemyHexagon = true;
-            }
-            
-            entity.AddCitizensAmount(new System.Random().Next(1, 101));
+
+            // if (entity.id.Value == 1)
+            //     entity.AddCitizensAmount(50);
+            // else
+            //     entity.AddCitizensAmount(0);
+
             entity.AddWarriorsAmount(new System.Random().Next(1, 101));
-            entity.AddFoodAmount(100000);
-            entity.AddAmmoAmount(100000);
+            entity.AddCitizensAmount(new System.Random().Next(1, 101));
+            //entity.AddWarriorsAmount(0);
+            entity.AddFoodAmount(10000);
+            entity.AddAmmoAmount(0);
             entity.AddCoalAmount(0);
             entity.AddIronAmount(0);
             entity.AddAmountPopUpCooldown(_commonStaticData.AmountPopUpCooldown, _commonStaticData.AmountPopUpCooldown);
@@ -84,6 +87,13 @@ namespace Code.Gameplay.Features.Map.Services
             
             entity.AddBuildingProgress(new ()
             {
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.City,
+                    buildersAmount = 0,
+                },
                 new BuildProgressContainer
                 {
                     fullProgress = 200,

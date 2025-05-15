@@ -3,6 +3,8 @@
     public enum LogisticResources
     {
         Food,
-        Ammo
+        Ammo,
+        Iron,
+        Coal
     }
 }

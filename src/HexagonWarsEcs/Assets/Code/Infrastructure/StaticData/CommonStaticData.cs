@@ -11,7 +11,6 @@ namespace Code.Infrastructure.StaticData
         public Sprite ManSprite;
         public Sprite FoodIcon;
         public float BattleCooldown;
-        public float BattleArrowsVerticalOffset;
         public float StrongCoefficientOfDefenders;
         public float StrongCoefficientOfAttackers;
         public float FoodPerSecondByBuilders;
@@ -27,5 +26,7 @@ namespace Code.Infrastructure.StaticData
         public float WarriorTrainingTime;
         public CourierCapacity[] CourierCapacity;
         public float AmountPopUpCooldown;
+        public float FoodPricePerCitizen;
+        public float CitizenCreationTime;
     }
 }

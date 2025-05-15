@@ -24,7 +24,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (hexEntity.citizensAmount.Value <= 0)
                     return;
                 
-                hexEntity.citizensAmount.Value--;
+                hexEntity.ReplaceCitizensAmount(hexEntity.citizensAmount.Value - 1);
                 hexEntity.mine.Miners++;
                 _minersAmount.text = hexEntity.mine.Miners.ToString();
             }).AddTo(this);
@@ -34,7 +34,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (hexEntity.mine.Miners <= 0)
                     return;
                 
-                hexEntity.citizensAmount.Value++;
+                hexEntity.ReplaceCitizensAmount(hexEntity.citizensAmount.Value + 1);
                 hexEntity.mine.Miners--;
                 _minersAmount.text = hexEntity.mine.Miners.ToString();
             }).AddTo(this);

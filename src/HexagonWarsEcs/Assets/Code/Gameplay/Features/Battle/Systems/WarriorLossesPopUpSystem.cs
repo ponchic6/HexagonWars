@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Code.Gameplay.Features.Battle.DataStructures;
 using Code.Gameplay.Features.PopUp.DataStructures;
 using Code.Infrastructure.StaticData;
 using Entitas;
@@ -38,29 +37,29 @@ namespace Code.Gameplay.Features.Battle.Systems
 
         private void UpdateWarriorPopUpEvents(GameEntity entity)
         {
-            GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonContainer.hexagonId);
+            GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
             List<AmountPopUpContainer> defenderPopUpContainer = defenderEntity.amountPopUpEvents.Value;
             defenderPopUpContainer.RemoveAll(x => x.sprite == _commonStaticData.ManSprite);
-            defenderPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, entity.battlefield.DefenderHexagonContainer.warriorsCount, defenderEntity.transform.Value));
+            defenderPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, defenderEntity.warriorsAmount.Value, defenderEntity.transform.Value));
 
-            foreach (WarriorsContainer warriorsContainer in entity.battlefield.AttackerHexagonContainers)
+            foreach (int attackersId in entity.battlefield.AttackerHexagonsId)
             {
-                GameEntity attackerEntity = _game.GetEntityWithId(warriorsContainer.hexagonId);
+                GameEntity attackerEntity = _game.GetEntityWithId(attackersId);
                 List<AmountPopUpContainer> attackerPopUpContainer = attackerEntity.amountPopUpEvents.Value;
                 attackerPopUpContainer.RemoveAll(x => x.sprite == _commonStaticData.ManSprite);
-                attackerPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, warriorsContainer.warriorsCount, attackerEntity.transform.Value));
+                attackerPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, attackerEntity.warriorsAmount.Value, attackerEntity.transform.Value));
             }
         }
 
         private void ClearWarriorPopUpEvents(GameEntity entity)
         {
-            GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonContainer.hexagonId);
+            GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
             List<AmountPopUpContainer> defenderPopUpContainer = defenderEntity.amountPopUpEvents.Value;
             defenderPopUpContainer.RemoveAll(x => x.sprite == _commonStaticData.ManSprite);
                     
-            foreach (WarriorsContainer warriorsContainer in entity.battlefield.AttackerHexagonContainers)
+            foreach (int attackerId in entity.battlefield.AttackerHexagonsId)
             {
-                GameEntity attackerEntity = _game.GetEntityWithId(warriorsContainer.hexagonId);
+                GameEntity attackerEntity = _game.GetEntityWithId(attackerId);
                 List<AmountPopUpContainer> attackerPopUpContainer = attackerEntity.amountPopUpEvents.Value;
                 attackerPopUpContainer.RemoveAll(x => x.sprite == _commonStaticData.ManSprite);
             }

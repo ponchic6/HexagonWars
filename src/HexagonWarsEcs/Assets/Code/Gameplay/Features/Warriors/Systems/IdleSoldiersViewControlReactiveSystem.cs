@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Code.Gameplay.Features.Warriors.Services;
 using Entitas;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Warriors.Systems
 {

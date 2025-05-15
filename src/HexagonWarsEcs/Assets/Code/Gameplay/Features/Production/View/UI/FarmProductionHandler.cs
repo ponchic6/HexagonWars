@@ -20,7 +20,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (hexEntity.citizensAmount.Value <= 0)
                     return;
                 
-                hexEntity.citizensAmount.Value--;
+                hexEntity.ReplaceCitizensAmount(hexEntity.citizensAmount.Value - 1);
                 hexEntity.foodFarm.Workers++;
                 _workersAmount.text = hexEntity.foodFarm.Workers.ToString();
             }).AddTo(this);
@@ -30,7 +30,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (hexEntity.foodFarm.Workers <= 0)
                     return;
                 
-                hexEntity.citizensAmount.Value++;
+                hexEntity.ReplaceCitizensAmount(hexEntity.citizensAmount.Value + 1);
                 hexEntity.foodFarm.Workers--;
                 _workersAmount.text = hexEntity.foodFarm.Workers.ToString();
             }).AddTo(this);

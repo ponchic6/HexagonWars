@@ -74,15 +74,17 @@ namespace Code.Gameplay.Features.Migration.View.UI
 
         public void Hide()
         {
-            _entityBehaviour = null;
-            
             if (_sliderTween != null)
                 _sliderTween.Complete();
 
             _sliderTween = _slider.transform
                 .DOScale(_sliderStandartScale, 0.3f)
                 .SetEase(Ease.OutQuad)
-                .OnComplete(() => gameObject.SetActive(false));
+                .OnComplete(() =>
+                {
+                    gameObject.SetActive(false);
+                    _entityBehaviour = null;
+                });
             
             _slider.value = 0;
         }

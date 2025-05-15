@@ -2,7 +2,7 @@
 {
     public enum BuildingsType
     {
-        LivingArea,
+        City,
         FoodFarm,
         Barracks,
         Mine

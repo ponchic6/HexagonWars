@@ -11,6 +11,7 @@ namespace Code.Gameplay.Features.Migration.View
         [SerializeField] private EntityBehaviour _entityBehaviour;
         [SerializeField] private Transform _migrationTrailPrefab;
         [SerializeField] private SplineContainer _splineContainer;
+        private GameContext _game = Contexts.sharedInstance.game;
         private float _distancePercentage;
         private float _distancePercentageMain;
         private float _speed;
@@ -20,7 +21,12 @@ namespace Code.Gameplay.Features.Migration.View
 
         private void Update()
         {
-            if (!_entityBehaviour.Entity.hasWayIdPoints)
+            GameEntity migrationEntity = _game.GetEntityWithId(_entityBehaviour.Entity.migrationArrow.MigrationId);
+            
+            if (migrationEntity == null)
+                return;
+            
+            if (!migrationEntity.hasWayIdPoints)
                 return;
 
             if (_splineContainer.Spline.Count == 0)
@@ -37,18 +43,21 @@ namespace Code.Gameplay.Features.Migration.View
                 mainTrailRenderer.endColor = Color.red;
                 mainTrailRenderer.sortingOrder = -2;
             }
-            
+
+            TryDestroy();
             MoveMainTrail();
             MoveFillingTrail();
         }
-        
+
         private void CreateSpline()
         {
-            GameContext game = Contexts.sharedInstance.game;
+            GameContext game = _game;
 
             List<Vector3> path = new();
 
-            foreach (int id in _entityBehaviour.Entity.wayIdPoints.Value)
+            GameEntity migrationEntity = _game.GetEntityWithId(_entityBehaviour.Entity.migrationArrow.MigrationId);
+            
+            foreach (int id in migrationEntity.wayIdPoints.Value)
             {
                 Vector3 position = game.GetEntityWithId(id).transform.Value.position + Vector3.up * 0.34f;
                 path.Add(position);
@@ -59,7 +68,7 @@ namespace Code.Gameplay.Features.Migration.View
             foreach (Vector3 vector3 in array) 
                 _splineContainer.Spline.Add(vector3);
 
-            _complexity = _entityBehaviour.Entity.migrationComplexityWay.Value.ToArray();
+            _complexity = migrationEntity.migrationComplexityWay.Value.ToArray();
         }
 
         private void MoveMainTrail()
@@ -82,6 +91,12 @@ namespace Code.Gameplay.Features.Migration.View
             _distancePercentage += _speed * Time.deltaTime;
             Vector3 currentPosition = _splineContainer.Spline.EvaluatePosition(_distancePercentage);
             _fillingFragment.transform.position = currentPosition;
+        }
+
+        private void TryDestroy()
+        {
+            if ((int)Math.Floor(_distancePercentage * _complexity.Length) != 0) 
+                _entityBehaviour.Entity.isDestructed = true;
         }
     }
 }

@@ -8,25 +8,25 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    static readonly Code.Gameplay.Features.Migration.MigrationArrow migrationArrowComponent = new Code.Gameplay.Features.Migration.MigrationArrow();
+    public Code.Gameplay.Features.Migration.MigrationArrow migrationArrow { get { return (Code.Gameplay.Features.Migration.MigrationArrow)GetComponent(GameComponentsLookup.MigrationArrow); } }
+    public bool hasMigrationArrow { get { return HasComponent(GameComponentsLookup.MigrationArrow); } }
 
-    public bool isMigrationArrow {
-        get { return HasComponent(GameComponentsLookup.MigrationArrow); }
-        set {
-            if (value != isMigrationArrow) {
-                var index = GameComponentsLookup.MigrationArrow;
-                if (value) {
-                    var componentPool = GetComponentPool(index);
-                    var component = componentPool.Count > 0
-                            ? componentPool.Pop()
-                            : migrationArrowComponent;
+    public void AddMigrationArrow(int newMigrationId) {
+        var index = GameComponentsLookup.MigrationArrow;
+        var component = (Code.Gameplay.Features.Migration.MigrationArrow)CreateComponent(index, typeof(Code.Gameplay.Features.Migration.MigrationArrow));
+        component.MigrationId = newMigrationId;
+        AddComponent(index, component);
+    }
 
-                    AddComponent(index, component);
-                } else {
-                    RemoveComponent(index);
-                }
-            }
-        }
+    public void ReplaceMigrationArrow(int newMigrationId) {
+        var index = GameComponentsLookup.MigrationArrow;
+        var component = (Code.Gameplay.Features.Migration.MigrationArrow)CreateComponent(index, typeof(Code.Gameplay.Features.Migration.MigrationArrow));
+        component.MigrationId = newMigrationId;
+        ReplaceComponent(index, component);
+    }
+
+    public void RemoveMigrationArrow() {
+        RemoveComponent(GameComponentsLookup.MigrationArrow);
     }
 }
 

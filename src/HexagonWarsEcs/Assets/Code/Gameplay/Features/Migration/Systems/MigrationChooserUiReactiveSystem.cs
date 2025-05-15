@@ -19,11 +19,9 @@ namespace Code.Gameplay.Features.Migration.Systems
                 GameMatcher.CitizensAmount,
                 GameMatcher.WarriorsAmount));
 
-        protected override bool Filter(GameEntity entity)
-        {
-            return _uiFactory.MigrationAmountChooser.gameObject.activeSelf &&
-                   _uiFactory.MigrationAmountChooser.EntityBehaviour.Entity.id.Value == entity.id.Value;
-        }
+        protected override bool Filter(GameEntity entity) =>
+            _uiFactory.MigrationAmountChooser.gameObject.activeSelf &&
+            _uiFactory.MigrationAmountChooser.EntityBehaviour.Entity.id.Value == entity.id.Value;
 
         protected override void Execute(List<GameEntity> entities) =>
             _uiFactory.MigrationAmountChooser.UpdateUi();

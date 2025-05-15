@@ -3,6 +3,7 @@ using Code.Gameplay.Features.Building.DataStructure;
 using Code.Infrastructure.View;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace Code.Gameplay.Features.Building.View
 {
@@ -15,9 +16,16 @@ namespace Code.Gameplay.Features.Building.View
         [SerializeField] private BuildingButton _buildingButtonPrefab;
         private Dictionary<BuildProgressContainer, BuildingButton> _buildingButtons = new();
         private EntityBehaviour _hexEntityBehaviour;
+        private DiContainer _diContainer;
 
         public EntityBehaviour HexEntityBehaviour => _hexEntityBehaviour;
         public Dictionary<BuildProgressContainer, BuildingButton> BuildingButtons => _buildingButtons;
+
+        [Inject]
+        public void Construct(DiContainer diContainer)
+        {
+            _diContainer = diContainer;
+        }
 
         private void Update()
         {
@@ -30,10 +38,8 @@ namespace Code.Gameplay.Features.Building.View
         {
             _hexEntityBehaviour = hexEntityBehaviour;
             
-            foreach (var kvp in _buildingButtons)
-            {
+            foreach (var kvp in _buildingButtons) 
                 Destroy(kvp.Value.gameObject);
-            }
             
             _buildingButtons.Clear();
             UpdateBuildingProgress();
@@ -44,25 +50,35 @@ namespace Code.Gameplay.Features.Building.View
             foreach (BuildProgressContainer buildProgress in _hexEntityBehaviour.Entity.buildingProgress.Value)
             {
                 if (!_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress < buildProgress.fullProgress)
+                {
                     CreateBuildingButton(buildProgress);
+                    continue;
+                }
 
                 if (!_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress >= buildProgress.fullProgress)
                 {
                     CreateBuildingButton(buildProgress);
                     SetBuildedStatus(buildProgress);
+                    continue;
                 }
-                
+
                 if (_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress >= buildProgress.fullProgress)
+                {
                     SetBuildedStatus(buildProgress);
+                    continue;
+                }
 
                 if (_buildingButtons.ContainsKey(buildProgress) && buildProgress.currentProgress < buildProgress.fullProgress)
+                {
                     UpdateBuildingButton(buildProgress);
+                    continue;
+                }
             }
         }
         
         private void CreateBuildingButton(BuildProgressContainer buildProgress)
         {
-            var buildingButton = Instantiate(_buildingButtonPrefab, _content);
+            BuildingButton buildingButton = _diContainer.InstantiatePrefabForComponent<BuildingButton>(_buildingButtonPrefab, _content);
             buildingButton.Setup(buildProgress, _hexEntityBehaviour);
             _buildingButtons.Add(buildProgress, buildingButton);
         }

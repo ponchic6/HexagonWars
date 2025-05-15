@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using Code.Gameplay.Common;
-using Code.Gameplay.Features.Battle.DataStructures;
 using Code.Gameplay.Features.Map.View;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.StaticData;
 using Code.Infrastructure.View;
 using Entitas;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Battle.Services
 {
     public class BattleFieldFactory : IBattleFieldFactory
     {
-        private const string MOVING_ARROW_PATH = "Arrows/MigrationArrow/MigrationArrow";
+        private const string BATTLE_INDICATOR_PATH = "Hexagons/UI/BattleIndicator";
         
         private readonly IIdentifierService _identifierService;
         private readonly CommonStaticData _commonStaticData;
@@ -45,36 +45,38 @@ namespace Code.Gameplay.Features.Battle.Services
             }
             
             _defendersHex = entityBehaviour;
-
-            if (TryAddAttackersInExistBattlefield()) 
-                return;
-
+            
             if (IsHexagonsNotNeighbours())
             {
                 CreateMigrationToBattlefield();
                 return;
             }
+
+            if (TryAddAttackersInExistBattlefield())
+                return;
             
-            GameEntity battlefield = CreateBattlefield();
-            CreateBattleArrow(battlefield);
+            GameEntity battlefield = CreateBattlefield(_attackersHex.Entity, _defendersHex.Entity);
+            CreateBattleIndicator(_attackersHex.Entity, _defendersHex.Entity, battlefield);
             ResetFactoryState();
         }
 
         public void CreateBattlefieldFromWarriorsMigration(GameEntity migrationEntity)
         {
+            GameEntity defenderHex = _game.GetEntityWithId(migrationEntity.hexagonForAttack.Value);
+            GameEntity attackerHex = _game.GetEntityWithId(migrationEntity.wayIdPoints.Value[0]);
+            GameEntity battlefield = CreateBattlefield(attackerHex, defenderHex);
+            CreateBattleIndicator(attackerHex, defenderHex, battlefield);
+            ResetFactoryState();
+        }
+
+        private GameEntity CreateBattlefield(GameEntity attackerHex, GameEntity defenderHex)
+        {
             GameEntity battlefield = _game.CreateEntity();
             battlefield.AddId(_identifierService.Next());
             battlefield.AddCurrentBattleCooldown(0f);
             battlefield.AddBattleCooldown(_commonStaticData.BattleCooldown);
-            GameEntity defenderHex = _game.GetEntityWithId(migrationEntity.hexagonForAttack.Value);
-            GameEntity attackerHex = _game.GetEntityWithId(migrationEntity.wayIdPoints.Value[0]);
-            WarriorsContainer attackers = new WarriorsContainer(migrationEntity.warriorsMigrationAmount.Value, migrationEntity.wayIdPoints.Value[0]);
-            WarriorsContainer defenders = new WarriorsContainer(defenderHex.warriorsAmount.Value, defenderHex.id.Value);
-            battlefield.AddBattlefield(new List<WarriorsContainer>{ attackers }, defenders);
-            attackerHex.warriorsAmount.Value -= migrationEntity.warriorsMigrationAmount.Value;
-            defenderHex.warriorsAmount.Value = 0;
-            CreateBattleArrowFromWarriorsMigration(battlefield, migrationEntity.wayIdPoints.Value[0], defenderHex.id.Value);
-            ResetFactoryState();
+            battlefield.AddBattlefield(new List<int>{ attackerHex.id.Value }, defenderHex.id.Value);
+            return battlefield;
         }
 
         private void CreateMigrationToBattlefield()
@@ -91,52 +93,29 @@ namespace Code.Gameplay.Features.Battle.Services
                 
             ResetFactoryState();
         }
-
-        private void CreateBattleArrowFromWarriorsMigration(GameEntity battlefield, int attackersHexId, int defendersHexId)
+        
+        private void CreateBattleIndicator(GameEntity fromHex, GameEntity toHex, GameEntity battlefieldEntity)
         {
-            GameEntity battleArrow = _game.CreateEntity();
-            battleArrow.AddViewPath(MOVING_ARROW_PATH);
-            battleArrow.AddBattleArrow(battlefield.id.Value);
-            battleArrow.AddWayIdPoints(new (){ attackersHexId, defendersHexId });
-        }
-
-        private void CreateBattleArrow(GameEntity battlefield)
-        {
-            GameEntity battleArrow = _game.CreateEntity();
-            battleArrow.AddViewPath(MOVING_ARROW_PATH);
-            battleArrow.AddBattleArrow(battlefield.id.Value);
-            battleArrow.AddWayIdPoints(new (){ _attackersHex.Entity.id.Value, _defendersHex.Entity.id.Value });
-        }
-
-        private GameEntity CreateBattlefield()
-        {
-            GameEntity battlefield = _game.CreateEntity();
-            battlefield.AddId(_identifierService.Next());
-            battlefield.AddCurrentBattleCooldown(0f);
-            battlefield.AddBattleCooldown(_commonStaticData.BattleCooldown);
-            WarriorsContainer attackers = new WarriorsContainer(_warriorsAmount, _attackersHex.Entity.id.Value);
-            WarriorsContainer defenders = new WarriorsContainer(_defendersHex.Entity.warriorsAmount.Value, _defendersHex.Entity.id.Value);
-            battlefield.AddBattlefield(new List<WarriorsContainer>{ attackers }, defenders);
-            _attackersHex.Entity.warriorsAmount.Value -= _warriorsAmount;
-            _defendersHex.Entity.warriorsAmount.Value = 0;
-            return battlefield;
+            GameEntity battleIndicator = _game.CreateEntity();
+            battleIndicator.AddId(_identifierService.Next());
+            battleIndicator.AddBattleIndicator(fromHex.id.Value, toHex.id.Value, 0, battlefieldEntity.id.Value);
+            battleIndicator.AddViewPath(BATTLE_INDICATOR_PATH);
         }
 
         private bool TryAddAttackersInExistBattlefield()
         {
             IGroup<GameEntity> entities = _game.GetGroup(GameMatcher.Battlefield);
 
-            foreach (GameEntity entity in entities)
+            foreach (GameEntity battlefieldEntity in entities)
             {
-                if (entity.battlefield.DefenderHexagonContainer.hexagonId == _defendersHex.Entity.id.Value)
-                {
-                    CreateBattleArrow(entity);
-                    
-                    entity.battlefield.AttackerHexagonContainers.Add(new WarriorsContainer(_warriorsAmount, _attackersHex.Entity.id.Value));
-                    _attackersHex.Entity.warriorsAmount.Value -= _warriorsAmount;
-                    ResetFactoryState();
-                    return true;
-                }
+                if (battlefieldEntity.battlefield.DefenderHexagonId != _defendersHex.Entity.id.Value)
+                    continue;
+                
+                battlefieldEntity.battlefield.AttackerHexagonsId.Add(_attackersHex.Entity.id.Value);
+                battlefieldEntity.ReplaceBattlefield(battlefieldEntity.battlefield.AttackerHexagonsId, battlefieldEntity.battlefield.DefenderHexagonId);
+                CreateBattleIndicator(_attackersHex.Entity, _defendersHex.Entity, battlefieldEntity);
+                ResetFactoryState();
+                return true;
             }
 
             return false;

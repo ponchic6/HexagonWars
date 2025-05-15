@@ -10,13 +10,14 @@ namespace Code.Gameplay.Features.Battle.Systems
     {
         private readonly CommonStaticData _commonStaticData;
         private readonly IGroup<GameEntity> _entities;
+        private readonly GameContext _game;
 
         public BattleLoopSystem(CommonStaticData commonStaticData)
         {
             _commonStaticData = commonStaticData;
-            GameContext game = Contexts.sharedInstance.game;
+            _game = Contexts.sharedInstance.game;
 
-            _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.Battlefield, GameMatcher.CurrentBattleCooldown, GameMatcher.BattleCooldown));
+            _entities = _game.GetGroup(GameMatcher.AllOf(GameMatcher.Battlefield));
         }
         
         public void Execute()
@@ -26,27 +27,46 @@ namespace Code.Gameplay.Features.Battle.Systems
                 if (entity.currentBattleCooldown.Value > 0) 
                     continue;
 
-                int attackers = entity.battlefield.AttackerHexagonContainers.Sum(x => x.warriorsCount);
-                int defenders = entity.battlefield.DefenderHexagonContainer.warriorsCount;
+                int attackers = entity
+                    .battlefield
+                    .AttackerHexagonsId
+                    .Sum(x => _game.GetEntityWithId(x).warriorsAmount.Value);
+                
+                int defenders = _game
+                    .GetEntityWithId(entity.battlefield.DefenderHexagonId)
+                    .warriorsAmount
+                    .Value;
 
-                List<int> attackersList = entity.battlefield.AttackerHexagonContainers.Select(x => x.warriorsCount).ToList();
+                List<int> attackersList = entity
+                        .battlefield
+                        .AttackerHexagonsId
+                        .Select(x => _game.GetEntityWithId(x).warriorsAmount.Value)
+                        .ToList();
+                
                 int totalAttackersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * defenders * defenders);
 
                 List<int> distributeLosses = DistributeLosses(attackersList, totalAttackersLosses);
 
-                for (var i = 0; i < entity.battlefield.AttackerHexagonContainers.Count; i++)
+                for (var i = 0; i < entity.battlefield.AttackerHexagonsId.Count; i++)
                 {
-                    var warriorsContainer = entity.battlefield.AttackerHexagonContainers[i];
-                    warriorsContainer.warriorsCount -= distributeLosses[i];
+                    GameEntity attackerHex = _game.GetEntityWithId(entity.battlefield.AttackerHexagonsId[i]);
                     
-                    if (warriorsContainer.warriorsCount < 0) 
-                        warriorsContainer.warriorsCount = 0;
+                    attackerHex.warriorsAmount.Value -= distributeLosses[i];
+                    
+                    if (attackerHex.warriorsAmount.Value < 0) 
+                        attackerHex.warriorsAmount.Value = 0;
+                    
+                    attackerHex.ReplaceWarriorsAmount(attackerHex.warriorsAmount.Value);
                 }
+
+                GameEntity defenderHex = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
                 
-                entity.battlefield.DefenderHexagonContainer.warriorsCount -= (int)Math.Round(_commonStaticData.StrongCoefficientOfAttackers * attackers * attackers);
+                defenderHex.warriorsAmount.Value -= (int)Math.Round(_commonStaticData.StrongCoefficientOfAttackers * attackers * attackers);
+
+                if (defenderHex.warriorsAmount.Value < 0)
+                    defenderHex.warriorsAmount.Value = 0;
                 
-                if (entity.battlefield.DefenderHexagonContainer.warriorsCount < 0)
-                    entity.battlefield.DefenderHexagonContainer.warriorsCount = 0;
+                entity.ReplaceBattlefield(entity.battlefield.AttackerHexagonsId, entity.battlefield.DefenderHexagonId);
             }
         }
         

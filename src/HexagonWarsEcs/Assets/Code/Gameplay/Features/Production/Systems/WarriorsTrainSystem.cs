@@ -11,7 +11,7 @@ namespace Code.Gameplay.Features.Production.Systems
         {
             GameContext game = Contexts.sharedInstance.game;
             
-            _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.CitizensAmount, GameMatcher.Barracks));
+            _entities = game.GetGroup(GameMatcher.Barracks);
         }
         
         public void Execute()
@@ -31,7 +31,7 @@ namespace Code.Gameplay.Features.Production.Systems
                 {
                     entity.barracks.CurrentCooldown = entity.barracks.Cooldown;
                     entity.barracks.WarriorsOrdered--;
-                    entity.warriorsAmount.Value++;
+                    entity.ReplaceWarriorsAmount(entity.warriorsAmount.Value + 1);
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using Code.Gameplay.Common.Services;
 using Code.Gameplay.Common.View;
+using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.View;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,7 +12,11 @@ namespace Code.Gameplay.Features.Building.View
     {
         [SerializeField] private EntityBehaviour _entityBehaviour;
         [SerializeField] private PointerHandler _pointerHandler;
+        [SerializeField] private GameObject _outline;
         private IUIFactory _uiFactory;
+        private MapOutlinesController _outlinesController;
+
+        public GameObject Outline => _outline;
 
         [Inject]
         public void Construct(IUIFactory uiFactory)
@@ -19,16 +24,23 @@ namespace Code.Gameplay.Features.Building.View
             _uiFactory = uiFactory;
         }
 
-        private void Awake() =>
+        private void Awake()
+        {
             _pointerHandler.OnPointerDownEvent += OnPointerDown;
+            _outlinesController = GetComponentInParent<MapOutlinesController>();
+            _outlinesController.AddOutline(_outline);
+        }
 
         private void OnDisable() =>
             _pointerHandler.OnPointerDownEvent -= OnPointerDown;
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                _uiFactory.HideInfoPanel(_entityBehaviour);
+            if (!Input.GetKeyDown(KeyCode.Escape)) 
+                return;
+            
+            _uiFactory.HideInfoPanel(_entityBehaviour);
+            _outlinesController.DeactivateAllOutline();
         }
 
         private void OnPointerDown(PointerEventData eventData)
@@ -36,8 +48,12 @@ namespace Code.Gameplay.Features.Building.View
             if (_entityBehaviour.Entity.isEnemyHexagon)
                 return;
 
-            if (eventData.button == PointerEventData.InputButton.Left) 
-                _uiFactory.ShowInfoPanel(_entityBehaviour);
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
+            
+            _uiFactory.ShowInfoPanel(_entityBehaviour);
+            _outlinesController.DeactivateAllOutline();
+            _outline.SetActive(true);
         }
     }
 }

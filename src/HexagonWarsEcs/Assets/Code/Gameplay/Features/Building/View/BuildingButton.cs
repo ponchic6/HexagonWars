@@ -7,6 +7,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Code.Gameplay.Features.Building.View
 {
@@ -33,19 +34,26 @@ namespace Code.Gameplay.Features.Building.View
         private EntityBehaviour _hexEntityBehaviour;
         private BuildProgressContainer _buildProgress;
         private ProductionHandler _productionHandler;
+        private DiContainer _dicontainer;
 
         public BuildProgressContainer BuildingProgressContainer => _buildProgress;
+
+        [Inject]
+        public void Construct(DiContainer container) =>
+            _dicontainer = container;
 
         private void Awake()
         {
             CalculatePositions();
             _plusWorkersButton.onClick.AsObservable().Subscribe(OnPlusButton).AddTo(this);
             _minusWorkersButton.onClick.AsObservable().Subscribe(OnMinusButton).AddTo(this);
+            
             _fivePlusWorkersButton.onClick.AsObservable().Subscribe(unit =>
             {
                 for (int i = 0; i < 5; i++) 
                     OnPlusButton(unit);
             }).AddTo(this);
+            
             _fiveMinusWorkersButton.onClick.AsObservable().Subscribe(unit =>
             {
                 for (int i = 0; i < 5; i++) 
@@ -61,9 +69,8 @@ namespace Code.Gameplay.Features.Building.View
             _statusText.text = "Не построено";
             _buildingName.text = $"{buildProgress.buildingType}";
             _workersInputField.text = _buildProgress.buildersAmount.ToString();
-            ProductionHandler buildingManagerPrefab =
-                Resources.Load<ProductionHandler>($"Hexagons/UI/BuildingUiControllers/{buildProgress.buildingType}");
-            _productionHandler = Instantiate(buildingManagerPrefab, _managePanel.transform);
+            _productionHandler = _dicontainer.InstantiatePrefabResourceForComponent<ProductionHandler>(
+                 $"Hexagons/UI/BuildingUiControllers/{buildProgress.buildingType}", _managePanel.transform);
             _productionHandler.gameObject.SetActive(false);
         }
 
@@ -107,7 +114,7 @@ namespace Code.Gameplay.Features.Building.View
             if (_hexEntityBehaviour.Entity.citizensAmount.Value <= 0)
                 return;
             
-            _hexEntityBehaviour.Entity.citizensAmount.Value--;
+            _hexEntityBehaviour.Entity.ReplaceCitizensAmount(_hexEntityBehaviour.Entity.citizensAmount.Value - 1);
             _buildProgress.buildersAmount++;
             _workersInputField.text = _buildProgress.buildersAmount.ToString();
         }
@@ -117,7 +124,7 @@ namespace Code.Gameplay.Features.Building.View
             if (_buildProgress.buildersAmount <= 0)
                 return;
             
-            _hexEntityBehaviour.Entity.citizensAmount.Value++;
+            _hexEntityBehaviour.Entity.ReplaceCitizensAmount(_hexEntityBehaviour.Entity.citizensAmount.Value + 1);
             _buildProgress.buildersAmount--;
             _workersInputField.text = _buildProgress.buildersAmount.ToString();
         }

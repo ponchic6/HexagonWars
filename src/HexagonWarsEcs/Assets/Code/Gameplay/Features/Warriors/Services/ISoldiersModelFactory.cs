@@ -8,6 +8,7 @@ namespace Code.Gameplay.Features.Warriors.Services
         public void TryCreateSoldier(int idHex);
         public void TryRemoveSoldier(int idHex);
         public void CreateAndMoveSoldierModel(GameEntity currentHex, GameEntity nextHex);
+        public void TryStartShootAlongDirection(GameEntity currentHex, GameEntity nextHex);
         public Dictionary<int, SoldierAnimationController> HexWithSoldiers { get; }
     }
 } 
