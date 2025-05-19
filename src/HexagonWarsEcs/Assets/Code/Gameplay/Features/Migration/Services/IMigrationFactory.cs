@@ -8,7 +8,9 @@ namespace Code.Gameplay.Features.Migration.Services
     {
         public void SetInitialHex(EntityBehaviour value, int selectedPeople, ManMigrationType warriors);
         public GameEntity SetFinishHexAndCreateMigration(EntityBehaviour value);
-        public EntityBehaviour GetAwailableNeighbourHex(EntityBehaviour defendersHex);
         public List<GameEntity> CreateMigrationViewTrail(EntityBehaviour entityBehaviour, ManMigrationType manMigrationType);
+        public List<int> FindShortestPath(EntityBehaviour startNode, EntityBehaviour endNode);
+        public EntityBehaviour InitialHex {get; }
+        public EntityBehaviour FinishHex {get; }
     }
 }

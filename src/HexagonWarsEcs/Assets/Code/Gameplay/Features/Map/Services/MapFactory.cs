@@ -34,6 +34,7 @@ namespace Code.Gameplay.Features.Map.Services
         {
             GameObject map = new GameObject("Map");
             map.AddComponent<MapOutlinesController>();
+            map.AddComponent<CommonMigrationToggleGroup>();
             
             float hexWidth = hexSize * 2f;
             float hexHeight = Mathf.Sqrt(3f) * hexSize;

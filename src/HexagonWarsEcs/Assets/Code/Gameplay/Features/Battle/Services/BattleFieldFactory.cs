@@ -82,8 +82,17 @@ namespace Code.Gameplay.Features.Battle.Services
         private void CreateMigrationToBattlefield()
         {
             _migrationFactory.SetInitialHex(_attackersHex, _warriorsAmount, ManMigrationType.Warriors);
+            EntityBehaviour neighbourHex = null;
+            
+            List<EntityBehaviour> neighboringHexagonsList = _defendersHex.GetComponent<NeighboringHexagons>().NeighboringHexagonsList;
+            
+            foreach (EntityBehaviour entity in neighboringHexagonsList)
+            {
+                List<int> findShortestPath = _migrationFactory.FindShortestPath(_attackersHex, entity);
                 
-            EntityBehaviour neighbourHex = _migrationFactory.GetAwailableNeighbourHex(_defendersHex);
+                if (findShortestPath != null)
+                    neighbourHex = entity;
+            }
 
             if (neighbourHex != null)
             {

@@ -1,23 +1,23 @@
 ﻿using Code.Gameplay.Common;
 using Code.Gameplay.Common.Services;
 using Code.Gameplay.Common.View;
+using Code.Gameplay.Features.Map.View;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.View;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
 namespace Code.Gameplay.Features.Migration.View
 {
-    public class MigrationHandler : MonoBehaviour
+    public class MigrationStartHexHandler : MonoBehaviour
     {
         [SerializeField] private EntityBehaviour _entityBehaviour;
         [SerializeField] private PointerHandler _pointerHandler;
-        [SerializeField] private Button _citizenButton;
-        [SerializeField] private Button _warriorButton;
+        [SerializeField] private Toggle _citizenToggle;
+        [SerializeField] private Toggle _warriorsToggle;
         private IMigrationFactory _migrationFactory;
         private IUIFactory _uiFactory;
         private GameContext _game;
@@ -32,28 +32,56 @@ namespace Code.Gameplay.Features.Migration.View
 
         private void Awake()
         {
-            _citizenButton.onClick.AsObservable().Subscribe(_ =>
+            CommonMigrationToggleGroup migrationToggleGroup = GetComponentInParent<CommonMigrationToggleGroup>();
+            migrationToggleGroup.AddToggle(_warriorsToggle);
+            migrationToggleGroup.AddToggle(_citizenToggle);
+
+            _citizenToggle.onValueChanged.AsObservable().Subscribe(isOn =>
             {
+                if (!isOn)
+                {
+                    _uiFactory.SliderMigrationChooserDeactivate();
+                    return;
+                }
+             
+                migrationToggleGroup.AllTogglesOffExceptOne(_warriorsToggle, _citizenToggle);
                 DestructAllMigrationTrailsView();
                 _uiFactory.SliderMigrationChooserActivate(_entityBehaviour, ManMigrationType.Citizens);
                 _migrationFactory.CreateMigrationViewTrail(_entityBehaviour, ManMigrationType.Citizens);
+                
             }).AddTo(this);
             
-            _warriorButton.onClick.AsObservable().Subscribe(_ =>
+            _warriorsToggle.onValueChanged.AsObservable().Subscribe(isOn =>
             {
+                if (!isOn)
+                {
+                    _uiFactory.SliderMigrationChooserDeactivate();
+                    return;
+                }
+             
+                migrationToggleGroup.AllTogglesOffExceptOne(_warriorsToggle, _citizenToggle);
                 DestructAllMigrationTrailsView();
                 _uiFactory.SliderMigrationChooserActivate(_entityBehaviour, ManMigrationType.Warriors);
                 _migrationFactory.CreateMigrationViewTrail(_entityBehaviour, ManMigrationType.Warriors);
+                
             }).AddTo(this);
             
             gameObject
                 .UpdateAsObservable()
                 .Where(_ => Input.GetKeyDown(KeyCode.Escape))
-                .Subscribe(_ => DestructAllMigrationTrailsView())
+                .Subscribe(_ =>
+                {
+                    DestructAllMigrationTrailsView();
+                    AllTogglesOff();
+                })
                 .AddTo(this);
-
-            _pointerHandler.OnPointerDownEvent += OnPointerDown;
         }
+
+        public void CitizenButtonActive(bool enable) =>
+            _citizenToggle.gameObject.SetActive(enable);
+
+        public void WarriorButtonActive(bool enable) =>
+            _warriorsToggle.gameObject.SetActive(enable);
 
         private void DestructAllMigrationTrailsView()
         {
@@ -61,25 +89,10 @@ namespace Code.Gameplay.Features.Migration.View
                 trailEntity.isDestructed = true;
         }
 
-        private void OnDisable() =>
-            _pointerHandler.OnPointerDownEvent -= OnPointerDown;
-
-        public void CitizenButtonActive(bool enable) =>
-            _citizenButton.gameObject.SetActive(enable);
-        
-        public void WarriorButtonActive(bool enable) =>
-            _warriorButton.gameObject.SetActive(enable);
-
-        private void OnPointerDown(PointerEventData eventData)
+        private void AllTogglesOff()
         {
-            if (_entityBehaviour.Entity.isEnemyHexagon)
-                return;
-
-            if (eventData.button == PointerEventData.InputButton.Right)
-            {
-                _migrationFactory.SetFinishHexAndCreateMigration(_entityBehaviour);
-                _uiFactory.SliderMigrationChooserDeactivate();
-            }
+            _warriorsToggle.isOn = false;
+            _citizenToggle.isOn = false;
         }
     }
 }

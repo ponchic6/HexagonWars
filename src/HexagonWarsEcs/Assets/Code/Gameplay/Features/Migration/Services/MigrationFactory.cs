@@ -6,7 +6,6 @@ using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
 using Entitas;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Services
 {
@@ -20,6 +19,9 @@ namespace Code.Gameplay.Features.Migration.Services
         private EntityBehaviour _initialHex, _finishHex;
         private ManMigrationType _manMigrationType;
         private int _migrationAmount;
+        
+        public EntityBehaviour InitialHex => _initialHex;
+        public EntityBehaviour FinishHex => _finishHex;
 
         public MigrationFactory(IIdentifierService identifierService)
         {
@@ -36,7 +38,7 @@ namespace Code.Gameplay.Features.Migration.Services
 
         public GameEntity SetFinishHexAndCreateMigration(EntityBehaviour entityBehaviour)
         {
-            if (_initialHex == null)
+            if (_initialHex == null || _migrationAmount == 0)
             {
                 _finishHex = null;
                 _migrationAmount = 0;
@@ -62,17 +64,40 @@ namespace Code.Gameplay.Features.Migration.Services
             _migrationAmount = 0;
             return migration;
         }
-
-        public EntityBehaviour GetAwailableNeighbourHex(EntityBehaviour finishHex)
+        
+        public List<int> FindShortestPath(EntityBehaviour startNode, EntityBehaviour endNode)
         {
-            List<EntityBehaviour> neighboringHexagonsList = finishHex.GetComponent<NeighboringHexagons>().NeighboringHexagonsList;
-            
-            foreach (EntityBehaviour entity in neighboringHexagonsList)
+            if (startNode == null || endNode == null)
+                return null;
+    
+            Queue<EntityBehaviour> queue = new Queue<EntityBehaviour>();
+            queue.Enqueue(startNode);
+    
+            Dictionary<EntityBehaviour, EntityBehaviour> cameFrom = new Dictionary<EntityBehaviour, EntityBehaviour>();
+            cameFrom[startNode] = null;
+    
+            while (queue.Count > 0)
             {
-                List<int> findShortestPath = FindShortestPath(_initialHex, entity);
-                
-                if (findShortestPath != null)
-                    return entity;
+                EntityBehaviour current = queue.Dequeue();
+        
+                if (current == endNode)
+                {
+                    return ReconstructPath(cameFrom, endNode);
+                }
+        
+                foreach (EntityBehaviour neighbor in current.GetComponent<NeighboringHexagons>().NeighboringHexagonsList)
+                {
+                    if (neighbor.Entity.isEnemyHexagon)
+                    {
+                        continue;
+                    }
+
+                    if (!cameFrom.ContainsKey(neighbor))
+                    {
+                        queue.Enqueue(neighbor);
+                        cameFrom[neighbor] = current;
+                    }
+                }
             }
             
             return null;
@@ -133,44 +158,6 @@ namespace Code.Gameplay.Features.Migration.Services
             }
             
             return trailsEntity;
-        }
-
-        private List<int> FindShortestPath(EntityBehaviour startNode, EntityBehaviour endNode)
-        {
-            if (startNode == null || endNode == null)
-                return null;
-    
-            Queue<EntityBehaviour> queue = new Queue<EntityBehaviour>();
-            queue.Enqueue(startNode);
-    
-            Dictionary<EntityBehaviour, EntityBehaviour> cameFrom = new Dictionary<EntityBehaviour, EntityBehaviour>();
-            cameFrom[startNode] = null;
-    
-            while (queue.Count > 0)
-            {
-                EntityBehaviour current = queue.Dequeue();
-        
-                if (current == endNode)
-                {
-                    return ReconstructPath(cameFrom, endNode);
-                }
-        
-                foreach (EntityBehaviour neighbor in current.GetComponent<NeighboringHexagons>().NeighboringHexagonsList)
-                {
-                    if (neighbor.Entity.isEnemyHexagon)
-                    {
-                        continue;
-                    }
-
-                    if (!cameFrom.ContainsKey(neighbor))
-                    {
-                        queue.Enqueue(neighbor);
-                        cameFrom[neighbor] = current;
-                    }
-                }
-            }
-            
-            return null;
         }
 
         private List<int> ReconstructPath(Dictionary<EntityBehaviour, EntityBehaviour> cameFrom, EntityBehaviour endNode)

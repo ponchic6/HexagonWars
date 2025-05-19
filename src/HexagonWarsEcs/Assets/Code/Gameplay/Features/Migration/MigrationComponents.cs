@@ -8,5 +8,5 @@ namespace Code.Gameplay.Features.Migration
     [Game] public class CitizensMigrationAmount : IComponent { public int Value; }
     [Game] public class WayIdPoints : IComponent { public List<int> Value; }
     [Game] public class MigrationArrow : IComponent { public int MigrationId; }
-    [Game] public class MigrationHandlerComponent : IComponent { public MigrationHandler Value; }
+    [Game] public class MigrationHandlerComponent : IComponent { public MigrationStartHexHandler Value; }
 }

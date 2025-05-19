@@ -1,14 +1,15 @@
 using Code.Infrastructure.View;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Code.Gameplay.Features.Migration.View
 {
     public class MigrationHandlerRegistrar : EntityComponentRegistrar
     {
-        [SerializeField] private MigrationHandler _migrationHandler;
+        [FormerlySerializedAs("_migrationHandler")] [SerializeField] private MigrationStartHexHandler migrationStartHexHandler;
         
         public override void RegisterComponent() =>
-            Entity.AddMigrationHandler(_migrationHandler);
+            Entity.AddMigrationHandler(migrationStartHexHandler);
 
         public override void UnregisterComponent() =>
             Entity.RemoveMigrationHandler();

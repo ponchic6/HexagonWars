@@ -11,14 +11,14 @@ public partial class GameEntity {
     public Code.Gameplay.Features.Migration.MigrationHandlerComponent migrationHandler { get { return (Code.Gameplay.Features.Migration.MigrationHandlerComponent)GetComponent(GameComponentsLookup.MigrationHandler); } }
     public bool hasMigrationHandler { get { return HasComponent(GameComponentsLookup.MigrationHandler); } }
 
-    public void AddMigrationHandler(Code.Gameplay.Features.Migration.View.MigrationHandler newValue) {
+    public void AddMigrationHandler(Code.Gameplay.Features.Migration.View.MigrationStartHexHandler newValue) {
         var index = GameComponentsLookup.MigrationHandler;
         var component = (Code.Gameplay.Features.Migration.MigrationHandlerComponent)CreateComponent(index, typeof(Code.Gameplay.Features.Migration.MigrationHandlerComponent));
         component.Value = newValue;
         AddComponent(index, component);
     }
 
-    public void ReplaceMigrationHandler(Code.Gameplay.Features.Migration.View.MigrationHandler newValue) {
+    public void ReplaceMigrationHandler(Code.Gameplay.Features.Migration.View.MigrationStartHexHandler newValue) {
         var index = GameComponentsLookup.MigrationHandler;
         var component = (Code.Gameplay.Features.Migration.MigrationHandlerComponent)CreateComponent(index, typeof(Code.Gameplay.Features.Migration.MigrationHandlerComponent));
         component.Value = newValue;
