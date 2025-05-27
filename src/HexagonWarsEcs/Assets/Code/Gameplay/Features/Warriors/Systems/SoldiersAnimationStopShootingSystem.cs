@@ -26,7 +26,8 @@ namespace Code.Gameplay.Features.Warriors.Systems
             {
                 GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
 
-                if (defenderEntity.warriorsAmount.Value <= 0) StopShootingForHexagonsInBattlefield(entity, defenderEntity);
+                if (defenderEntity.warriorsAmount.Value <= 0)
+                    StopShootingForHexagonsInBattlefield(entity, defenderEntity);
 
                 if (entity.battlefield.AttackerHexagonsId.All(x => _game.GetEntityWithId(x).warriorsAmount.Value <= 0))
                     StopShootingForHexagonsInBattlefield(entity, defenderEntity);
@@ -34,6 +35,12 @@ namespace Code.Gameplay.Features.Warriors.Systems
                 if (entity.isDestructed) 
                     StopShootingForHexagonsInBattlefield(entity, defenderEntity);
             }
+        }
+
+        private void StopShootingForHexagonsInBattlefield(GameEntity entity, GameEntity defenderEntity)
+        {
+            entity.battlefield.AttackerHexagonsId.ForEach(StopShootingForHexagon);
+            StopShootingForHexagon(defenderEntity.id.Value);
         }
 
         private void StopShootingForHexagon(int hexId)
@@ -45,12 +52,6 @@ namespace Code.Gameplay.Features.Warriors.Systems
             
             if (soldierModel.Animator.GetCurrentAnimatorStateInfo(0).IsName("Shooting"))
                 soldierModel.StartIdle();
-        }
-
-        private void StopShootingForHexagonsInBattlefield(GameEntity entity, GameEntity defenderEntity)
-        {
-            entity.battlefield.AttackerHexagonsId.ForEach(StopShootingForHexagon);
-            StopShootingForHexagon(defenderEntity.id.Value);
         }
     }
 }

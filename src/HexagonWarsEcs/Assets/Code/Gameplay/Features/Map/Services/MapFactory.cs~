@@ -1,0 +1,124 @@
+using System.Collections.Generic;
+using Code.Gameplay.Features.Building;
+using Code.Gameplay.Features.Building.DataStructure;
+using Code.Gameplay.Features.Map.View;
+using Code.Gameplay.Features.Migration.View.UI;
+using Code.Gameplay.Features.PopUp.DataStructures;
+using Code.Infrastructure.Services;
+using Code.Infrastructure.StaticData;
+using UnityEngine;
+
+namespace Code.Gameplay.Features.Map.Services
+{
+    public class MapFactory : IMapFactory
+    {
+        private readonly CommonStaticData _commonStaticData;
+        private readonly IIdentifierService _identifierService;
+        
+        private readonly float hexSize = 0.45f;
+        private int _mapWidth = 4;
+        private int _mapHeight = 4;
+        private GameContext _game;
+
+        public MapFactory(CommonStaticData commonStaticData, IIdentifierService identifierService)
+        {
+            _commonStaticData = commonStaticData;
+            _identifierService = identifierService;
+            _game = Contexts.sharedInstance.game;
+        }
+        
+        public void CreateMap() =>
+            GenerateHexMap();
+
+        private void GenerateHexMap()
+        {
+            GameObject map = new GameObject("Map");
+            map.AddComponent<MapOutlinesController>();
+            map.AddComponent<CommonMigrationToggleGroup>();
+            
+            float hexWidth = hexSize * 2f;
+            float hexHeight = Mathf.Sqrt(3f) * hexSize;
+            float offsetX = hexWidth * 0.75f;
+            float offsetY = hexHeight;
+
+            for (int x = 0; x < _mapWidth; x++)
+            {
+                for (int y = 0; y < _mapHeight; y++)
+                {
+                    GameEntity hexagonEntity = CreateHexagonEntity(x, y);
+                    float xPos = x * offsetX;
+                    float yPos = y * offsetY;
+                    
+                    if (x % 2 == 1)
+                    {
+                        yPos += hexHeight / 2f;
+                    }
+
+                    hexagonEntity.AddInitialTransform(new Vector3(xPos, 0, yPos), Quaternion.Euler(new Vector3(-90, 0, 0)));
+                    hexagonEntity.AddViewPrefabWithParent(_commonStaticData.Hexagon, map);
+                }
+            }
+        }
+
+        private GameEntity CreateHexagonEntity(int x, int y)
+        {
+            GameEntity entity = _game.CreateEntity();
+            entity.isChildHexagon = true;
+            entity.AddId(_identifierService.Next());
+
+            if (x < 2)
+                entity.isPlayerHexagon = true;
+            else
+                entity.isEnemyHexagon = true;
+
+            // if (entity.id.Value == 1)
+            //     entity.AddCitizensAmount(50);
+            // else
+            //     entity.AddCitizensAmount(0);
+
+            entity.AddWarriorsAmount(new System.Random().Next(1, 101));
+            entity.AddCitizensAmount(new System.Random().Next(1, 101));
+            //entity.AddWarriorsAmount(0);
+            entity.AddFoodAmount(10000);
+            entity.AddAmmoAmount(0);
+            entity.AddCoalAmount(0);
+            entity.AddIronAmount(0);
+            entity.AddAmountPopUpCooldown(_commonStaticData.AmountPopUpCooldown, _commonStaticData.AmountPopUpCooldown);
+            entity.AddAmountPopUpEvents(new List<AmountPopUpContainer>());
+            
+            entity.AddBuildingProgress(new ()
+            {
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.City,
+                    buildersAmount = 0,
+                },
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.FoodFarm,
+                    buildersAmount = 0,
+                },
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.Barracks,
+                    buildersAmount = 0,
+                },
+                new BuildProgressContainer
+                {
+                    fullProgress = 200,
+                    currentProgress = 0,
+                    buildingType = BuildingsType.Mine,
+                    buildersAmount = 0,
+                }
+            });
+
+            return entity;
+        }
+    }
+}

@@ -1,12 +1,11 @@
-using System;
 using System.Collections.Generic;
 using Entitas;
 
 namespace Code.Gameplay.Features.Migration.Systems
 {
-    public class MigrationEnemyHexButtonsReactiveSystem : ReactiveSystem<GameEntity>
+    public class MigrationEnemyButtonsVisibilityReactiveSystem : ReactiveSystem<GameEntity>
     {
-        public MigrationEnemyHexButtonsReactiveSystem(IContext<GameEntity> context) : base(context)
+        public MigrationEnemyButtonsVisibilityReactiveSystem(IContext<GameEntity> context) : base(context)
         {
         }
 

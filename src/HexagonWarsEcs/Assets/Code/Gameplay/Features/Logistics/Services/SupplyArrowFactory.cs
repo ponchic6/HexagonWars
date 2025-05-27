@@ -1,4 +1,5 @@
-﻿using Code.Infrastructure.View;
+using System.Collections.Generic;
+using Code.Infrastructure.View;
 using Logic.Logistic;
 using UnityEngine;
 using Zenject;
@@ -8,30 +9,44 @@ namespace Code.Gameplay.Features.Logistics.Services
     public class SupplyArrowFactory : ISupplyArrowFactory
     {
         private const string PATH_TO_SUPPLY_ARROW = "Arrows/SupplyArrow/SupplyArrow";
-        
-        private readonly DiContainer _diContainer;
+
         private LineRenderer _currentLine;
         private Material _lineMaterial;
-
-        public SupplyArrowFactory(DiContainer diContainer)
+        private GameEntity _currentEntity;
+        private List<Vector3> _positions;
+        
+        public void AddPoint(Vector3 position, Color color)
         {
-            _diContainer = diContainer;
-        }
-
-        public LineRenderer AddPoint(Vector3 position, Color color)
-        {
-            if (_currentLine == null)
+            if (_currentEntity == null)
             {
-                _currentLine = _diContainer.InstantiatePrefabResourceForComponent<LineRenderer>(PATH_TO_SUPPLY_ARROW);
+                GameContext game = Contexts.sharedInstance.game;
+                GameEntity entity = game.CreateEntity();
+                entity.AddViewPath(PATH_TO_SUPPLY_ARROW);
+                _currentEntity = entity;
+                _positions = new();
+                position.y = 0.5f;
+                _positions.Add(position);
+                return;
+            }
+
+            if (_currentEntity.hasView && _currentLine == null)
+            {
+                _currentLine = _currentEntity.view.Value.GetComponent<LineRenderer>();
                 _lineMaterial = _currentLine.material;
             }
 
             position.y = 0.5f;
-            _currentLine.positionCount += 1;
-            _currentLine.SetPosition(_currentLine.positionCount - 1, position);
+            _positions.Add(position);
+            _currentLine.positionCount = _positions.Count;
+            
+            for (var i = 0; i < _positions.Count; i++)
+            {
+                Vector3 currentPosition = _positions[i];
+                _currentLine.SetPosition(i, currentPosition);
+            }
+            
             _lineMaterial.SetVector("_Color", color);
             UpdateTiling();
-            return _currentLine;
         }
 
         public void RemoveLastPoint(Color color)
@@ -39,39 +54,32 @@ namespace Code.Gameplay.Features.Logistics.Services
             if (_currentLine == null)
                 return;
             
-            int positionCount = _currentLine.positionCount;
-            
-            Vector3[] newPositions = new Vector3[positionCount - 1];
-            
-            for (int i = 0; i < newPositions.Length; i++)
-            {
-                newPositions[i] = _currentLine.GetPosition(i);
-            }
-            
-            _currentLine.positionCount = newPositions.Length;
-            _currentLine.SetPositions(newPositions);
+            _positions.RemoveAt(_positions.Count - 1);
+            _currentLine.positionCount = _positions.Count;
+            _currentLine.SetPositions(_positions.ToArray());
             _lineMaterial.SetVector("_Color", color);
             UpdateTiling();
         }
 
         public GameEntity CreateArrow()
         {
-            GameContext game = Contexts.sharedInstance.game;
-            GameEntity entity = game.CreateEntity();
-            EntityBehaviour entityBehaviour = _currentLine.gameObject.GetComponent<EntityBehaviour>();
-            entityBehaviour.SetEntity(entity);
-            UpdateTiling();
+            GameEntity entity = _currentEntity;
+            _currentEntity = null;
+            
+            _positions.Clear();
             _lineMaterial = null;
             _currentLine = null;
+            UpdateTiling();
             return entity;
         }
         
         public void DestroyCurrentArrow()
         {
-            if (_currentLine == null)
+            if (_currentEntity == null)
                 return;
             
-            Object.Destroy(_currentLine.gameObject);
+            _currentEntity.isDestructed = true;
+            _currentEntity = null;
             _lineMaterial = null;
             _currentLine = null;
         }

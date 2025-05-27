@@ -13,8 +13,13 @@ namespace Code.Gameplay.Features.Migration.Systems
             Add(systemFactory.Create<MigrationTrailClearSystem>());
             
             Add(systemFactory.Create<MigrationChooserUiReactiveSystem>());
-            Add(systemFactory.Create<MigrationHexButtonsReactiveSystem>());
-            Add(systemFactory.Create<MigrationEnemyHexButtonsReactiveSystem>());
+            Add(systemFactory.Create<MigrationButtonsVisibilityReactiveSystem>());
+            Add(systemFactory.Create<MigrationEnemyButtonsVisibilityReactiveSystem>());
+
+            Add(systemFactory.Create<MigrationTogglesDisablingReactiveSystem>());
+            Add(systemFactory.Create<MigrationTrailCreatingReactiveSystem>());
+            Add(systemFactory.Create<MigrationTogglesForChooserReactiveSystem>());
+            Add(systemFactory.Create<MigrationChooserHideReactiveSystem>());
         }
     }
 }

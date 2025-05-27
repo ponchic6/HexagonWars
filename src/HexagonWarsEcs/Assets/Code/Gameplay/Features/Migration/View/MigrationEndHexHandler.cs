@@ -1,8 +1,8 @@
 using Code.Gameplay.Common.Services;
 using Code.Gameplay.Common.View;
-using Code.Gameplay.Features.Map.View;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.View;
+using Entitas;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -16,21 +16,18 @@ namespace Code.Gameplay.Features.Migration.View
         [SerializeField] private PointerHandler _pointerHandler;
         [SerializeField] private Toggle _citizenToggle;
         [SerializeField] private Toggle _warriorsToggle;
-        private IUIFactory _uiFactory;
         private IMigrationFactory _migrationFactory;
-        private CommonMigrationToggleGroup _migrationToggleGroup;
+        private GameContext _game;
 
         [Inject]
         public void Construct(IMigrationFactory migrationFactory, IUIFactory uiFactory)
         {
-            _uiFactory = uiFactory;
             _migrationFactory = migrationFactory;
+            _game = Contexts.sharedInstance.game;
         }
         
         private void Awake()
         {
-            _migrationToggleGroup = GetComponentInParent<CommonMigrationToggleGroup>();
-
             _pointerHandler.OnPointerDownEvent += OnPointerDown;
         }
 
@@ -45,9 +42,15 @@ namespace Code.Gameplay.Features.Migration.View
             if (eventData.button != PointerEventData.InputButton.Right)
                 return;
 
+            IGroup<GameEntity> toggles = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.CitizenToggleEnabling, GameMatcher.SoldiersToggleEnabling));
+            
+            foreach (GameEntity entity in toggles.GetEntities())
+            {
+                entity.isCitizenToggleEnabling = false;
+                entity.isSoldiersToggleEnabling = false;
+            }
+
             _migrationFactory.SetFinishHexAndCreateMigration(_entityBehaviour);
-            _uiFactory.SliderMigrationChooserDeactivate();
-            _migrationToggleGroup.AllTogglesOff();
         }
     }
 }

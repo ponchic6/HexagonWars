@@ -1,0 +1,39 @@
+﻿using System.Collections.Generic;
+using Code.Gameplay.Common;
+using Code.Gameplay.Common.Services;
+using Code.Gameplay.Features.Migration.Services;
+using Code.Infrastructure.View;
+using Entitas;
+
+namespace Code.Gameplay.Features.Migration.Systems
+{
+    public class CitizenMigrationToggleReactiveSystem : ReactiveSystem<GameEntity>
+    {
+        private readonly IUIFactory _uiFactory;
+
+        public CitizenMigrationToggleReactiveSystem(IContext<GameEntity> context, IUIFactory uiFactory, IMigrationFactory migrationFactory) : base(context)
+        {
+            _uiFactory = uiFactory;
+        }
+
+        protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
+            context.CreateCollector(GameMatcher.CitizenToggleEnabling.AddedOrRemoved());
+
+        protected override bool Filter(GameEntity entity) =>
+            true;
+
+        protected override void Execute(List<GameEntity> entities)
+        {
+            foreach (GameEntity entity in entities)
+            {
+                if (entity.isCitizenToggleEnabling)
+                {
+                    EntityBehaviour entityBehaviour = entity.view.Value;
+                    _uiFactory.SliderMigrationChooserActivate(entityBehaviour, ManMigrationType.Citizens);
+                }
+                else if (!entity.isSoldiersToggleEnabling)
+                    entity.migrationHandler.Value.AllTogglesOffWithoutNotify();
+            }
+        }
+    }
+}

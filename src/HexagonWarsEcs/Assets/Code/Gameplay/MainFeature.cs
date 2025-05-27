@@ -1,6 +1,7 @@
 ﻿using Code.Gameplay.Features.Battle.Systems;
 using Code.Gameplay.Features.Building.Systems;
 using Code.Gameplay.Features.Citizens.Systems;
+using Code.Gameplay.Features.EnemyAi.Systems;
 using Code.Gameplay.Features.Logistics.Systems;
 using Code.Gameplay.Features.Map.Systems;
 using Code.Gameplay.Features.Migration.Systems;
@@ -24,6 +25,7 @@ namespace Code.Gameplay
             Add(systemFactory.Create<CitizensFeature>());
             Add(systemFactory.Create<BuildFeature>());
             Add(systemFactory.Create<SupplyFeature>());
+            Add(systemFactory.Create<EnemyAiFeature>());
             Add(systemFactory.Create<BattleFeature>());
             Add(systemFactory.Create<WarriorsFeature>());
             Add(systemFactory.Create<ProductionFeature>());

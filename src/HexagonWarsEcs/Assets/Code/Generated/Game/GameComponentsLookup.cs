@@ -40,25 +40,28 @@ public static class GameComponentsLookup {
     public const int SupplyRoute = 29;
     public const int ChildHexagon = 30;
     public const int MapParent = 31;
-    public const int CitizensMigrationAmount = 32;
-    public const int MigrationArrow = 33;
-    public const int MigrationComplexityWay = 34;
-    public const int MigrationHandler = 35;
-    public const int WayIdPoints = 36;
-    public const int AmountPopUpCooldown = 37;
-    public const int AmountPopUpEvents = 38;
-    public const int Barracks = 39;
-    public const int City = 40;
-    public const int FoodFarm = 41;
-    public const int Mine = 42;
-    public const int Destructed = 43;
-    public const int InitialTransform = 44;
-    public const int View = 45;
-    public const int ViewPath = 46;
-    public const int ViewPrefab = 47;
-    public const int ViewPrefabWithParent = 48;
+    public const int NeighboringHexagons = 32;
+    public const int CitizensMigrationAmount = 33;
+    public const int CitizenToggleEnabling = 34;
+    public const int MigrationArrow = 35;
+    public const int MigrationComplexityWay = 36;
+    public const int MigrationHandler = 37;
+    public const int SoldiersToggleEnabling = 38;
+    public const int WayIdPoints = 39;
+    public const int AmountPopUpCooldown = 40;
+    public const int AmountPopUpEvents = 41;
+    public const int Barracks = 42;
+    public const int City = 43;
+    public const int FoodFarm = 44;
+    public const int Mine = 45;
+    public const int Destructed = 46;
+    public const int InitialTransform = 47;
+    public const int View = 48;
+    public const int ViewPath = 49;
+    public const int ViewPrefab = 50;
+    public const int ViewPrefabWithParent = 51;
 
-    public const int TotalComponents = 49;
+    public const int TotalComponents = 52;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -93,10 +96,13 @@ public static class GameComponentsLookup {
         "SupplyRoute",
         "ChildHexagon",
         "MapParent",
+        "NeighboringHexagons",
         "CitizensMigrationAmount",
+        "CitizenToggleEnabling",
         "MigrationArrow",
         "MigrationComplexityWay",
         "MigrationHandler",
+        "SoldiersToggleEnabling",
         "WayIdPoints",
         "AmountPopUpCooldown",
         "AmountPopUpEvents",
@@ -145,10 +151,13 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Logistics.SupplyRoute),
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),
+        typeof(Code.Gameplay.Features.Map.NeighboringHexagonsComponent),
         typeof(Code.Gameplay.Features.Migration.CitizensMigrationAmount),
+        typeof(Code.Gameplay.Features.Migration.CitizenToggleEnabling),
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
         typeof(Code.Gameplay.Features.Migration.MigrationComplexityWay),
         typeof(Code.Gameplay.Features.Migration.MigrationHandlerComponent),
+        typeof(Code.Gameplay.Features.Migration.SoldiersToggleEnabling),
         typeof(Code.Gameplay.Features.Migration.WayIdPoints),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpCooldown),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpEvents),

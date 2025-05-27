@@ -9,4 +9,6 @@ namespace Code.Gameplay.Features.Migration
     [Game] public class WayIdPoints : IComponent { public List<int> Value; }
     [Game] public class MigrationArrow : IComponent { public int MigrationId; }
     [Game] public class MigrationHandlerComponent : IComponent { public MigrationStartHexHandler Value; }
+    [Game] public class CitizenToggleEnabling : IComponent { }
+    [Game] public class SoldiersToggleEnabling : IComponent { }
 }

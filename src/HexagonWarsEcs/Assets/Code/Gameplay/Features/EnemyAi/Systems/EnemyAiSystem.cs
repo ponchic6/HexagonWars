@@ -1,0 +1,65 @@
+﻿using System.Linq;
+using Code.Gameplay.Features.Battle.Services;
+using Entitas;
+using UnityEngine;
+
+namespace Code.Gameplay.Features.EnemyAi.Systems
+{
+    public class EnemyAiSystem : IExecuteSystem
+    {
+        private readonly IBattleFieldFactory _battleFieldFactory;
+        private readonly GameContext _game;
+        private readonly IGroup<GameEntity> _entities;
+        private readonly IGroup<GameEntity> _battlefields;
+
+        public EnemyAiSystem(IBattleFieldFactory battleFieldFactory)
+        {
+            _battleFieldFactory = battleFieldFactory;
+            
+            _game = Contexts.sharedInstance.game;
+
+            _entities = _game.GetGroup(GameMatcher.AllOf(GameMatcher.WarriorsAmount, GameMatcher.EnemyHexagon));
+            _battlefields = _game.GetGroup(GameMatcher.Battlefield);
+        }
+        
+        public void Execute()
+        {
+            foreach (GameEntity enemyEntity in _entities)
+            {
+                if (!enemyEntity.hasNeighboringHexagons)
+                    continue;
+
+                if (enemyEntity.warriorsAmount.Value == 0)
+                    continue;
+                
+                if (enemyEntity.neighboringHexagons.Value.Select(i => _game.GetEntityWithId(i)).All(neighbourEntity => neighbourEntity.isEnemyHexagon))
+                    continue;
+
+                if (HasBattleWithAttacker(enemyEntity))
+                    continue;
+                
+                foreach (int i in enemyEntity.neighboringHexagons.Value)
+                {
+                    GameEntity neighbourEntity = _game.GetEntityWithId(i);
+                    
+                    if (neighbourEntity.isPlayerHexagon)
+                    {
+                        _battleFieldFactory.CreateBattlefield(enemyEntity, neighbourEntity);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private bool HasBattleWithAttacker(GameEntity gameEntity)
+        {
+            foreach (GameEntity battlefield in _battlefields)
+            {
+                if (battlefield.battlefield.AttackerHexagonsId.Contains(gameEntity.id.Value))
+                    return true;
+            }
+
+            return false;
+        }
+    }
+}

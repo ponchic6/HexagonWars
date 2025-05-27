@@ -3,9 +3,9 @@ using Entitas;
 
 namespace Code.Gameplay.Features.Migration.Systems
 {
-    public class MigrationHexButtonsReactiveSystem : ReactiveSystem<GameEntity>
+    public class MigrationButtonsVisibilityReactiveSystem : ReactiveSystem<GameEntity>
     {
-        public MigrationHexButtonsReactiveSystem(IContext<GameEntity> context) : base(context)
+        public MigrationButtonsVisibilityReactiveSystem(IContext<GameEntity> context) : base(context)
         {
         }
 
@@ -23,13 +23,19 @@ namespace Code.Gameplay.Features.Migration.Systems
             foreach (GameEntity entity in entities)
             {
                 if (entity.citizensAmount.Value == 0)
+                {
                     entity.migrationHandler.Value.CitizenButtonActive(false);
+                    entity.isCitizenToggleEnabling= false;
+                }
                 
                 if (entity.citizensAmount.Value > 0)
                     entity.migrationHandler.Value.CitizenButtonActive(true);
-                
+
                 if (entity.warriorsAmount.Value == 0)
+                {
                     entity.migrationHandler.Value.WarriorButtonActive(false);
+                    entity.isSoldiersToggleEnabling = false;
+                }
 
                 if (entity.warriorsAmount.Value > 0)
                     entity.migrationHandler.Value.WarriorButtonActive(true);

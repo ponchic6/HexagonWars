@@ -18,6 +18,9 @@ namespace Code.Gameplay.Features.Battle.Systems
         {
             foreach (GameEntity entity in _entities)
             {
+                if (!entity.hasBattleIndicatorController)
+                    continue;
+                
                 GameEntity fromHex = _game.GetEntityWithId(entity.battleIndicator.FromHexId);
                 GameEntity toHex = _game.GetEntityWithId(entity.battleIndicator.ToHexId);
 
@@ -32,7 +35,7 @@ namespace Code.Gameplay.Features.Battle.Systems
                 entity
                     .battleIndicatorController
                     .Controller
-                    .SetBattleStatus(entity.battleIndicator.WinIndicator);
+                    .SetBattleStatus(entity);
             }
         }
     }

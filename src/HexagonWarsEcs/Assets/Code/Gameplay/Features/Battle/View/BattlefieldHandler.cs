@@ -2,6 +2,7 @@
 using Code.Gameplay.Common.View;
 using Code.Gameplay.Features.Battle.Services;
 using Code.Infrastructure.View;
+using Entitas;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -13,13 +14,13 @@ namespace Code.Gameplay.Features.Battle.View
         [SerializeField] private EntityBehaviour _entityBehaviour;
         [SerializeField] private PointerHandler _pointerHandler;
         private IBattleFieldFactory _battleFieldFactory;
-        private IUIFactory _uiFactory;
+        private GameContext _game;
 
         [Inject]
         public void Construct(IBattleFieldFactory battleFieldFactory, IUIFactory uiFactory)
         {
             _battleFieldFactory = battleFieldFactory;
-            _uiFactory = uiFactory;
+            _game = Contexts.sharedInstance.game;
         }
 
         private void Awake() =>
@@ -33,11 +34,18 @@ namespace Code.Gameplay.Features.Battle.View
             if (!_entityBehaviour.Entity.isEnemyHexagon)
                 return;
 
-            if (eventData.button == PointerEventData.InputButton.Right)
+            if (eventData.button != PointerEventData.InputButton.Right) 
+                return;
+            
+            IGroup<GameEntity> toggles = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.CitizenToggleEnabling, GameMatcher.SoldiersToggleEnabling));
+            
+            foreach (GameEntity entity in toggles.GetEntities())
             {
-                _battleFieldFactory.TrySetDefendersAndCreateBattlefield(_entityBehaviour); 
-                _uiFactory.SliderMigrationChooserDeactivate();
+                entity.isCitizenToggleEnabling = false;
+                entity.isSoldiersToggleEnabling = false;
             }
+            
+            _battleFieldFactory.TrySetDefendersAndCreateBattlefield(_entityBehaviour);
         }
     }
 }

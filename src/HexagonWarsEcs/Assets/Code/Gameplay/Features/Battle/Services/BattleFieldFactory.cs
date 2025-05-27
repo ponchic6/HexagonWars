@@ -55,8 +55,7 @@ namespace Code.Gameplay.Features.Battle.Services
             if (TryAddAttackersInExistBattlefield())
                 return;
             
-            GameEntity battlefield = CreateBattlefield(_attackersHex.Entity, _defendersHex.Entity);
-            CreateBattleIndicator(_attackersHex.Entity, _defendersHex.Entity, battlefield);
+            CreateBattlefield(_attackersHex.Entity, _defendersHex.Entity);
             ResetFactoryState();
         }
 
@@ -64,18 +63,18 @@ namespace Code.Gameplay.Features.Battle.Services
         {
             GameEntity defenderHex = _game.GetEntityWithId(migrationEntity.hexagonForAttack.Value);
             GameEntity attackerHex = _game.GetEntityWithId(migrationEntity.wayIdPoints.Value[0]);
-            GameEntity battlefield = CreateBattlefield(attackerHex, defenderHex);
-            CreateBattleIndicator(attackerHex, defenderHex, battlefield);
+            CreateBattlefield(attackerHex, defenderHex);
             ResetFactoryState();
         }
 
-        private GameEntity CreateBattlefield(GameEntity attackerHex, GameEntity defenderHex)
+        public GameEntity CreateBattlefield(GameEntity attackerHex, GameEntity defenderHex)
         {
             GameEntity battlefield = _game.CreateEntity();
             battlefield.AddId(_identifierService.Next());
             battlefield.AddCurrentBattleCooldown(0f);
             battlefield.AddBattleCooldown(_commonStaticData.BattleCooldown);
             battlefield.AddBattlefield(new List<int>{ attackerHex.id.Value }, defenderHex.id.Value);
+            CreateBattleIndicator(attackerHex, defenderHex, battlefield);
             return battlefield;
         }
 

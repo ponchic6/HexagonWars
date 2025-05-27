@@ -1,0 +1,25 @@
+﻿using System.Collections.Generic;
+using Entitas;
+
+namespace Code.Gameplay.Features.Migration.Systems
+{
+    public class MigrationChooserHideReactiveSystem : ReactiveSystem<GameEntity>
+    {
+        private GameContext _game;
+
+        public MigrationChooserHideReactiveSystem(IContext<GameEntity> context) : base(context)
+        {
+            _game = Contexts.sharedInstance.game;
+        }
+
+        protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
+            context.CreateCollector(GameMatcher.CitizenToggleEnabling.AddedOrRemoved(), GameMatcher.SoldiersToggleEnabling.AddedOrRemoved());
+
+        protected override bool Filter(GameEntity entity) =>
+            true;
+
+        protected override void Execute(List<GameEntity> entities)
+        {
+        }
+    }
+}

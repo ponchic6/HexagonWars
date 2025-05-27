@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Entitas;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Battle.Systems
 {
@@ -11,7 +12,7 @@ namespace Code.Gameplay.Features.Battle.Systems
             _game = Contexts.sharedInstance.game;
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-            context.CreateCollector(GameMatcher.BattleIndicator.Added());
+            context.CreateCollector(GameMatcher.BattleIndicatorController.Added());
 
         protected override bool Filter(GameEntity entity) =>
             true;
@@ -22,7 +23,7 @@ namespace Code.Gameplay.Features.Battle.Systems
             {
                 GameEntity fromHex = _game.GetEntityWithId(entity.battleIndicator.FromHexId);
                 GameEntity toHex = _game.GetEntityWithId(entity.battleIndicator.ToHexId);
-                
+
                 entity
                     .battleIndicatorController
                     .Controller

@@ -49,11 +49,14 @@ namespace Code.Gameplay.Features.Battle.View.UI
         public void SetPosition(Transform from, Transform to) =>
             transform.position = (from.position + to.position) / 2 + Vector3.up * 0.5f;
 
-        public void SetBattleStatus(float winIndicator)
+        public void SetBattleStatus(GameEntity battleIndicatorEntity)
         {
+            float winIndicator = battleIndicatorEntity.battleIndicator.WinIndicator;
+            GameEntity fromHexEntity = _game.GetEntityWithId(battleIndicatorEntity.battleIndicator.FromHexId);
+
             _text.text = Math.Round(winIndicator, 2).ToString();
             
-            if (winIndicator > 0.5f)
+            if (winIndicator > 0.5f && fromHexEntity.isPlayerHexagon || winIndicator < 0.5f && fromHexEntity.isEnemyHexagon)
                 _imageArrow.color = Color.green;
             else
                 _imageArrow.color = Color.red;

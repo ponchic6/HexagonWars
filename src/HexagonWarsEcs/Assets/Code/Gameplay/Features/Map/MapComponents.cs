@@ -6,4 +6,5 @@ namespace Code.Gameplay.Features.Map
 {
     [Game] public class MapParent : IComponent { public List<EntityBehaviour> Value; }
     [Game] public class ChildHexagon : IComponent { }
+    [Game] public class NeighboringHexagonsComponent : IComponent { public List<int> Value; }
 }

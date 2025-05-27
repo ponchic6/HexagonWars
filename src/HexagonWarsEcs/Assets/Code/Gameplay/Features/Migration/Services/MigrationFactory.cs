@@ -103,27 +103,6 @@ namespace Code.Gameplay.Features.Migration.Services
             return null;
         }
 
-        private GameEntity CreateMigrationEntity(List<int> shortestPath)
-        {
-            GameEntity migration = _game.CreateEntity();
-            migration.AddId(_identifierService.Next());
-            migration.AddWayIdPoints(shortestPath);
-            migration.AddMigrationComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
-
-            switch (_manMigrationType)
-            {
-                case ManMigrationType.Citizens:
-                    migration.AddCitizensMigrationAmount(_migrationAmount);
-                    break;
-                
-                case ManMigrationType.Warriors:
-                    migration.AddWarriorsMigrationAmount(_migrationAmount);
-                    break;
-            }
-
-            return migration;
-        }
-
         public List<GameEntity> CreateMigrationViewTrail(EntityBehaviour migrationHexBehaviour, ManMigrationType manMigrationType)
         {
             IGroup<GameEntity> group = manMigrationType switch
@@ -158,6 +137,27 @@ namespace Code.Gameplay.Features.Migration.Services
             }
             
             return trailsEntity;
+        }
+
+        private GameEntity CreateMigrationEntity(List<int> shortestPath)
+        {
+            GameEntity migration = _game.CreateEntity();
+            migration.AddId(_identifierService.Next());
+            migration.AddWayIdPoints(shortestPath);
+            migration.AddMigrationComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
+
+            switch (_manMigrationType)
+            {
+                case ManMigrationType.Citizens:
+                    migration.AddCitizensMigrationAmount(_migrationAmount);
+                    break;
+                
+                case ManMigrationType.Warriors:
+                    migration.AddWarriorsMigrationAmount(_migrationAmount);
+                    break;
+            }
+
+            return migration;
         }
 
         private List<int> ReconstructPath(Dictionary<EntityBehaviour, EntityBehaviour> cameFrom, EntityBehaviour endNode)

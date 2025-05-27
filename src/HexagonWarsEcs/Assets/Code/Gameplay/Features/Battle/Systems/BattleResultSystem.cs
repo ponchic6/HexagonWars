@@ -21,17 +21,33 @@ namespace Code.Gameplay.Features.Battle.Systems
             {
                 GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
 
+                if (defenderEntity.isPlayerHexagon && entity.battlefield.AttackerHexagonsId.Any(x => _game.GetEntityWithId(x).isPlayerHexagon) ||
+                    defenderEntity.isEnemyHexagon && entity.battlefield.AttackerHexagonsId.Any(x => _game.GetEntityWithId(x).isEnemyHexagon))
+                {
+                    entity.isDestructed = true;
+                    continue;
+                }
+
                 if (defenderEntity.warriorsAmount.Value <= 0)
                 {
-                    defenderEntity.isEnemyHexagon = false;
-                    defenderEntity.isPlayerHexagon = true;
+                    if (defenderEntity.isEnemyHexagon)
+                    {
+                        defenderEntity.isEnemyHexagon = false;
+                        defenderEntity.isPlayerHexagon = true;
+                    }
+                    else if (defenderEntity.isPlayerHexagon)
+                    {
+                        defenderEntity.isEnemyHexagon = true;
+                        defenderEntity.isPlayerHexagon = false;
+                    }
                     
                     entity.battlefield.AttackerHexagonsId.ForEach(x =>
                     {
                         GameEntity attackerEntity = _game.GetEntityWithId(x);
-                        defenderEntity.warriorsAmount.Value += attackerEntity.warriorsAmount.Value;
-                        attackerEntity.warriorsAmount.Value = 0;
+                        defenderEntity.ReplaceWarriorsAmount(defenderEntity.warriorsAmount.Value + attackerEntity.warriorsAmount.Value);
+                        attackerEntity.ReplaceWarriorsAmount(0);
                     });
+
                     entity.isDestructed = true;
                 }
 

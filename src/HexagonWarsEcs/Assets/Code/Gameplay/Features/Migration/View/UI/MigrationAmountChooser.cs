@@ -42,12 +42,6 @@ namespace Code.Gameplay.Features.Migration.View.UI
         {
             _slider.transform.localScale *= _sliderStandartScale;
             _slider.onValueChanged.AsObservable().Subscribe(OnSliderValueChanged).AddTo(this);
-            
-            gameObject
-                .UpdateAsObservable()
-                .Where(_ => Input.GetKeyDown(KeyCode.Escape))
-                .Subscribe(_ => Hide())
-                .AddTo(this);
         }
         
         public void Show(EntityBehaviour hexEntity, ManMigrationType manMigrationType)

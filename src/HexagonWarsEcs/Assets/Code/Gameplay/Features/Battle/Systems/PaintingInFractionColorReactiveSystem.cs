@@ -7,11 +7,10 @@ namespace Code.Gameplay.Features.Battle.Systems
     {
         public PaintingInFractionColorReactiveSystem(IContext<GameEntity> context) : base(context)
         {
-            GameContext game = Contexts.sharedInstance.game;
         }
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-            context.CreateCollector(GameMatcher.PlayerHexagon);
+            context.CreateCollector(GameMatcher.PlayerHexagon.AddedOrRemoved());
 
         protected override bool Filter(GameEntity entity) =>
             true;
