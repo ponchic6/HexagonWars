@@ -37,6 +37,9 @@ namespace Code.Gameplay.Features.Migration.Systems
                 
                 GameEntity currentHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
                 GameEntity nextHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[1]);
+                
+                if (nextHex.isEnemyHexagon)
+                    continue;
                     
                 if (currentHex.warriorsAmount.Value < routEntity.warriorsMigrationAmount.Value)
                 {

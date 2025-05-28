@@ -41,7 +41,6 @@ namespace Code.Gameplay.Features.EnemyAi.Systems
                 foreach (int i in enemyEntity.neighboringHexagons.Value)
                 {
                     GameEntity neighbourEntity = _game.GetEntityWithId(i);
-                    Debug.Log(enemyEntity.id.Value);
                     
                     if (neighbourEntity.isPlayerHexagon)
                     {
@@ -56,8 +55,8 @@ namespace Code.Gameplay.Features.EnemyAi.Systems
         {
             foreach (GameEntity battlefield in _battlefields)
             {
-                if (battlefield.battlefield.AttackerHexagonsId.Contains(gameEntity.id.Value))
-                    return true;
+                // if (battlefield.battlefield.AttackerHexagonsId.Contains(gameEntity.id.Value))
+                //     return true;
             }
 
             return false;

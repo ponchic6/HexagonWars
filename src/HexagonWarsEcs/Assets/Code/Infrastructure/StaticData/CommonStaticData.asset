@@ -16,8 +16,8 @@ MonoBehaviour:
   ManSprite: {fileID: 21300000, guid: 586222d5524d5d244afd4b834f1813e2, type: 3}
   FoodIcon: {fileID: 21300000, guid: aefbd44fe3ff1af44bc55cde38080591, type: 3}
   BattleCooldown: 1
-  StrongCoefficientOfDefenders: 0.002
-  StrongCoefficientOfAttackers: 0.002
+  StrongCoefficientOfDefenders: 0.001
+  StrongCoefficientOfAttackers: 0.001
   FoodPerSecondByBuilders: 0.1
   FoodPerSecondByWarriors: 0.1
   FoodPerSecondByCitizens: 0.1

@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using System.Linq;
 using Entitas;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.Battle.Systems
 {
@@ -27,16 +25,11 @@ namespace Code.Gameplay.Features.Battle.Systems
                 int battleId = entity.battleIndicator.BattleId;
                 GameEntity battleEntity = _game.GetEntityWithId(battleId);
 
-                if (battleEntity == null)
-                {
-                    entity.isDestructed = true;
-                    continue;
-                }
-
-                if (battleEntity.battlefield.AttackerHexagonsId.Any(attackerId => attackerId == entity.battleIndicator.FromHexId))
+                if (battleEntity != null && !battleEntity.isDestructed)
                     continue;
                 
                 entity.isDestructed = true;
+
             }
         }
     }

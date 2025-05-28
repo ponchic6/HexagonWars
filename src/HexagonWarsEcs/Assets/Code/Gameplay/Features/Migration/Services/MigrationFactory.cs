@@ -6,6 +6,7 @@ using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
 using Entitas;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Services
 {
@@ -46,9 +47,8 @@ namespace Code.Gameplay.Features.Migration.Services
             }
             
             _finishHex = entityBehaviour;
-            
             List<int> shortestPath = FindShortestPath(_initialHex, _finishHex);
-
+            
             if (shortestPath == null)
             {
                 _initialHex = null;

@@ -25,17 +25,8 @@ namespace Code.Gameplay.Features.Battle.View.UI
         public void OnPointerDown(PointerEventData eventData)
         {
             GameEntity battleEntity = _game.GetEntityWithId(_entityBehaviour.Entity.battleIndicator.BattleId);
-            
-            if (battleEntity.battlefield.AttackerHexagonsId.Count == 1)
-            {
-                battleEntity.isDestructed = true;
-                _entityBehaviour.Entity.isDestructed = true;
-            }
-            else
-            {
-                battleEntity.battlefield.AttackerHexagonsId.RemoveAll(x => x == _entityBehaviour.Entity.battleIndicator.FromHexId);
-                _entityBehaviour.Entity.isDestructed = true;
-            }
+            battleEntity.isDestructed = true;
+            _entityBehaviour.Entity.isDestructed = true;
         }
 
         public void SetDirection(Transform from, Transform to)

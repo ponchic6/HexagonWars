@@ -15,8 +15,8 @@ namespace Code.Gameplay.Features.Migration.Systems
             Add(systemFactory.Create<MigrationChooserUiReactiveSystem>());
             Add(systemFactory.Create<MigrationButtonsVisibilityReactiveSystem>());
             Add(systemFactory.Create<MigrationEnemyButtonsVisibilityReactiveSystem>());
-
             Add(systemFactory.Create<MigrationTogglesDisablingReactiveSystem>());
+            Add(systemFactory.Create<MigrationTogglesCountPeopleReactiveSystem>());
             Add(systemFactory.Create<MigrationTrailCreatingReactiveSystem>());
             Add(systemFactory.Create<MigrationTogglesForChooserReactiveSystem>());
             Add(systemFactory.Create<MigrationChooserHideReactiveSystem>());

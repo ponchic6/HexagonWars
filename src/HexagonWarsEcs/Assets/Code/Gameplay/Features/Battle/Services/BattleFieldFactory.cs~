@@ -5,7 +5,6 @@ using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.StaticData;
 using Code.Infrastructure.View;
-using Entitas;
 using UnityEngine;
 
 namespace Code.Gameplay.Features.Battle.Services
@@ -43,7 +42,7 @@ namespace Code.Gameplay.Features.Battle.Services
                 _warriorsAmount = 0;
                 return;
             }
-            
+
             _defendersHex = entityBehaviour;
             
             if (IsHexagonsNotNeighbours())
@@ -51,37 +50,31 @@ namespace Code.Gameplay.Features.Battle.Services
                 CreateMigrationToBattlefield();
                 return;
             }
-
-            if (TryAddAttackersInExistBattlefield())
-                return;
             
             CreateBattlefield(_attackersHex.Entity, _defendersHex.Entity);
             ResetFactoryState();
         }
-
-        public void CreateBattlefieldFromWarriorsMigration(GameEntity migrationEntity)
-        {
-            GameEntity defenderHex = _game.GetEntityWithId(migrationEntity.hexagonForAttack.Value);
-            GameEntity attackerHex = _game.GetEntityWithId(migrationEntity.wayIdPoints.Value[0]);
-            CreateBattlefield(attackerHex, defenderHex);
-            ResetFactoryState();
-        }
-
+        
         public GameEntity CreateBattlefield(GameEntity attackerHex, GameEntity defenderHex)
         {
-            Debug.Log("CreateBattlefield");
             GameEntity battlefield = _game.CreateEntity();
             battlefield.AddId(_identifierService.Next());
             battlefield.AddCurrentBattleCooldown(0f);
             battlefield.AddBattleCooldown(_commonStaticData.BattleCooldown);
-            battlefield.AddBattlefield(new List<int>{ attackerHex.id.Value }, defenderHex.id.Value);
+            battlefield.AddBattlefield(attackerHex.id.Value, defenderHex.id.Value);
             CreateBattleIndicator(attackerHex, defenderHex, battlefield);
+            ResetFactoryState();
             return battlefield;
         }
 
         private void CreateMigrationToBattlefield()
         {
             _migrationFactory.SetInitialHex(_attackersHex, _warriorsAmount, ManMigrationType.Warriors);
+            _migrationFactory.SetFinishHexAndCreateMigration(_defendersHex);
+            Debug.Log(_attackersHex);
+            Debug.Log(_defendersHex);
+            return;
+            
             EntityBehaviour neighbourHex = null;
             
             List<EntityBehaviour> neighboringHexagonsList = _defendersHex.GetComponent<NeighboringHexagons>().NeighboringHexagonsList;
@@ -94,11 +87,8 @@ namespace Code.Gameplay.Features.Battle.Services
                     neighbourHex = entity;
             }
 
-            if (neighbourHex != null)
-            {
-                GameEntity migration = _migrationFactory.SetFinishHexAndCreateMigration(neighbourHex);
-                migration.AddHexagonForAttack(_defendersHex.Entity.id.Value);
-            }
+            if (neighbourHex != null) 
+                _migrationFactory.SetFinishHexAndCreateMigration(neighbourHex);
                 
             ResetFactoryState();
         }
@@ -110,26 +100,7 @@ namespace Code.Gameplay.Features.Battle.Services
             battleIndicator.AddBattleIndicator(fromHex.id.Value, toHex.id.Value, 0, battlefieldEntity.id.Value);
             battleIndicator.AddViewPath(BATTLE_INDICATOR_PATH);
         }
-
-        private bool TryAddAttackersInExistBattlefield()
-        {
-            IGroup<GameEntity> entities = _game.GetGroup(GameMatcher.Battlefield);
-
-            foreach (GameEntity battlefieldEntity in entities)
-            {
-                if (battlefieldEntity.battlefield.DefenderHexagonId != _defendersHex.Entity.id.Value)
-                    continue;
-                
-                battlefieldEntity.battlefield.AttackerHexagonsId.Add(_attackersHex.Entity.id.Value);
-                battlefieldEntity.ReplaceBattlefield(battlefieldEntity.battlefield.AttackerHexagonsId, battlefieldEntity.battlefield.DefenderHexagonId);
-                CreateBattleIndicator(_attackersHex.Entity, _defendersHex.Entity, battlefieldEntity);
-                ResetFactoryState();
-                return true;
-            }
-
-            return false;
-        }
-
+        
         private bool IsHexagonsNotNeighbours()
         {
             if (_attackersHex.GetComponent<NeighboringHexagons>().NeighboringHexagonsList.Contains(_defendersHex))

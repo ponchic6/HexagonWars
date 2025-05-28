@@ -26,17 +26,12 @@ namespace Code.Gameplay.Features.Warriors.Systems
                     continue;
                 
                 int defenderId = entity.battlefield.DefenderHexagonId;
+                int attackerId = entity.battlefield.AttackerHexagonId;
                 GameEntity defenderEntity = _game.GetEntityWithId(defenderId);
-                GameEntity attackerEntity = _game.GetEntityWithId(entity.battlefield.AttackerHexagonsId[0]);
+                GameEntity attackerEntity = _game.GetEntityWithId(attackerId);
 
                 StartShootingForHexagon(defenderEntity, attackerEntity);
-
-                foreach (int attackerId in entity.battlefield.AttackerHexagonsId)
-                {
-                    defenderEntity = _game.GetEntityWithId(defenderId);
-                    attackerEntity = _game.GetEntityWithId(attackerId);
-                    StartShootingForHexagon(attackerEntity, defenderEntity);
-                }
+                StartShootingForHexagon(attackerEntity, defenderEntity);
             }
         }
 

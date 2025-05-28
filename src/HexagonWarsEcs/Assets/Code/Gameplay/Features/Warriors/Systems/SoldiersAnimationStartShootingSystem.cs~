@@ -1,7 +1,6 @@
 using Code.Gameplay.Features.Warriors.Services;
 using Code.Gameplay.Features.Warriors.View;
 using Entitas;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.Warriors.Systems
 {
@@ -23,7 +22,9 @@ namespace Code.Gameplay.Features.Warriors.Systems
         {
             foreach (GameEntity entity in _entities)
             {
-                Debug.Log(entity.isDestructed);
+                if (entity.isDestructed)
+                    continue;
+                
                 int defenderId = entity.battlefield.DefenderHexagonId;
                 GameEntity defenderEntity = _game.GetEntityWithId(defenderId);
                 GameEntity attackerEntity = _game.GetEntityWithId(entity.battlefield.AttackerHexagonsId[0]);

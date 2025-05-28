@@ -27,46 +27,29 @@ namespace Code.Gameplay.Features.Battle.Systems
                 if (entity.currentBattleCooldown.Value > 0) 
                     continue;
 
-                int attackers = entity
-                    .battlefield
-                    .AttackerHexagonsId
-                    .Sum(x => _game.GetEntityWithId(x).warriorsAmount.Value);
-                
-                int defenders = _game
-                    .GetEntityWithId(entity.battlefield.DefenderHexagonId)
-                    .warriorsAmount
-                    .Value;
-
-                List<int> attackersList = entity
-                        .battlefield
-                        .AttackerHexagonsId
-                        .Select(x => _game.GetEntityWithId(x).warriorsAmount.Value)
-                        .ToList();
-                
-                int totalAttackersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * defenders * defenders);
-
-                List<int> distributeLosses = DistributeLosses(attackersList, totalAttackersLosses);
-
-                for (var i = 0; i < entity.battlefield.AttackerHexagonsId.Count; i++)
-                {
-                    GameEntity attackerHex = _game.GetEntityWithId(entity.battlefield.AttackerHexagonsId[i]);
-                    
-                    attackerHex.warriorsAmount.Value -= distributeLosses[i];
-                    
-                    if (attackerHex.warriorsAmount.Value < 0) 
-                        attackerHex.warriorsAmount.Value = 0;
-                    
-                    attackerHex.ReplaceWarriorsAmount(attackerHex.warriorsAmount.Value);
-                }
-
+                GameEntity attackerHex = _game.GetEntityWithId(entity.battlefield.AttackerHexagonId);
                 GameEntity defenderHex = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
                 
-                defenderHex.warriorsAmount.Value -= (int)Math.Round(_commonStaticData.StrongCoefficientOfAttackers * attackers * attackers);
+                int attackers = attackerHex.warriorsAmount.Value;
+                int defenders = defenderHex.warriorsAmount.Value;
 
-                if (defenderHex.warriorsAmount.Value < 0)
-                    defenderHex.warriorsAmount.Value = 0;
+                int totalAttackersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * defenders * defenders);
+                int totalDefendersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * attackers * attackers);
+
+                attackerHex.warriorsAmount.Value -= totalAttackersLosses;
+                    
+                if (attackerHex.warriorsAmount.Value < 0) 
+                    attackerHex.warriorsAmount.Value = 0;
+                    
+                attackerHex.ReplaceWarriorsAmount(attackerHex.warriorsAmount.Value);
                 
-                entity.ReplaceBattlefield(entity.battlefield.AttackerHexagonsId, entity.battlefield.DefenderHexagonId);
+                defenderHex.warriorsAmount.Value -= totalDefendersLosses;
+                    
+                if (defenderHex.warriorsAmount.Value < 0) 
+                    defenderHex.warriorsAmount.Value = 0;
+                    
+                defenderHex.ReplaceWarriorsAmount(defenderHex.warriorsAmount.Value);
+                entity.ReplaceBattlefield(entity.battlefield.AttackerHexagonId, entity.battlefield.DefenderHexagonId);
             }
         }
         

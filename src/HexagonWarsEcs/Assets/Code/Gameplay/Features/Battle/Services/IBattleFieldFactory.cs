@@ -6,7 +6,6 @@ namespace Code.Gameplay.Features.Battle.Services
     {
         public void SetAttackers(EntityBehaviour entityBehaviour, int selectedWarriors);
         public void TrySetDefendersAndCreateBattlefield(EntityBehaviour entityBehaviour);
-        public void CreateBattlefieldFromWarriorsMigration(GameEntity entity);
         public GameEntity CreateBattlefield(GameEntity attackerHex, GameEntity defenderHex);
     }
 }

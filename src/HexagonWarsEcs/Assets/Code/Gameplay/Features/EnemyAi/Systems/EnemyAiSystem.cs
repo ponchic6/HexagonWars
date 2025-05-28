@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Code.Gameplay.Features.Battle.Services;
 using Entitas;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.EnemyAi.Systems
 {
@@ -55,8 +54,8 @@ namespace Code.Gameplay.Features.EnemyAi.Systems
         {
             foreach (GameEntity battlefield in _battlefields)
             {
-                if (battlefield.battlefield.AttackerHexagonsId.Contains(gameEntity.id.Value))
-                    return true;
+                // if (battlefield.battlefield.AttackerHexagonsId.Contains(gameEntity.id.Value))
+                //     return true;
             }
 
             return false;

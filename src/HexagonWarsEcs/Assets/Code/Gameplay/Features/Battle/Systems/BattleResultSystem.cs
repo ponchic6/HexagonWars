@@ -20,9 +20,10 @@ namespace Code.Gameplay.Features.Battle.Systems
             foreach (GameEntity entity in _entities)
             {
                 GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
+                GameEntity attackerEntity = _game.GetEntityWithId(entity.battlefield.AttackerHexagonId);
 
-                if (defenderEntity.isPlayerHexagon && entity.battlefield.AttackerHexagonsId.Any(x => _game.GetEntityWithId(x).isPlayerHexagon) ||
-                    defenderEntity.isEnemyHexagon && entity.battlefield.AttackerHexagonsId.Any(x => _game.GetEntityWithId(x).isEnemyHexagon))
+                if (defenderEntity.isPlayerHexagon && attackerEntity.isPlayerHexagon ||
+                    defenderEntity.isEnemyHexagon && attackerEntity.isEnemyHexagon)
                 {
                     entity.isDestructed = true;
                     continue;
@@ -40,18 +41,14 @@ namespace Code.Gameplay.Features.Battle.Systems
                         defenderEntity.isEnemyHexagon = true;
                         defenderEntity.isPlayerHexagon = false;
                     }
-                    
-                    entity.battlefield.AttackerHexagonsId.ForEach(x =>
-                    {
-                        GameEntity attackerEntity = _game.GetEntityWithId(x);
-                        defenderEntity.ReplaceWarriorsAmount(defenderEntity.warriorsAmount.Value + attackerEntity.warriorsAmount.Value);
-                        attackerEntity.ReplaceWarriorsAmount(0);
-                    });
 
+                    
+                    defenderEntity.ReplaceWarriorsAmount(defenderEntity.warriorsAmount.Value + attackerEntity.warriorsAmount.Value);
+                    attackerEntity.ReplaceWarriorsAmount(0);
                     entity.isDestructed = true;
                 }
 
-                if (entity.battlefield.AttackerHexagonsId.All(x => _game.GetEntityWithId(x).warriorsAmount.Value <= 0))
+                if (attackerEntity.warriorsAmount.Value <= 0)
                     entity.isDestructed = true;
             }
         }

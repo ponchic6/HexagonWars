@@ -6,7 +6,7 @@ namespace Code.Gameplay.Features.EnemyAi.Systems
     {
         public EnemyAiFeature(ISystemFactory systemFactory)
         {
-            Add(systemFactory.Create<EnemyAiSystem>());
+            //Add(systemFactory.Create<EnemyAiSystem>());
         }
     }
 }
