@@ -33,6 +33,9 @@ namespace Code.Gameplay.Features.Warriors.Systems
                 
                 GameEntity currentHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
                 GameEntity nextHex = _game.GetEntityWithId(entity.wayIdPoints.Value[1]);
+                
+                if(nextHex.isEnemyHexagon)
+                    continue;
                     
                 _soldiersModelFactory.CreateAndMoveSoldierModel(currentHex, nextHex);
             }

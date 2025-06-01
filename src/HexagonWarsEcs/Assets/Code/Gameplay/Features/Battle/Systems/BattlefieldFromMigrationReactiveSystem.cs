@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Code.Gameplay.Features.Battle.Services;
 using Entitas;
+using UnityEngine;
 
 namespace Code.Gameplay.Features.Battle.Systems
 {
@@ -28,6 +29,11 @@ namespace Code.Gameplay.Features.Battle.Systems
                 return false;
             
             GameEntity nextHex = _game.GetEntityWithId(entity.wayIdPoints.Value[1]);
+            GameEntity currentHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
+
+            if (currentHex.hasWarriorsAmount && currentHex.warriorsAmount.Value <= 0)
+                return false;
+            
             return entity.hasWarriorsMigrationAmount && nextHex != null && nextHex.isEnemyHexagon;
         }
 
@@ -46,8 +52,8 @@ namespace Code.Gameplay.Features.Battle.Systems
                         return;
                 }
 
-                GameEntity defenderHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
-                GameEntity attackerHex = _game.GetEntityWithId(entity.wayIdPoints.Value[1]);
+                GameEntity defenderHex = _game.GetEntityWithId(entity.wayIdPoints.Value[1]);
+                GameEntity attackerHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
 
                 _battleFieldFactory.CreateBattlefield(attackerHex, defenderHex);
             }

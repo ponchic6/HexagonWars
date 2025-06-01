@@ -36,9 +36,6 @@ namespace Code.Gameplay.Features.Migration.View
 
         private void OnPointerDown(PointerEventData eventData)
         {
-            if (_entityBehaviour.Entity.isEnemyHexagon)
-                return;
-
             if (eventData.button != PointerEventData.InputButton.Right)
                 return;
 

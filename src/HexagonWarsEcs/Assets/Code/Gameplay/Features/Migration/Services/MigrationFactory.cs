@@ -81,17 +81,10 @@ namespace Code.Gameplay.Features.Migration.Services
                 EntityBehaviour current = queue.Dequeue();
         
                 if (current == endNode)
-                {
                     return ReconstructPath(cameFrom, endNode);
-                }
         
                 foreach (EntityBehaviour neighbor in current.GetComponent<NeighboringHexagons>().NeighboringHexagonsList)
                 {
-                    if (neighbor.Entity.isEnemyHexagon)
-                    {
-                        continue;
-                    }
-
                     if (!cameFrom.ContainsKey(neighbor))
                     {
                         queue.Enqueue(neighbor);

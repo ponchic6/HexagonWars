@@ -34,22 +34,24 @@ namespace Code.Gameplay.Features.Migration.Systems
                     routEntity.ReplaceMigrationComplexityWay(routEntity.migrationComplexityWay.Value);
                     continue;
                 }
-                
+
                 GameEntity currentHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
                 GameEntity nextHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[1]);
-                
+
                 if (nextHex.isEnemyHexagon)
                     continue;
-                    
+                
                 if (currentHex.warriorsAmount.Value < routEntity.warriorsMigrationAmount.Value)
                 {
-                    routEntity.isDestructed = true;
-                    return;
+                    nextHex.ReplaceWarriorsAmount(nextHex.warriorsAmount.Value + currentHex.warriorsAmount.Value);
+                    currentHex.ReplaceWarriorsAmount(0);
                 }
-                    
-                currentHex.ReplaceWarriorsAmount(currentHex.warriorsAmount.Value - routEntity.warriorsMigrationAmount.Value);
-                nextHex.ReplaceWarriorsAmount(nextHex.warriorsAmount.Value + routEntity.warriorsMigrationAmount.Value);
-                    
+                else
+                {
+                    currentHex.ReplaceWarriorsAmount(currentHex.warriorsAmount.Value - routEntity.warriorsMigrationAmount.Value);
+                    nextHex.ReplaceWarriorsAmount(nextHex.warriorsAmount.Value + routEntity.warriorsMigrationAmount.Value);
+                }
+                
                 routEntity.migrationComplexityWay.Value.RemoveAt(0);
                 routEntity.ReplaceMigrationComplexityWay(routEntity.migrationComplexityWay.Value);
                 routEntity.wayIdPoints.Value.RemoveAt(0);

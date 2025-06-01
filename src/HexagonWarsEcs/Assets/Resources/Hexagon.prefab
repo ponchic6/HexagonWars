@@ -528,7 +528,6 @@ GameObject:
   - component: {fileID: 426827041464429389}
   - component: {fileID: 8180901549282218489}
   - component: {fileID: 5770923189635765875}
-  - component: {fileID: 3408284145224947107}
   - component: {fileID: 8855539897590396150}
   m_Layer: 0
   m_Name: Hexagon
@@ -784,20 +783,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entityBehaviour: {fileID: -3125488246894819592}
   _renderer: {fileID: 8575431155741185573}
---- !u!114 &3408284145224947107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5910288373307850574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bfba029be694d47aa529ce5ac5bb50e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _entityBehaviour: {fileID: -3125488246894819592}
-  _pointerHandler: {fileID: 426827041464429389}
 --- !u!114 &8855539897590396150
 MonoBehaviour:
   m_ObjectHideFlags: 0

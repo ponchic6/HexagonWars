@@ -43,8 +43,8 @@ namespace Code.Gameplay.Features.Battle.Systems
                     }
 
                     
-                    defenderEntity.ReplaceWarriorsAmount(defenderEntity.warriorsAmount.Value + attackerEntity.warriorsAmount.Value);
-                    attackerEntity.ReplaceWarriorsAmount(0);
+                    //defenderEntity.ReplaceWarriorsAmount(defenderEntity.warriorsAmount.Value + attackerEntity.warriorsAmount.Value);
+                    //attackerEntity.ReplaceWarriorsAmount(0);
                     entity.isDestructed = true;
                 }
 

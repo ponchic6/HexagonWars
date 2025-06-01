@@ -23,28 +23,29 @@ namespace Code.Gameplay.Features.Migration.Systems
         {
             foreach (GameEntity routEntity in _entities)
             {
-                if (routEntity.migrationComplexityWay.Value.Count <= 0)
+                GameEntity currentHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
+                GameEntity nextHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[1]);
+                
+                if (routEntity.migrationComplexityWay.Value.Count <= 0 ||
+                    nextHex.isEnemyHexagon)
                 {
                     routEntity.isDestructed = true;
                     return;
                 }
-                
+
                 if (routEntity.migrationComplexityWay.Value[0] > 0)
                 {
                     routEntity.migrationComplexityWay.Value[0] -= Time.deltaTime;
                     routEntity.ReplaceMigrationComplexityWay(routEntity.migrationComplexityWay.Value);
                     continue;
                 }
-                
-                GameEntity currentHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
-                GameEntity nextHex = _game.GetEntityWithId(routEntity.wayIdPoints.Value[1]);
-                    
+
                 if (currentHex.citizensAmount.Value < routEntity.citizensMigrationAmount.Value)
                 {
                     routEntity.isDestructed = true;
                     return;
                 }
-                    
+
                 currentHex.ReplaceCitizensAmount(currentHex.citizensAmount.Value - routEntity.citizensMigrationAmount.Value);
                 nextHex.ReplaceCitizensAmount(nextHex.citizensAmount.Value + routEntity.citizensMigrationAmount.Value);
                     
