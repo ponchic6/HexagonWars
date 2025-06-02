@@ -8,19 +8,19 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown currentHungerDeathCooldown { get { return (Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown)GetComponent(GameComponentsLookup.CurrentHungerDeathCooldown); } }
+    public Code.Gameplay.Features.Men.CurrentHungerDeathCooldown currentHungerDeathCooldown { get { return (Code.Gameplay.Features.Men.CurrentHungerDeathCooldown)GetComponent(GameComponentsLookup.CurrentHungerDeathCooldown); } }
     public bool hasCurrentHungerDeathCooldown { get { return HasComponent(GameComponentsLookup.CurrentHungerDeathCooldown); } }
 
     public void AddCurrentHungerDeathCooldown(float newValue) {
         var index = GameComponentsLookup.CurrentHungerDeathCooldown;
-        var component = (Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown));
+        var component = (Code.Gameplay.Features.Men.CurrentHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Men.CurrentHungerDeathCooldown));
         component.Value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceCurrentHungerDeathCooldown(float newValue) {
         var index = GameComponentsLookup.CurrentHungerDeathCooldown;
-        var component = (Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown));
+        var component = (Code.Gameplay.Features.Men.CurrentHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Men.CurrentHungerDeathCooldown));
         component.Value = newValue;
         ReplaceComponent(index, component);
     }
