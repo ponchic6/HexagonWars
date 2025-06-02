@@ -40,12 +40,12 @@ namespace Code.Gameplay.Features.Battle.Systems
             GameEntity defenderEntity = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
             List<AmountPopUpContainer> defenderPopUpContainer = defenderEntity.amountPopUpEvents.Value;
             defenderPopUpContainer.RemoveAll(x => x.sprite == _commonStaticData.ManSprite);
-            defenderPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, defenderEntity.warriorsAmount.Value, defenderEntity.transform.Value));
+            defenderPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, defenderEntity.manAmount.Value, defenderEntity.transform.Value));
 
             GameEntity attackerEntity = _game.GetEntityWithId(entity.battlefield.AttackerHexagonId);
             List<AmountPopUpContainer> attackerPopUpContainer = attackerEntity.amountPopUpEvents.Value;
             attackerPopUpContainer.RemoveAll(x => x.sprite == _commonStaticData.ManSprite);
-            attackerPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, attackerEntity.warriorsAmount.Value, attackerEntity.transform.Value));
+            attackerPopUpContainer.Add(new AmountPopUpContainer(_commonStaticData.ManSprite, attackerEntity.manAmount.Value, attackerEntity.transform.Value));
         }
 
         private void ClearWarriorPopUpEvents(GameEntity entity)

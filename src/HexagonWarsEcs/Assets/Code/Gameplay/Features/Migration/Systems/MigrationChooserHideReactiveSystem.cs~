@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
+using Code.Gameplay.Common.Services;
 using Entitas;
 
 namespace Code.Gameplay.Features.Migration.Systems
 {
     public class MigrationChooserHideReactiveSystem : ReactiveSystem<GameEntity>
     {
-        private GameContext _game;
+        private readonly IUIFactory _uiFactory;
+        private readonly GameContext _game;
 
-        public MigrationChooserHideReactiveSystem(IContext<GameEntity> context) : base(context)
+        public MigrationChooserHideReactiveSystem(IContext<GameEntity> context, IUIFactory uiFactory) : base(context)
         {
+            _uiFactory = uiFactory;
             _game = Contexts.sharedInstance.game;
         }
 
@@ -20,6 +23,10 @@ namespace Code.Gameplay.Features.Migration.Systems
 
         protected override void Execute(List<GameEntity> entities)
         {
+            IGroup<GameEntity> group = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.CitizenToggleEnabling, GameMatcher.SoldiersToggleEnabling));
+
+            if (group.count == 0)
+                _uiFactory.SliderMigrationChooserDeactivate();
         }
     }
 }

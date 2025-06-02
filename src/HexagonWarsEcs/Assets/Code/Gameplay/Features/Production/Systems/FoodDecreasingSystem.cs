@@ -17,8 +17,7 @@ namespace Code.Gameplay.Features.Production.Systems
             GameContext game = Contexts.sharedInstance.game;
 
             _entities = game.GetGroup(GameMatcher.AnyOf(
-                GameMatcher.CitizensAmount,
-                GameMatcher.WarriorsAmount,
+                GameMatcher.ManAmount,
                 GameMatcher.BuildingProgress,
                 GameMatcher.FoodFarm,
                 GameMatcher.Mine));
@@ -42,11 +41,8 @@ namespace Code.Gameplay.Features.Production.Systems
             float consumption = 0f;
             float deltaTime = Time.deltaTime;
         
-            if (entity.hasCitizensAmount)
-                consumption += entity.citizensAmount.Value * deltaTime * _commonStaticData.FoodPerSecondByCitizens;
-            
-            if (entity.hasWarriorsAmount)
-                consumption += entity.warriorsAmount.Value * deltaTime * _commonStaticData.FoodPerSecondByWarriors;
+            if (entity.hasManAmount)
+                consumption += entity.manAmount.Value * deltaTime * _commonStaticData.FoodPerSecondByCitizens;
             
             if (entity.hasFoodFarm)
                 consumption += entity.foodFarm.Workers * deltaTime * _commonStaticData.FoodPerSecondByCitizens;

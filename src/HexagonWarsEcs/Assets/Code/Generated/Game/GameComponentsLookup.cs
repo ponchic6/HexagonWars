@@ -21,46 +21,43 @@ public static class GameComponentsLookup {
     public const int CurrentBattleCooldown = 10;
     public const int EnemyHexagon = 11;
     public const int PlayerHexagon = 12;
-    public const int WarriorsAmount = 13;
-    public const int WarriorsMigrationAmount = 14;
-    public const int BuildingProgress = 15;
-    public const int CitizensAmount = 16;
-    public const int CurrentHungerDeathCooldown = 17;
-    public const int MaxHungerDeathCooldown = 18;
-    public const int AmmoAmount = 19;
-    public const int AvailabilityForSupplyRout = 20;
-    public const int CoalAmount = 21;
-    public const int CouriersProgressList = 22;
-    public const int FoodAmount = 23;
-    public const int HighlightedSupplyRout = 24;
-    public const int IronAmount = 25;
-    public const int SupplyComplexityWay = 26;
-    public const int SupplyHighlighter = 27;
-    public const int SupplyRoute = 28;
-    public const int ChildHexagon = 29;
-    public const int MapParent = 30;
-    public const int NeighboringHexagons = 31;
-    public const int CitizensMigrationAmount = 32;
-    public const int CitizenToggleEnabling = 33;
-    public const int MigrationArrow = 34;
-    public const int MigrationComplexityWay = 35;
-    public const int MigrationHandler = 36;
-    public const int SoldiersToggleEnabling = 37;
-    public const int WayIdPoints = 38;
-    public const int AmountPopUpCooldown = 39;
-    public const int AmountPopUpEvents = 40;
-    public const int Barracks = 41;
-    public const int City = 42;
-    public const int FoodFarm = 43;
-    public const int Mine = 44;
-    public const int Destructed = 45;
-    public const int InitialTransform = 46;
-    public const int View = 47;
-    public const int ViewPath = 48;
-    public const int ViewPrefab = 49;
-    public const int ViewPrefabWithParent = 50;
+    public const int BuildingProgress = 13;
+    public const int AmmoAmount = 14;
+    public const int AvailabilityForSupplyRout = 15;
+    public const int CoalAmount = 16;
+    public const int CouriersProgressList = 17;
+    public const int FoodAmount = 18;
+    public const int HighlightedSupplyRout = 19;
+    public const int IronAmount = 20;
+    public const int SupplyComplexityWay = 21;
+    public const int SupplyHighlighter = 22;
+    public const int SupplyRoute = 23;
+    public const int ChildHexagon = 24;
+    public const int MapParent = 25;
+    public const int NeighboringHexagons = 26;
+    public const int CurrentHungerDeathCooldown = 27;
+    public const int ManAmount = 28;
+    public const int ManAnimation = 29;
+    public const int MaxHungerDeathCooldown = 30;
+    public const int ManMigrationAmount = 31;
+    public const int ManToggleEnabling = 32;
+    public const int MigrationArrow = 33;
+    public const int MigrationComplexityWay = 34;
+    public const int MigrationHandler = 35;
+    public const int WayIdPoints = 36;
+    public const int AmountPopUpCooldown = 37;
+    public const int AmountPopUpEvents = 38;
+    public const int City = 39;
+    public const int FoodFarm = 40;
+    public const int Mine = 41;
+    public const int Destructed = 42;
+    public const int InitialTransform = 43;
+    public const int View = 44;
+    public const int ViewPath = 45;
+    public const int ViewPrefab = 46;
+    public const int ViewPrefabWithParent = 47;
 
-    public const int TotalComponents = 51;
+    public const int TotalComponents = 48;
 
     public static readonly string[] componentNames = {
         "Id",
@@ -76,12 +73,7 @@ public static class GameComponentsLookup {
         "CurrentBattleCooldown",
         "EnemyHexagon",
         "PlayerHexagon",
-        "WarriorsAmount",
-        "WarriorsMigrationAmount",
         "BuildingProgress",
-        "CitizensAmount",
-        "CurrentHungerDeathCooldown",
-        "MaxHungerDeathCooldown",
         "AmmoAmount",
         "AvailabilityForSupplyRout",
         "CoalAmount",
@@ -95,16 +87,18 @@ public static class GameComponentsLookup {
         "ChildHexagon",
         "MapParent",
         "NeighboringHexagons",
-        "CitizensMigrationAmount",
-        "CitizenToggleEnabling",
+        "CurrentHungerDeathCooldown",
+        "ManAmount",
+        "ManAnimation",
+        "MaxHungerDeathCooldown",
+        "ManMigrationAmount",
+        "ManToggleEnabling",
         "MigrationArrow",
         "MigrationComplexityWay",
         "MigrationHandler",
-        "SoldiersToggleEnabling",
         "WayIdPoints",
         "AmountPopUpCooldown",
         "AmountPopUpEvents",
-        "Barracks",
         "City",
         "FoodFarm",
         "Mine",
@@ -130,12 +124,7 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Battle.CurrentBattleCooldown),
         typeof(Code.Gameplay.Features.Battle.EnemyHexagon),
         typeof(Code.Gameplay.Features.Battle.PlayerHexagon),
-        typeof(Code.Gameplay.Features.Battle.WarriorsAmount),
-        typeof(Code.Gameplay.Features.Battle.WarriorsMigrationAmount),
         typeof(Code.Gameplay.Features.Building.BuildingProgress),
-        typeof(Code.Gameplay.Features.Citizens.CitizensAmount),
-        typeof(Code.Gameplay.Features.Citizens.CurrentHungerDeathCooldown),
-        typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown),
         typeof(Code.Gameplay.Features.Logistics.AmmoAmount),
         typeof(Code.Gameplay.Features.Logistics.AvailabilityForSupplyRout),
         typeof(Code.Gameplay.Features.Logistics.CoalAmount),
@@ -149,16 +138,18 @@ public static class GameComponentsLookup {
         typeof(Code.Gameplay.Features.Map.ChildHexagon),
         typeof(Code.Gameplay.Features.Map.MapParent),
         typeof(Code.Gameplay.Features.Map.NeighboringHexagonsComponent),
-        typeof(Code.Gameplay.Features.Migration.CitizensMigrationAmount),
-        typeof(Code.Gameplay.Features.Migration.CitizenToggleEnabling),
+        typeof(Code.Gameplay.Features.Men.CurrentHungerDeathCooldown),
+        typeof(Code.Gameplay.Features.Men.ManAmount),
+        typeof(Code.Gameplay.Features.Men.ManAnimation),
+        typeof(Code.Gameplay.Features.Men.MaxHungerDeathCooldown),
+        typeof(Code.Gameplay.Features.Migration.ManMigrationAmount),
+        typeof(Code.Gameplay.Features.Migration.ManToggleEnabling),
         typeof(Code.Gameplay.Features.Migration.MigrationArrow),
         typeof(Code.Gameplay.Features.Migration.MigrationComplexityWay),
         typeof(Code.Gameplay.Features.Migration.MigrationHandlerComponent),
-        typeof(Code.Gameplay.Features.Migration.SoldiersToggleEnabling),
         typeof(Code.Gameplay.Features.Migration.WayIdPoints),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpCooldown),
         typeof(Code.Gameplay.Features.PopUp.AmountPopUpEvents),
-        typeof(Code.Gameplay.Features.Production.Barracks),
         typeof(Code.Gameplay.Features.Production.City),
         typeof(Code.Gameplay.Features.Production.FoodFarm),
         typeof(Code.Gameplay.Features.Production.Mine),

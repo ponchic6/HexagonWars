@@ -839,7 +839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1574219278271077404}
   - component: {fileID: 5491108810896776764}
-  - component: {fileID: 2225753853214280393}
+  - component: {fileID: 3898212080008464187}
   m_Layer: 0
   m_Name: CitizenModel
   m_TagString: Untagged
@@ -886,7 +886,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2225753853214280393
+--- !u!114 &3898212080008464187
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -895,7 +895,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2099750484562226312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48797384a79e452d9a2523f9c355a571, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e8a127905cd05c48a8b47b0472dcbd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 5491108810896776764}

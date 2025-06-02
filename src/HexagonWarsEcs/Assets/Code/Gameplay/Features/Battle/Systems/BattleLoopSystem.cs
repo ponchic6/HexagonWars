@@ -30,25 +30,25 @@ namespace Code.Gameplay.Features.Battle.Systems
                 GameEntity attackerHex = _game.GetEntityWithId(entity.battlefield.AttackerHexagonId);
                 GameEntity defenderHex = _game.GetEntityWithId(entity.battlefield.DefenderHexagonId);
                 
-                int attackers = attackerHex.warriorsAmount.Value;
-                int defenders = defenderHex.warriorsAmount.Value;
+                int attackers = attackerHex.manAmount.Value;
+                int defenders = defenderHex.manAmount.Value;
 
                 int totalAttackersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * defenders * defenders);
                 int totalDefendersLosses = (int)Math.Round(_commonStaticData.StrongCoefficientOfDefenders * attackers * attackers);
 
-                attackerHex.warriorsAmount.Value -= totalAttackersLosses;
+                attackerHex.manAmount.Value -= totalAttackersLosses;
                     
-                if (attackerHex.warriorsAmount.Value < 0) 
-                    attackerHex.warriorsAmount.Value = 0;
+                if (attackerHex.manAmount.Value < 0) 
+                    attackerHex.manAmount.Value = 0;
                     
-                attackerHex.ReplaceWarriorsAmount(attackerHex.warriorsAmount.Value);
+                attackerHex.ReplaceManAmount(attackerHex.manAmount.Value);
                 
-                defenderHex.warriorsAmount.Value -= totalDefendersLosses;
+                defenderHex.manAmount.Value -= totalDefendersLosses;
                     
-                if (defenderHex.warriorsAmount.Value < 0) 
-                    defenderHex.warriorsAmount.Value = 0;
+                if (defenderHex.manAmount.Value < 0) 
+                    defenderHex.manAmount.Value = 0;
                     
-                defenderHex.ReplaceWarriorsAmount(defenderHex.warriorsAmount.Value);
+                defenderHex.ReplaceManAmount(defenderHex.manAmount.Value);
                 entity.ReplaceBattlefield(entity.battlefield.AttackerHexagonId, entity.battlefield.DefenderHexagonId);
             }
         }

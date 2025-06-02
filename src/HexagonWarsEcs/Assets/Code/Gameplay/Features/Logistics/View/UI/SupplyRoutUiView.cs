@@ -90,10 +90,10 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         {
             GameEntity startHexEntity = _gameContext.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
             
-            if (startHexEntity.citizensAmount.Value <= 0)
+            if (startHexEntity.manAmount.Value <= 0)
                 return;
             
-            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value - 1);
+            startHexEntity.ReplaceManAmount(startHexEntity.manAmount.Value - 1);
             var value = _resourcesDropdown.value;
             TMP_Dropdown.OptionData optionData = _resourcesDropdown.options[value];
             Enum.TryParse(optionData.text, out LogisticResources resource);
@@ -108,7 +108,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
             if (routEntity.couriersProgressList.Value.Count == 0)
                 return;
             
-            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value + 1);
+            startHexEntity.ReplaceManAmount(startHexEntity.manAmount.Value + 1);
             routEntity.couriersProgressList.Value.RemoveAt(0);
             _couriersInputField.text = routEntity.couriersProgressList.Value.Count.ToString();
         }
@@ -116,7 +116,7 @@ namespace Code.Gameplay.Features.Logistics.View.UI
         private void OnDeleteButton(GameEntity routEntity)
         {
             GameEntity startHexEntity = _gameContext.GetEntityWithId(routEntity.wayIdPoints.Value[0]);
-            startHexEntity.ReplaceCitizensAmount(startHexEntity.citizensAmount.Value + routEntity.couriersProgressList.Value.Count);
+            startHexEntity.ReplaceManAmount(startHexEntity.manAmount.Value + routEntity.couriersProgressList.Value.Count);
             routEntity.isDestructed = true;
         }
     }

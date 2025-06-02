@@ -24,8 +24,8 @@ namespace Code.Gameplay.Features.Battle.Systems
                 GameEntity fromHex = _game.GetEntityWithId(entity.battleIndicator.FromHexId);
                 GameEntity toHex = _game.GetEntityWithId(entity.battleIndicator.ToHexId);
 
-                int totalWarriors = fromHex.warriorsAmount.Value + toHex.warriorsAmount.Value;
-                entity.battleIndicator.WinIndicator = fromHex.warriorsAmount.Value / (float)totalWarriors;
+                int totalWarriors = fromHex.manAmount.Value + toHex.manAmount.Value;
+                entity.battleIndicator.WinIndicator = fromHex.manAmount.Value / (float)totalWarriors;
                 entity.ReplaceBattleIndicator(
                     entity.battleIndicator.FromHexId,
                     entity.battleIndicator.ToHexId,

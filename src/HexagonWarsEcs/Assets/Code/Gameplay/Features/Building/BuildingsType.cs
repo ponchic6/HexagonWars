@@ -4,7 +4,6 @@
     {
         City,
         FoodFarm,
-        Barracks,
         Mine
     }
 }

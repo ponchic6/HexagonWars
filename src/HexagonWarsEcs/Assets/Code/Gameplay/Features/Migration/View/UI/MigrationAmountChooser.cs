@@ -1,5 +1,4 @@
 ﻿using System;
-using Code.Gameplay.Common;
 using Code.Gameplay.Features.Battle.Services;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.View;
@@ -27,7 +26,6 @@ namespace Code.Gameplay.Features.Migration.View.UI
         private IMigrationFactory _migrationFactory;
         private EntityBehaviour _entityBehaviour;
         private IBattleFieldFactory _battleFieldFactory;
-        private ManMigrationType _manMigrationType;
 
         public EntityBehaviour EntityBehaviour => _entityBehaviour;
 
@@ -44,18 +42,12 @@ namespace Code.Gameplay.Features.Migration.View.UI
             _slider.onValueChanged.AsObservable().Subscribe(OnSliderValueChanged).AddTo(this);
         }
         
-        public void Show(EntityBehaviour hexEntity, ManMigrationType manMigrationType)
-        {
-            _manMigrationType = manMigrationType;
+        public void Show(EntityBehaviour hexEntity)
+        { ;
             _selectedPeople = 0;
+            
             _entityBehaviour = hexEntity;
-
-            _text.text = manMigrationType switch
-            {
-                ManMigrationType.Citizens => _entityBehaviour.Entity.citizensAmount.Value + " граждан",
-                ManMigrationType.Warriors => _entityBehaviour.Entity.warriorsAmount.Value + " военных",
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            _text.text = _entityBehaviour.Entity.manAmount.Value + " человек";
 
             _slider.value = 0;
             gameObject.SetActive(true);
@@ -86,32 +78,12 @@ namespace Code.Gameplay.Features.Migration.View.UI
         public void UpdateUi()
         {
             if (_slider.value == 0)
-            {
-                _text.text = _manMigrationType switch
-                {
-                    ManMigrationType.Citizens => _entityBehaviour.Entity.citizensAmount.Value + " граждан",
-                    ManMigrationType.Warriors => _entityBehaviour.Entity.warriorsAmount.Value + " военных",
-                    _ => throw new ArgumentOutOfRangeException()
-                };
-            }
+                _text.text = _entityBehaviour.Entity.manAmount.Value + " человек";
             else
             {
-                int value;
-                switch (_manMigrationType)
-                {
-                    case ManMigrationType.Citizens:
-                        value = _entityBehaviour.Entity.citizensAmount.Value;
-                        _text.text = _selectedPeople + "/" + value + " граждан";
-                        break;
-                    case ManMigrationType.Warriors:
-                        value = _entityBehaviour.Entity.warriorsAmount.Value;
-                        _text.text = _selectedPeople + "/" + value + " военных";
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
+                int value = _entityBehaviour.Entity.manAmount.Value;
                 _selectedPeople = (int)Math.Round(value * _slider.value);
+                _text.text = _selectedPeople + "/" + value + " человек";
             }
         }
 
@@ -119,25 +91,11 @@ namespace Code.Gameplay.Features.Migration.View.UI
         {
             if (_entityBehaviour == null)
                 return;
-            
-            int value;
-            
-            switch (_manMigrationType)
-            {
-                case ManMigrationType.Citizens:
-                    value = _entityBehaviour.Entity.citizensAmount.Value;
-                    _selectedPeople = (int)Math.Round(value * sliderValue);
-                    _text.text = _selectedPeople + "/" + value + " граждан";
-                    _migrationFactory.SetInitialHex(_entityBehaviour, _selectedPeople, ManMigrationType.Citizens);
-                    break;
-                case ManMigrationType.Warriors:
-                    value = _entityBehaviour.Entity.warriorsAmount.Value;
-                    _selectedPeople = (int)Math.Round(value * sliderValue);
-                    _text.text = _selectedPeople + "/" + value + " военных";
-                    _battleFieldFactory.SetAttackers(_entityBehaviour, _selectedPeople);
-                    _migrationFactory.SetInitialHex(_entityBehaviour, _selectedPeople, ManMigrationType.Warriors);
-                    break;
-            }
+
+            int value = _entityBehaviour.Entity.manAmount.Value;
+            _selectedPeople = (int)Math.Round(value * sliderValue);
+            _text.text = _selectedPeople + "/" + value + " человек";
+            _migrationFactory.SetInitialHex(_entityBehaviour, _selectedPeople);
         }
     }
 }

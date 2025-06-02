@@ -16,14 +16,14 @@ namespace Code.Gameplay.Features.Migration.Systems
         }
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-            context.CreateCollector(GameMatcher.CitizenToggleEnabling.AddedOrRemoved(), GameMatcher.SoldiersToggleEnabling.AddedOrRemoved());
+            context.CreateCollector(GameMatcher.ManToggleEnabling.AddedOrRemoved());
 
         protected override bool Filter(GameEntity entity) =>
             true;
 
         protected override void Execute(List<GameEntity> entities)
         {
-            IGroup<GameEntity> group = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.CitizenToggleEnabling, GameMatcher.SoldiersToggleEnabling));
+            IGroup<GameEntity> group = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.ManToggleEnabling));
 
             if (group.count == 0)
                 _uiFactory.SliderMigrationChooserDeactivate();

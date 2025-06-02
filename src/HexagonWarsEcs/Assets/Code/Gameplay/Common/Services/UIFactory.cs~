@@ -74,7 +74,7 @@ namespace Code.Gameplay.Common.Services
             }
         }
 
-        public void SliderMigrationChooserActivate(GameEntity hexEntity, ManMigrationType manMigrationType) =>
+        public void SliderMigrationChooserActivate(EntityBehaviour hexEntity, ManMigrationType manMigrationType) =>
             _migrationAmountChooser.Show(hexEntity, manMigrationType);
 
         public void SliderMigrationChooserDeactivate() =>

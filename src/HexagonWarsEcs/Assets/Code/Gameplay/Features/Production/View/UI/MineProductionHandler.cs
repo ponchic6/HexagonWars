@@ -21,10 +21,10 @@ namespace Code.Gameplay.Features.Production.View.UI
             
             _plusButton.onClick.AsObservable().Subscribe(_ =>
             {
-                if (hexEntity.citizensAmount.Value <= 0)
+                if (hexEntity.manAmount.Value <= 0)
                     return;
                 
-                hexEntity.ReplaceCitizensAmount(hexEntity.citizensAmount.Value - 1);
+                hexEntity.ReplaceManAmount(hexEntity.manAmount.Value - 1);
                 hexEntity.mine.Miners++;
                 _minersAmount.text = hexEntity.mine.Miners.ToString();
             }).AddTo(this);
@@ -34,7 +34,7 @@ namespace Code.Gameplay.Features.Production.View.UI
                 if (hexEntity.mine.Miners <= 0)
                     return;
                 
-                hexEntity.ReplaceCitizensAmount(hexEntity.citizensAmount.Value + 1);
+                hexEntity.ReplaceManAmount(hexEntity.manAmount.Value + 1);
                 hexEntity.mine.Miners--;
                 _minersAmount.text = hexEntity.mine.Miners.ToString();
             }).AddTo(this);

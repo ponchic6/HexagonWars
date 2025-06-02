@@ -31,10 +31,10 @@ namespace Code.Gameplay.Features.Battle.Systems
             GameEntity nextHex = _game.GetEntityWithId(entity.wayIdPoints.Value[1]);
             GameEntity currentHex = _game.GetEntityWithId(entity.wayIdPoints.Value[0]);
 
-            if (currentHex.hasWarriorsAmount && currentHex.warriorsAmount.Value <= 0)
+            if (currentHex.hasManAmount && currentHex.manAmount.Value <= 0)
                 return false;
             
-            return entity.hasWarriorsMigrationAmount && nextHex != null && nextHex.isEnemyHexagon;
+            return entity.hasManMigrationAmount && nextHex != null && nextHex.isEnemyHexagon;
         }
 
         protected override void Execute(List<GameEntity> entities)

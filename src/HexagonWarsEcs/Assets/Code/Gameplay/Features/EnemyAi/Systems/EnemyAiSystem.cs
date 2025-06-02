@@ -17,7 +17,7 @@ namespace Code.Gameplay.Features.EnemyAi.Systems
             
             _game = Contexts.sharedInstance.game;
 
-            _entities = _game.GetGroup(GameMatcher.AllOf(GameMatcher.WarriorsAmount, GameMatcher.EnemyHexagon));
+            _entities = _game.GetGroup(GameMatcher.AllOf(GameMatcher.ManAmount, GameMatcher.EnemyHexagon));
             _battlefields = _game.GetGroup(GameMatcher.Battlefield);
         }
         
@@ -28,7 +28,7 @@ namespace Code.Gameplay.Features.EnemyAi.Systems
                 if (!enemyEntity.hasNeighboringHexagons)
                     continue;
 
-                if (enemyEntity.warriorsAmount.Value == 0)
+                if (enemyEntity.manAmount.Value == 0)
                     continue;
                 
                 if (enemyEntity.neighboringHexagons.Value.Select(i => _game.GetEntityWithId(i)).All(neighbourEntity => neighbourEntity.isEnemyHexagon))

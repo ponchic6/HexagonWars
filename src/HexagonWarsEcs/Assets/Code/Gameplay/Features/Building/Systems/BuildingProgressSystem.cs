@@ -16,7 +16,7 @@ namespace Code.Gameplay.Features.Building.Systems
             GameContext game = Contexts.sharedInstance.game;
             _commonStaticData = commonStaticData;
 
-            _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.BuildingProgress, GameMatcher.CitizensAmount));
+            _entities = game.GetGroup(GameMatcher.AllOf(GameMatcher.BuildingProgress, GameMatcher.ManAmount));
         }
         
         public void Execute()
@@ -46,7 +46,7 @@ namespace Code.Gameplay.Features.Building.Systems
         private void FinishBuildingProcess(BuildProgressContainer buildProgressContainer, GameEntity entity)
         {
             AddBuilding(buildProgressContainer, entity);
-            entity.ReplaceCitizensAmount(buildProgressContainer.buildersAmount + entity.citizensAmount.Value);
+            entity.ReplaceManAmount(buildProgressContainer.buildersAmount + entity.manAmount.Value);
             buildProgressContainer.buildersAmount = 0;
         }
         
@@ -60,10 +60,6 @@ namespace Code.Gameplay.Features.Building.Systems
                 
                 case BuildingsType.FoodFarm:
                     entity.AddFoodFarm(0);
-                    break;
-                
-                case BuildingsType.Barracks:
-                    entity.AddBarracks(0, _commonStaticData.WarriorTrainingTime, _commonStaticData.WarriorTrainingTime);
                     break;
                 
                 case BuildingsType.Mine:

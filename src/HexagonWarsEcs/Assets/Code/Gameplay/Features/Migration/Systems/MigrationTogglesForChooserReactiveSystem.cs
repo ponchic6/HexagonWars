@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Code.Gameplay.Common;
 using Code.Gameplay.Common.Services;
 using Code.Infrastructure.View;
 using Entitas;
@@ -17,8 +16,7 @@ namespace Code.Gameplay.Features.Migration.Systems
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
             context.CreateCollector(
-                GameMatcher.SoldiersToggleEnabling.AddedOrRemoved(),
-                GameMatcher.CitizenToggleEnabling.AddedOrRemoved()
+                GameMatcher.ManToggleEnabling.AddedOrRemoved()
             );
 
         protected override bool Filter(GameEntity entity) =>
@@ -29,14 +27,10 @@ namespace Code.Gameplay.Features.Migration.Systems
             foreach (GameEntity entity in entities)
             {
                 EntityBehaviour entityBehaviour = entity.view.Value;
-
-                if (entity.isSoldiersToggleEnabling)
-                    _uiFactory.SliderMigrationChooserActivate(entityBehaviour, ManMigrationType.Warriors);
                 
-                else if (entity.isCitizenToggleEnabling)
-                    _uiFactory.SliderMigrationChooserActivate(entityBehaviour, ManMigrationType.Citizens);
-                
-                else if (!entity.isSoldiersToggleEnabling && !entity.isCitizenToggleEnabling) 
+                if (entity.isManToggleEnabling)
+                    _uiFactory.SliderMigrationChooserActivate(entityBehaviour);
+                else 
                     entity.migrationHandler.Value.AllTogglesOffWithoutNotify();
             }
         }

@@ -11,8 +11,7 @@ namespace Code.Gameplay.Features.Migration.Systems
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
             context.CreateCollector(GameMatcher.AnyOf(
-                    GameMatcher.CitizensAmount,
-                    GameMatcher.WarriorsAmount
+                    GameMatcher.ManAmount
                     ));
 
         protected override bool Filter(GameEntity entity) =>
@@ -22,24 +21,14 @@ namespace Code.Gameplay.Features.Migration.Systems
         {
             foreach (GameEntity entity in entities)
             {
-                if (entity.citizensAmount.Value == 0)
+                if (entity.manAmount.Value == 0)
                 {
-                    entity.migrationHandler.Value.CitizenButtonActive(false);
-                    entity.isCitizenToggleEnabling= false;
+                    entity.migrationHandler.Value.ManButtonActive(false);
+                    entity.isManToggleEnabling= false;
                 }
                 
-                if (entity.citizensAmount.Value > 0)
-                    entity.migrationHandler.Value.CitizenButtonActive(true);
-
-                if (entity.warriorsAmount.Value == 0)
-                {
-                    entity.migrationHandler.Value.WarriorButtonActive(false);
-                    entity.isSoldiersToggleEnabling = false;
-                }
-
-                if (entity.warriorsAmount.Value > 0)
-                    entity.migrationHandler.Value.WarriorButtonActive(true);
-
+                if (entity.manAmount.Value > 0)
+                    entity.migrationHandler.Value.ManButtonActive(true);
             }
         }
     }

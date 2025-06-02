@@ -29,7 +29,7 @@ namespace Code.Gameplay.Features.Battle.Systems
                     continue;
                 }
 
-                if (defenderEntity.warriorsAmount.Value <= 0)
+                if (defenderEntity.manAmount.Value <= 0)
                 {
                     if (defenderEntity.isEnemyHexagon)
                     {
@@ -41,14 +41,11 @@ namespace Code.Gameplay.Features.Battle.Systems
                         defenderEntity.isEnemyHexagon = true;
                         defenderEntity.isPlayerHexagon = false;
                     }
-
                     
-                    //defenderEntity.ReplaceWarriorsAmount(defenderEntity.warriorsAmount.Value + attackerEntity.warriorsAmount.Value);
-                    //attackerEntity.ReplaceWarriorsAmount(0);
                     entity.isDestructed = true;
                 }
 
-                if (attackerEntity.warriorsAmount.Value <= 0)
+                if (attackerEntity.manAmount.Value <= 0)
                     entity.isDestructed = true;
             }
         }

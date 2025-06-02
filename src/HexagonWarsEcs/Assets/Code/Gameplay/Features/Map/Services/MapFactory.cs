@@ -75,8 +75,7 @@ namespace Code.Gameplay.Features.Map.Services
             // else
             //     entity.AddCitizensAmount(0);
 
-            entity.AddWarriorsAmount(new System.Random().Next(1, 101));
-            entity.AddCitizensAmount(new System.Random().Next(1, 101));
+            entity.AddManAmount(new System.Random().Next(1, 101));
             //entity.AddWarriorsAmount(0);
             entity.AddFoodAmount(10000);
             entity.AddAmmoAmount(0);
@@ -99,13 +98,6 @@ namespace Code.Gameplay.Features.Map.Services
                     fullProgress = 200,
                     currentProgress = 0,
                     buildingType = BuildingsType.FoodFarm,
-                    buildersAmount = 0,
-                },
-                new BuildProgressContainer
-                {
-                    fullProgress = 200,
-                    currentProgress = 0,
-                    buildingType = BuildingsType.Barracks,
                     buildersAmount = 0,
                 },
                 new BuildProgressContainer

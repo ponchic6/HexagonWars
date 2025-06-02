@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Code.Gameplay.Common;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.View;
 using Entitas;
@@ -18,7 +17,7 @@ namespace Code.Gameplay.Features.Migration.Systems
         }
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-            context.CreateCollector(GameMatcher.CitizenToggleEnabling.Added(), GameMatcher.SoldiersToggleEnabling.Added());
+            context.CreateCollector(GameMatcher.ManToggleEnabling.Added());
 
         protected override bool Filter(GameEntity entity) =>
             true;
@@ -30,7 +29,7 @@ namespace Code.Gameplay.Features.Migration.Systems
             foreach (GameEntity entity in entities)
             {
                 EntityBehaviour entityBehaviour = entity.view.Value;
-                _migrationFactory.CreateMigrationViewTrail(entityBehaviour, entity.isCitizenToggleEnabling ? ManMigrationType.Citizens : ManMigrationType.Warriors);
+                _migrationFactory.CreateMigrationViewTrail(entityBehaviour);
             }
         }
         

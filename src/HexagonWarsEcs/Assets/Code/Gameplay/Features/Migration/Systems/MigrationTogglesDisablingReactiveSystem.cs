@@ -10,7 +10,7 @@ namespace Code.Gameplay.Features.Migration.Systems
         }
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-            context.CreateCollector(GameMatcher.CitizenToggleEnabling.Added(), GameMatcher.SoldiersToggleEnabling.Added());
+            context.CreateCollector(GameMatcher.ManToggleEnabling.Added());
 
         protected override bool Filter(GameEntity entity) =>
             true;
@@ -19,7 +19,7 @@ namespace Code.Gameplay.Features.Migration.Systems
         {
             GameContext game = Contexts.sharedInstance.game;
 
-            IGroup<GameEntity> toggles = game.GetGroup(GameMatcher.AnyOf(GameMatcher.CitizenToggleEnabling, GameMatcher.SoldiersToggleEnabling));
+            IGroup<GameEntity> toggles = game.GetGroup(GameMatcher.AnyOf(GameMatcher.ManToggleEnabling));
             
             foreach (GameEntity toggle in toggles.GetEntities())
             {
@@ -27,8 +27,7 @@ namespace Code.Gameplay.Features.Migration.Systems
                     continue;
             
                 toggle.migrationHandler.Value.AllTogglesOffWithoutNotify();
-                toggle.isCitizenToggleEnabling = false;
-                toggle.isSoldiersToggleEnabling = false;
+                toggle.isManToggleEnabling = false;
             }
         }
     }

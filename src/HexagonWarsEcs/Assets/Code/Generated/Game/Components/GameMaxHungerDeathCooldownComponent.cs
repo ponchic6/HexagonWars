@@ -8,19 +8,19 @@
 //------------------------------------------------------------------------------
 public partial class GameEntity {
 
-    public Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown maxHungerDeathCooldown { get { return (Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown)GetComponent(GameComponentsLookup.MaxHungerDeathCooldown); } }
+    public Code.Gameplay.Features.Men.MaxHungerDeathCooldown maxHungerDeathCooldown { get { return (Code.Gameplay.Features.Men.MaxHungerDeathCooldown)GetComponent(GameComponentsLookup.MaxHungerDeathCooldown); } }
     public bool hasMaxHungerDeathCooldown { get { return HasComponent(GameComponentsLookup.MaxHungerDeathCooldown); } }
 
     public void AddMaxHungerDeathCooldown(float newValue) {
         var index = GameComponentsLookup.MaxHungerDeathCooldown;
-        var component = (Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown));
+        var component = (Code.Gameplay.Features.Men.MaxHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Men.MaxHungerDeathCooldown));
         component.Value = newValue;
         AddComponent(index, component);
     }
 
     public void ReplaceMaxHungerDeathCooldown(float newValue) {
         var index = GameComponentsLookup.MaxHungerDeathCooldown;
-        var component = (Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Citizens.MaxHungerDeathCooldown));
+        var component = (Code.Gameplay.Features.Men.MaxHungerDeathCooldown)CreateComponent(index, typeof(Code.Gameplay.Features.Men.MaxHungerDeathCooldown));
         component.Value = newValue;
         ReplaceComponent(index, component);
     }

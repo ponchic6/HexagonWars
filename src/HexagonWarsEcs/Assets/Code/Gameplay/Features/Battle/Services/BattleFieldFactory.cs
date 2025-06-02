@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Code.Gameplay.Common;
 using Code.Gameplay.Features.Map.View;
 using Code.Gameplay.Features.Migration.Services;
 using Code.Infrastructure.Services;
@@ -69,7 +68,7 @@ namespace Code.Gameplay.Features.Battle.Services
 
         private void CreateMigrationToBattlefield()
         {
-            _migrationFactory.SetInitialHex(_attackersHex, _warriorsAmount, ManMigrationType.Warriors);
+            _migrationFactory.SetInitialHex(_attackersHex, _warriorsAmount);
             _migrationFactory.SetFinishHexAndCreateMigration(_defendersHex);
             return;
             

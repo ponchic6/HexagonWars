@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Code.Gameplay.Features.Battle.Services;
 using Entitas;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.EnemyAi.Systems
 {

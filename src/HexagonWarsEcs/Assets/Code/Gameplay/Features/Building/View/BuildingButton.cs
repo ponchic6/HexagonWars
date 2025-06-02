@@ -111,10 +111,10 @@ namespace Code.Gameplay.Features.Building.View
 
         private void OnPlusButton(Unit _)
         {
-            if (_hexEntityBehaviour.Entity.citizensAmount.Value <= 0)
+            if (_hexEntityBehaviour.Entity.manAmount.Value <= 0)
                 return;
             
-            _hexEntityBehaviour.Entity.ReplaceCitizensAmount(_hexEntityBehaviour.Entity.citizensAmount.Value - 1);
+            _hexEntityBehaviour.Entity.ReplaceManAmount(_hexEntityBehaviour.Entity.manAmount.Value - 1);
             _buildProgress.buildersAmount++;
             _workersInputField.text = _buildProgress.buildersAmount.ToString();
         }
@@ -124,7 +124,7 @@ namespace Code.Gameplay.Features.Building.View
             if (_buildProgress.buildersAmount <= 0)
                 return;
             
-            _hexEntityBehaviour.Entity.ReplaceCitizensAmount(_hexEntityBehaviour.Entity.citizensAmount.Value + 1);
+            _hexEntityBehaviour.Entity.ReplaceManAmount(_hexEntityBehaviour.Entity.manAmount.Value + 1);
             _buildProgress.buildersAmount--;
             _workersInputField.text = _buildProgress.buildersAmount.ToString();
         }

@@ -10,7 +10,7 @@ namespace Code.Gameplay.Common.Services
     {
         public void ShowInfoPanel(EntityBehaviour entityBehaviour);
         public void HideInfoPanel(EntityBehaviour entityBehaviour);
-        public void SliderMigrationChooserActivate(EntityBehaviour entityBehaviour, ManMigrationType manMigrationType);
+        public void SliderMigrationChooserActivate(EntityBehaviour entityBehaviour);
         public void SliderMigrationChooserDeactivate();
         public BuildingInfoPanel BuildingInfoPanel { get; }
         public ProductionInfoPanel ProductionInfoPanel { get; }

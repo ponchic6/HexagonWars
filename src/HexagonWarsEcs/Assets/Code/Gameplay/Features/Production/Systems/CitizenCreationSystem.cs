@@ -31,7 +31,7 @@ namespace Code.Gameplay.Features.Production.Systems
                 {
                     entity.city.CurrentCooldown = entity.city.Cooldown;
                     entity.city.CitizenOrdered--;
-                    entity.ReplaceCitizensAmount(entity.citizensAmount.Value + 1);
+                    entity.ReplaceManAmount(entity.manAmount.Value + 1);
                 }
             }
         }

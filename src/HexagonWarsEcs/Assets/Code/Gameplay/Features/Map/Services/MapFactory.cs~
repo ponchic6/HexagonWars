@@ -34,7 +34,6 @@ namespace Code.Gameplay.Features.Map.Services
         {
             GameObject map = new GameObject("Map");
             map.AddComponent<MapOutlinesController>();
-            map.AddComponent<CommonMigrationToggleGroup>();
             
             float hexWidth = hexSize * 2f;
             float hexHeight = Mathf.Sqrt(3f) * hexSize;
@@ -76,8 +75,7 @@ namespace Code.Gameplay.Features.Map.Services
             // else
             //     entity.AddCitizensAmount(0);
 
-            entity.AddWarriorsAmount(new System.Random().Next(1, 101));
-            entity.AddCitizensAmount(new System.Random().Next(1, 101));
+            entity.AddManAmount(new System.Random().Next(1, 101));
             //entity.AddWarriorsAmount(0);
             entity.AddFoodAmount(10000);
             entity.AddAmmoAmount(0);

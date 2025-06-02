@@ -14,8 +14,7 @@ namespace Code.Gameplay.Features.Migration.View
     {
         [SerializeField] private EntityBehaviour _entityBehaviour;
         [SerializeField] private PointerHandler _pointerHandler;
-        [SerializeField] private Toggle _citizenToggle;
-        [SerializeField] private Toggle _warriorsToggle;
+        [SerializeField] private Toggle _manToggle;
         private IMigrationFactory _migrationFactory;
         private GameContext _game;
 
@@ -39,13 +38,10 @@ namespace Code.Gameplay.Features.Migration.View
             if (eventData.button != PointerEventData.InputButton.Right)
                 return;
 
-            IGroup<GameEntity> toggles = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.CitizenToggleEnabling, GameMatcher.SoldiersToggleEnabling));
+            IGroup<GameEntity> toggles = _game.GetGroup(GameMatcher.AnyOf(GameMatcher.ManAmount));
             
             foreach (GameEntity entity in toggles.GetEntities())
-            {
-                entity.isCitizenToggleEnabling = false;
-                entity.isSoldiersToggleEnabling = false;
-            }
+                entity.isManToggleEnabling = false;
 
             _migrationFactory.SetFinishHexAndCreateMigration(_entityBehaviour);
         }

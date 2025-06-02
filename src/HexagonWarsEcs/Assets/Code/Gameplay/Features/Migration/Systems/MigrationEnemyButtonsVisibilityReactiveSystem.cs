@@ -21,22 +21,15 @@ namespace Code.Gameplay.Features.Migration.Systems
             {
                 if (entity.isEnemyHexagon)
                 {
-                    entity.migrationHandler.Value.CitizenButtonActive(false);
-                    entity.migrationHandler.Value.WarriorButtonActive(false);
+                    entity.migrationHandler.Value.ManButtonActive(false);
                 }
                 else
                 {
-                    if (entity.citizensAmount.Value == 0)
-                        entity.migrationHandler.Value.CitizenButtonActive(false);
+                    if (entity.manAmount.Value == 0)
+                        entity.migrationHandler.Value.ManButtonActive(false);
                 
-                    if (entity.citizensAmount.Value > 0)
-                        entity.migrationHandler.Value.CitizenButtonActive(true);
-                
-                    if (entity.warriorsAmount.Value == 0)
-                        entity.migrationHandler.Value.WarriorButtonActive(false);
-
-                    if (entity.warriorsAmount.Value > 0)
-                        entity.migrationHandler.Value.WarriorButtonActive(true);
+                    if (entity.manAmount.Value > 0)
+                        entity.migrationHandler.Value.ManButtonActive(true);
                 }
             }
         }

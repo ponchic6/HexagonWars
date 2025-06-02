@@ -10,7 +10,7 @@ namespace Code.Gameplay.Features.Migration.Systems
         }
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
-            context.CreateCollector(GameMatcher.CitizensAmount.Added(), GameMatcher.WarriorsAmount.Added());
+            context.CreateCollector(GameMatcher.ManAmount.Added());
 
         protected override bool Filter(GameEntity entity) =>
             entity.hasMigrationHandler;
@@ -18,9 +18,7 @@ namespace Code.Gameplay.Features.Migration.Systems
         protected override void Execute(List<GameEntity> entities)
         {
             foreach (GameEntity entity in entities)
-            {
-                entity.migrationHandler.Value.UpdateCitizenAndWarriorsCountsView();
-            }
+                entity.migrationHandler.Value.UpdateManCountsView();
         }
     }
 }

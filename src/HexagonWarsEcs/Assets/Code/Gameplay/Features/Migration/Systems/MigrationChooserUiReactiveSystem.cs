@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Code.Gameplay.Common.Services;
 using Entitas;
-using UnityEngine;
 
 namespace Code.Gameplay.Features.Migration.Systems
 {
@@ -16,8 +15,7 @@ namespace Code.Gameplay.Features.Migration.Systems
 
         protected override ICollector<GameEntity> GetTrigger(IContext<GameEntity> context) =>
             context.CreateCollector(GameMatcher.AnyOf(
-                GameMatcher.CitizensAmount,
-                GameMatcher.WarriorsAmount));
+                GameMatcher.ManAmount));
 
         protected override bool Filter(GameEntity entity) =>
             _uiFactory.MigrationAmountChooser.gameObject.activeSelf &&

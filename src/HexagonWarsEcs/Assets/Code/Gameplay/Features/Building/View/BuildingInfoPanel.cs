@@ -10,7 +10,7 @@ namespace Code.Gameplay.Features.Building.View
     public class BuildingInfoPanel : MonoBehaviour
     {
         [SerializeField] private Transform _content;
-        [SerializeField] private TMP_Text _citizensAmount;
+        [SerializeField] private TMP_Text _manAmount;
         [SerializeField] private TMP_Text _foodAmount;
         [SerializeField] private TMP_Text _ammoAmount;
         [SerializeField] private BuildingButton _buildingButtonPrefab;
@@ -29,7 +29,7 @@ namespace Code.Gameplay.Features.Building.View
 
         private void Update()
         {
-            _citizensAmount.text = _hexEntityBehaviour.Entity.citizensAmount.Value.ToString();
+            _manAmount.text = _hexEntityBehaviour.Entity.manAmount.Value.ToString();
             _foodAmount.text = _hexEntityBehaviour.Entity.foodAmount.Value.ToString("F1");
             _ammoAmount.text = _hexEntityBehaviour.Entity.ammoAmount.Value.ToString("F1");
         }

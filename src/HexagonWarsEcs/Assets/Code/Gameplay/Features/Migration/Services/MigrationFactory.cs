@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Code.Gameplay.Common;
 using Code.Gameplay.Features.Map.View;
 using Code.Infrastructure.Services;
 using Code.Infrastructure.View;
@@ -18,7 +17,6 @@ namespace Code.Gameplay.Features.Migration.Services
         private readonly GameContext _game;
         
         private EntityBehaviour _initialHex, _finishHex;
-        private ManMigrationType _manMigrationType;
         private int _migrationAmount;
         
         public EntityBehaviour InitialHex => _initialHex;
@@ -30,9 +28,8 @@ namespace Code.Gameplay.Features.Migration.Services
             _game = Contexts.sharedInstance.game;
         }   
             
-        public void SetInitialHex(EntityBehaviour entityBehaviour, int selectedPeople, ManMigrationType manMigrationType)
+        public void SetInitialHex(EntityBehaviour entityBehaviour, int selectedPeople)
         {
-            _manMigrationType = manMigrationType;
             _initialHex = entityBehaviour;
             _migrationAmount = selectedPeople;
         }
@@ -96,14 +93,9 @@ namespace Code.Gameplay.Features.Migration.Services
             return null;
         }
 
-        public List<GameEntity> CreateMigrationViewTrail(EntityBehaviour migrationHexBehaviour, ManMigrationType manMigrationType)
+        public List<GameEntity> CreateMigrationViewTrail(EntityBehaviour migrationHexBehaviour)
         {
-            IGroup<GameEntity> group = manMigrationType switch
-            {
-                ManMigrationType.Citizens => _game.GetGroup(GameMatcher.CitizensMigrationAmount),
-                ManMigrationType.Warriors => _game.GetGroup(GameMatcher.WarriorsMigrationAmount),
-                _ => throw new ArgumentOutOfRangeException(nameof(manMigrationType), manMigrationType, null)
-            };
+            IGroup<GameEntity> group = _game.GetGroup(GameMatcher.ManMigrationAmount);
 
             List<GameEntity> entityMigrations = new();
 
@@ -138,18 +130,7 @@ namespace Code.Gameplay.Features.Migration.Services
             migration.AddId(_identifierService.Next());
             migration.AddWayIdPoints(shortestPath);
             migration.AddMigrationComplexityWay(Enumerable.Repeat(5f, shortestPath.Count - 1).ToList());
-
-            switch (_manMigrationType)
-            {
-                case ManMigrationType.Citizens:
-                    migration.AddCitizensMigrationAmount(_migrationAmount);
-                    break;
-                
-                case ManMigrationType.Warriors:
-                    migration.AddWarriorsMigrationAmount(_migrationAmount);
-                    break;
-            }
-
+            migration.AddManMigrationAmount(_migrationAmount);
             return migration;
         }
 
